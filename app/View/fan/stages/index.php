@@ -56,7 +56,7 @@
     <!-- Stage Card 1 -->
     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
       <img
-        src="https://via.placeholder.com/600x300?text=Stage+Map"
+        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
         alt="Stage Map"
         class="w-full h-48 object-cover"
       />
@@ -64,7 +64,7 @@
         <h3 class="font-bold text-xl mb-2">Stage 1: Casablanca → Rabat</h3>
         <p class="text-gray-600 mb-1"><strong>Distance:</strong> 90 km</p>
         <p class="text-gray-600 mb-4"><strong>Type:</strong> Coastal</p>
-        <a href="#"
+        <a href="<?= url('stages/1') ?>"
           class="inline-block bg-emerald-500 text-white py-2 px-4 rounded hover:bg-emerald-600 transition duration-300"
         >View Details</a>
       </div>
@@ -73,7 +73,7 @@
     <!-- Stage Card 2 -->
     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
       <img
-        src="https://via.placeholder.com/600x300?text=Stage+Map"
+        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
         alt="Stage Map"
         class="w-full h-48 object-cover"
       />
@@ -81,7 +81,7 @@
         <h3 class="font-bold text-xl mb-2">Stage 2: Rabat → Fez</h3>
         <p class="text-gray-600 mb-1"><strong>Distance:</strong> 200 km</p>
         <p class="text-gray-600 mb-4"><strong>Type:</strong> Urban</p>
-        <a href="#"
+        <a href="<?= url('stages/1') ?>"
           class="inline-block bg-emerald-500 text-white py-2 px-4 rounded hover:bg-emerald-600 transition duration-300"
         >View Details</a>
       </div>
@@ -90,7 +90,7 @@
     <!-- Stage Card 3 -->
     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
       <img
-        src="https://via.placeholder.com/600x300?text=Stage+Map"
+        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
         alt="Stage Map"
         class="w-full h-48 object-cover"
       />
@@ -98,7 +98,7 @@
         <h3 class="font-bold text-xl mb-2">Stage 3: Fez → Meknes</h3>
         <p class="text-gray-600 mb-1"><strong>Distance:</strong> 65 km</p>
         <p class="text-gray-600 mb-4"><strong>Type:</strong> Nature</p>
-        <a href="#"
+        <a href="<?= url('stages/1') ?>"
           class="inline-block bg-emerald-500 text-white py-2 px-4 rounded hover:bg-emerald-600 transition duration-300"
         >View Details</a>
       </div>
