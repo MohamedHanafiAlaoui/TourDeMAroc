@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Allow direct access to the assets folder
+RewriteRule ^assets/ - [L]
+
+# Redirect all other requests to the public folder
+RewriteRule ^(.*)$ public/$1 [L]
