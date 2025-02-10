@@ -31,6 +31,9 @@
     // $router->post('/courses/enroll/{id}', [CoursesController::class, 'enroll'], ["student"]);
     
     
+    $router->get('/cyclist/profile', [CyclistsController::class, 'profile'], ["visitor"]);
+
+
     $router->get('/login', [LoginController::class, 'index'], ["visitor"]);
     $router->get('/signup', [SignupController::class, 'index'], ["visitor"]);
 
