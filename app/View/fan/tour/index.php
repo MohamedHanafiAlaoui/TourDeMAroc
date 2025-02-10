@@ -66,7 +66,7 @@
           </div>
           <div class="flex-1">
             <div class="relative h-64 bg-gray-200 rounded-xl overflow-hidden">
-              <img src="/api/placeholder/600/400" alt="Tour Map" class="w-full h-full object-cover" />
+              <img src="https://sportpro.ma/wp-content/uploads/2024/06/tour-de-france-scaled.jpg" alt="Tour Map" class="w-full h-full object-cover" />
             </div>
           </div>
         </div>

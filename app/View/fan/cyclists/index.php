@@ -33,12 +33,12 @@
 <script>
     // Sample player data
     const players = [
-        { name: "Mohammed El Amrani", nationality: "Morocco", team: "Team Morocco", age: 28, wins: 3, image: "https://example.com/player1.jpg" },
-        { name: "Jean Dupont", nationality: "France", team: "Team France", age: 30, wins: 5, image: "https://example.com/player2.jpg" },
-        { name: "Carlos Rodriguez", nationality: "Spain", team: "Team Spain", age: 25, wins: 2, image: "https://example.com/player3.jpg" },
-        { name: "Giovanni Rossi", nationality: "Italy", team: "Team Italy", age: 27, wins: 4, image: "https://example.com/player4.jpg" },
-        { name: "Jan Janssen", nationality: "Netherlands", team: "Team Netherlands", age: 29, wins: 3, image: "https://example.com/player5.jpg" },
-        { name: "Ahmed Hassan", nationality: "Egypt", team: "Team Egypt", age: 26, wins: 1, image: "https://example.com/player6.jpg" },
+        { name: "Mohammed El Amrani", nationality: "Morocco", team: "Team Morocco", age: 28, wins: 3, image: "https://avatars.githubusercontent.com/u/110723408?v=4" },
+        { name: "Jean Dupont", nationality: "France", team: "Team France", age: 30, wins: 5, image: "https://avatars.githubusercontent.com/u/110723408?v=4" },
+        { name: "Carlos Rodriguez", nationality: "Spain", team: "Team Spain", age: 25, wins: 2, image: "https://avatars.githubusercontent.com/u/110723408?v=4" },
+        { name: "Giovanni Rossi", nationality: "Italy", team: "Team Italy", age: 27, wins: 4, image: "https://avatars.githubusercontent.com/u/110723408?v=4" },
+        { name: "Jan Janssen", nationality: "Netherlands", team: "Team Netherlands", age: 29, wins: 3, image: "https://avatars.githubusercontent.com/u/110723408?v=4" },
+        { name: "Ahmed Hassan", nationality: "Egypt", team: "Team Egypt", age: 26, wins: 1, image: "https://avatars.githubusercontent.com/u/110723408?v=4" },
         // Add more players as needed
     ];
 

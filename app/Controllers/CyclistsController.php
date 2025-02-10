@@ -5,4 +5,9 @@ class CyclistsController extends BaseController {
     {
         $this->render("/cyclists/index");
     }
+
+    public function show($id)
+    {
+        $this->render("/cyclists/show");
+    }
 }

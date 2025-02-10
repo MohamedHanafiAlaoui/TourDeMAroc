@@ -56,7 +56,7 @@
     <!-- Stage Card 1 -->
     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
       <img
-        src="https://via.placeholder.com/600x300?text=Stage+Map"
+        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
         alt="Stage Map"
         class="w-full h-48 object-cover"
       />
@@ -73,7 +73,7 @@
     <!-- Stage Card 2 -->
     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
       <img
-        src="https://via.placeholder.com/600x300?text=Stage+Map"
+        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
         alt="Stage Map"
         class="w-full h-48 object-cover"
       />
@@ -90,7 +90,7 @@
     <!-- Stage Card 3 -->
     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
       <img
-        src="https://via.placeholder.com/600x300?text=Stage+Map"
+        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
         alt="Stage Map"
         class="w-full h-48 object-cover"
       />
