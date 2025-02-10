@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour de Maroc - Experience the Thrill of Cycling</title>
+    <link rel="stylesheet" href="<?= URLASSETS . 'css/output.css' ?>">
+    <link rel="stylesheet" href="<?= URLASSETS . 'css/all.min.css' ?>">
+    <link rel="stylesheet" href="<?= URLASSETS . 'css/fontawesome.css' ?>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Modern Navbar -->
+    <nav class="bg-white shadow-lg backdrop-blur-md bg-opacity-90 fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center">
+                        <span class="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 text-transparent bg-clip-text">Tour de Maroc</span>
+                    </div>
+                    <div class="hidden md:flex space-x-8">
+                        <a href="<?= url() ?>" class="text-emerald-500 font-semibold">Home</a>
+                        <a href="<?= url('tour') ?>" class="text-gray-600 hover:text-emerald-500 transition">Tour</a>
+                        <a href="<?= url('stages') ?>" class="text-gray-600 hover:text-emerald-500 transition">Stages</a>
+                        <a href="<?= url('cyclists') ?>" class="text-gray-600 hover:text-emerald-500 transition">Cyclists</a>
+                        <a href="<?= url('ranking') ?>" class="text-gray-600 hover:text-emerald-500 transition">Rankings</a>
+                    </div>
+                </div>
+                <a href="<?= url('login') ?>" class="bg-emerald-500 text-white px-6 py-2 rounded-full hover:bg-emerald-600 transition">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </nav>

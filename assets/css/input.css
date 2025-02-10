@@ -22,5 +22,5 @@ html::-webkit-scrollbar {
 }
 
 html::-webkit-scrollbar-thumb {
-    @apply rounded-2xl bg-primary-500
+    @apply rounded-2xl bg-green-200
 }
