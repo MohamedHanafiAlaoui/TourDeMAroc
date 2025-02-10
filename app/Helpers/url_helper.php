@@ -17,3 +17,8 @@
     function baseUrl(){
         return implode("/", array_slice(explode('/', requestPath()), 0, 6));
     }
+
+    function url($path = "")
+    {
+        return URLROOT . $path;
+    }
