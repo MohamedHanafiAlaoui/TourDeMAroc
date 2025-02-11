@@ -21,7 +21,21 @@
     $router = new Router();
     $request = new Request();
     // examples of the routs 
-    // $router->get('/', [HomeController::class, 'index'], ["visitor", "student"]);
+    $router->get('/', [HomeController::class, 'index'], ["visitor"]);
+    $router->get('/tour', [HomeController::class, 'details'], ["visitor"]);
+    $router->get('/cyclists', [CyclistsController::class, 'index'], ["visitor"]);
+    $router->get('/cyclists/{id}', [CyclistsController::class, 'show'], ["visitor"]);
+    $router->get('/stages', [StagesController::class, 'index'], ["visitor"]);
+    $router->get('/stages/{id}', [StagesController::class, 'show'], ["visitor"]);
+    $router->get('/ranking', [RankingController::class, 'index'], ["visitor"]);
     // $router->post('/courses/enroll/{id}', [CoursesController::class, 'enroll'], ["student"]);
+    
+    
+    $router->get('/cyclist/profile', [CyclistsController::class, 'profile'], ["visitor"]);
+
+
+    $router->get('/login', [LoginController::class, 'index'], ["visitor"]);
+    $router->get('/signup', [SignupController::class, 'index'], ["visitor"]);
+
 
     $router->dispatch($request);

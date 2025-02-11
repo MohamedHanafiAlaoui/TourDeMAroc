@@ -14,18 +14,18 @@
             }
             else if (isLoggedIn() && user()->isAdmin()) {
                 $path = APPROOT . "View/admin" . $path . ".php";
-            }elseif (isLoggedIn() && user()->isTeacher()){
-                $path = APPROOT . "View/teacher" . $path . ".php";
+            }elseif (isLoggedIn() && user()->isCyclist()){
+                $path = APPROOT . "View/cyclist" . $path . ".php";
             }else{
-                $path = APPROOT . "View/student" . $path . ".php";
+                $path = APPROOT . "View/fan" . $path . ".php";
             }
 
-            $role = "student";
+            $role = "fan";
             if (isLoggedIn() && user()->isAdmin()) {
                 $role = "admin";
             }
-            elseif (isLoggedIn() && user()->isTeacher()) {
-                $role = "teacher";
+            elseif (isLoggedIn() && user()->isCyclist()) {
+                $role = "cyclist";
             }
             
             if (file_exists($path)) {
