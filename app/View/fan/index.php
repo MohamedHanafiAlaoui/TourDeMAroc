@@ -58,34 +58,20 @@
             <p class="text-gray-600 max-w-2xl mx-auto">Meet the talented athletes who make Tour de Maroc an unforgettable experience.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-                <img src="/api/placeholder/400/500" alt="Ahmed Bennani" class="w-full h-64 object-cover">
-                <div class="p-6 text-center">
-                    <h3 class="font-bold text-xl mb-2">Ahmed Bennani</h3>
-                    <p class="text-emerald-500">Team Morocco</p>
+
+            <?php if (!$TopCyclists) { ?>
+                <div class="h-40 text-red-500 flex justify-center ">
+                    <p>No Stage exists</p>
                 </div>
-            </div>
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-                <img src="/api/placeholder/400/500" alt="Sofia El Amrani" class="w-full h-64 object-cover">
-                <div class="p-6 text-center">
-                    <h3 class="font-bold text-xl mb-2">Sofia El Amrani</h3>
-                    <p class="text-emerald-500">Team Atlas</p>
+            <?php } else { foreach ($TopCyclists as $key => $cyclist): ?>
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                    <img src="/api/placeholder/400/500" alt="<?= htmlspecialchars($cyclist->getFullName()) ?>" class="w-full h-64 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($cyclist->getFullName()) ?></h3>
+                        <p class="text-emerald-500">Team <?= htmlspecialchars($cyclist->getNameTeam()) ?></p>
+                    </div>
                 </div>
-            </div>
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-                <img src="/api/placeholder/400/500" alt="Youssef Hakimi" class="w-full h-64 object-cover">
-                <div class="p-6 text-center">
-                    <h3 class="font-bold text-xl mb-2">Youssef Hakimi</h3>
-                    <p class="text-emerald-500">Team Sahara</p>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-                <img src="/api/placeholder/400/500" alt="Laila Tazi" class="w-full h-64 object-cover">
-                <div class="p-6 text-center">
-                    <h3 class="font-bold text-xl mb-2">Laila Tazi</h3>
-                    <p class="text-emerald-500">Team Casablanca</p>
-                </div>
-            </div>
+            <?php endforeach;} ?>
         </div>
     </div>
 </section>

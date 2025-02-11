@@ -2,19 +2,19 @@
 
     class Stage extends BaseModel
     {
-        protected $id_stage;
-        protected $name;
-        protected $start_location;
-        protected $end_location;
-        protected $distance_km;
-        protected $start_date;
-        protected $end_date;
-        protected $id_region;
-        protected $difficulty_level;
-        protected $id_category;
+        private $id_stage;
+        private $name;
+        private $start_location;
+        private $end_location;
+        private $distance_km;
+        private $start_date;
+        private $end_date;
+        private $id_region;
+        private $difficulty_level;
+        private $id_category;
         
-        protected $nameCategory;
-        protected $nameRegion;
+        private $nameCategory;
+        private $nameRegion;
 
         public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null)
         {
@@ -167,7 +167,7 @@
             foreach ($result as $key => $value) {
                 $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
                 $class->setNameCategory($value['name_region']);
-                
+
                 $stages[] = $class; 
             }
             return $stages;
