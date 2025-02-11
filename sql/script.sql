@@ -1,7 +1,15 @@
 -- Création de la base de données
-CREATE DATABASE tour_de_maroc;
+CREATE DATABASE tour-de-maroc;
 
-\c tour_de_maroc;
+\c tour-de-maroc;
+
+--Table des rôles
+CREATE TYPE user_role AS ENUM ('Admin', 'Fan', 'Cyclist');
+
+CREATE TABLE roles (
+    id_role SERIAL PRIMARY KEY,
+    name_user user_role NOT NULL UNIQUE
+);
 
 -- Table des équipes
 CREATE TABLE teams (
@@ -13,29 +21,33 @@ CREATE TABLE teams (
 -- Table principale des utilisateurs
 CREATE TABLE users (
     id_user SERIAL PRIMARY KEY,
-    name VARCHAR(250) NOT NULL, -- Pas UNIQUE
+    firstname VARCHAR(250) NOT NULL,
+    lastname VARCHAR(250) NOT NULL,
     email VARCHAR(250) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     photo TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_role INT REFERENCES roles(id_role) ON DELETE SET NULL
 );
 
--- Table des cyclistes (hérite de users) - Pas besoin de redéfinir id_user
+-- Table des cyclistes (hérite de users)
 CREATE TABLE cyclists (
+    id_user INT PRIMARY KEY DEFAULT nextval ('users_id_user_seq'),
     nationality VARCHAR(250),
     birthdate DATE,
     total_points INT DEFAULT 0,
     approved BOOLEAN DEFAULT FALSE,
-    history TEXT,
     id_team INT REFERENCES teams(id_team) ON DELETE SET NULL
 ) INHERITS (users);
 
--- Table des administrateurs (hérite de users) - Pas besoin de redéfinir id_user
+-- Table des administrateurs (hérite de users)
 CREATE TABLE admins (
+    id_user INT PRIMARY KEY DEFAULT nextval ('users_id_user_seq')
 ) INHERITS (users);
 
--- Table des fans (hérite de users) - Pas besoin de redéfinir id_user
+-- Table des fans (hérite de users)
 CREATE TABLE fans (
+    id_user INT PRIMARY KEY DEFAULT nextval ('users_id_user_seq')
 ) INHERITS (users);
 
 -- Stage categories table
@@ -69,7 +81,7 @@ CREATE TABLE stages (
 -- Stage results table
 CREATE TABLE stage_results (
     id_results SERIAL PRIMARY KEY,
-    id_cyclist INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE,
+    id_cyclist INT NOT NULL REFERENCES cyclists(id_user) ON DELETE CASCADE,
     id_stage INT NOT NULL REFERENCES stages(id_stage) ON DELETE CASCADE,
     total_time INTERVAL NOT NULL,
     distance_km DECIMAL(6,2) NOT NULL,
@@ -82,7 +94,7 @@ CREATE TABLE stage_results (
 -- Fans and their favorite cyclists table
 CREATE TABLE fan_favorites (
     id_fan INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE,
-    id_cyclist INT NOT NULL REFERENCES users(id_user) ON DELETE CASCADE,
+    id_cyclist INT NOT NULL REFERENCES cyclists(id_user) ON DELETE CASCADE,
     PRIMARY KEY (id_fan, id_cyclist)
 );
 
@@ -121,4 +133,11 @@ CREATE TABLE reports (
     description TEXT NOT NULL,
     reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_archived BOOLEAN DEFAULT FALSE
+);
+
+--Historique des performances des cyclistes
+CREATE TABLE historys(
+    id_history SERIAL PRIMARY KEY,
+    version VARCHAR(250) NOT NULL,
+    id_cyclist INT NOT NULL REFERENCES cyclists(id_user) ON DELETE CASCADE
 );
