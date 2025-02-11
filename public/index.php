@@ -22,23 +22,21 @@
     $request = new Request();
     // examples of the routs 
     $router->get('/', [HomeController::class, 'index'], ["visitor", "fan", "cyclist"]);
-    $router->get('/tour', [HomeController::class, 'details'], ["visitor"]);
-    $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor"]);
-    $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor"]);
-    $router->get('/stages', [StagesController::class, 'index'], ["visitor"]);
-    $router->get('/stages/{id}', [StagesController::class, 'show'], ["visitor"]);
-    $router->get('/ranking', [RankingController::class, 'index'], ["visitor"]);
+    $router->get('/tour', [HomeController::class, 'details'], ["visitor", "fan", "cyclist"]);
+    $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor", "fan", "cyclist"]);
+    $router->get('/stages', [StagesController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->get('/stages/{id}', [StagesController::class, 'show'], ["visitor", "fan", "cyclist"]);
+    $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
-    // $router->post('/courses/enroll/{id}', [CoursesController::class, 'enroll'], ["student"]);
     
+    $router->get('/login', [AuthController::class, 'login'], ["visitor"]);
+    $router->post('/login', [AuthController::class, 'signin'], ["visitor"]);
+    $router->get('/signup', [AuthController::class, 'signup'], ["visitor"]);
+    $router->post('/signup', [AuthController::class, 'register'], ["visitor"]);
     
-    $router->get('/cyclist/profile', [CyclistController::class, 'profile'], ["visitor"]);
-
-    $router->get('/login', [LoginController::class, 'index'], ["visitor"]);
-    $router->post('/login', [LoginController::class, 'login'], ["visitor"]);
-    $router->get('/signup', [SignupController::class, 'index'], ["visitor"]);
-    $router->post('/signup', [SignupController::class, 'signup'], ["visitor"]);
-
+    $router->get('/forget-password', [ResetPasswordController::class, 'index'], ["visitor"]);
+    $router->get('/reset-password', [ResetPasswordController::class, 'reset'], ["visitor"]);
 
     $router->dispatch($request);
