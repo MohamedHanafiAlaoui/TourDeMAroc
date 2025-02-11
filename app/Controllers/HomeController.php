@@ -3,7 +3,8 @@ class HomeController extends BaseController {
 
     public function index()
     {
-        $this->render("/");
+        $nextStages = Stage::NextStages();
+        $this->render("/", compact("nextStages"));
     }
 
     public function details()

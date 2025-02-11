@@ -21,43 +21,24 @@
         <p class="text-gray-600 max-w-2xl mx-auto">Explore each stage of the Tour de Maroc – from start to finish.</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Stage Card 1 -->
-        <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-            <img src="/api/placeholder/600/400" alt="Stage: Agadir → Marrakech" class="w-full h-48 object-cover">
-            <div class="p-6">
-            <h3 class="font-bold text-xl mb-2">Agadir → Marrakech</h3>
-            <p class="text-gray-600">May 1, 2023 - May 3, 2023</p>
-            <div class="flex items-center mt-2">
-                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Completed</span>
+        <!-- Stage Card -->
+        <?php if (!$nextStages) { ?>
+            <div class="h-80 text-red-500 flex justify-center ">
+                <p>No Stage exists</p>
             </div>
-            <a href="#" class="mt-4 inline-block text-emerald-500 hover:text-emerald-600">View Stage Details →</a>
+        <?php } else { foreach ($nextStages as $key => $stage): ?>
+            <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
+                <img src="/api/placeholder/600/400" alt="Stage: <?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?>" class="w-full h-48 object-cover">
+                <div class="p-6">
+                <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?></h3>
+                <p class="text-gray-600"><?= htmlspecialchars($stage->getStDate()) ?> - <?= htmlspecialchars($stage->getEnDate()) ?></p>
+                <div class="flex items-center mt-2">
+                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm"><?= htmlspecialchars($stage->getNameRegion()) ?></span>
+                </div>
+                <a href="#" class="mt-4 inline-block text-emerald-500 hover:text-emerald-600">View Stage Details →</a>
+                </div>
             </div>
-        </div>
-        <!-- Stage Card 2 -->
-        <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-            <img src="/api/placeholder/600/400" alt="Stage: Marrakech → Casablanca" class="w-full h-48 object-cover">
-            <div class="p-6">
-            <h3 class="font-bold text-xl mb-2">Marrakech → Casablanca</h3>
-            <p class="text-gray-600">May 4, 2023 - May 6, 2023</p>
-            <div class="flex items-center mt-2">
-                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Completed</span>
-            </div>
-            <a href="#" class="mt-4 inline-block text-emerald-500 hover:text-emerald-600">View Stage Details →</a>
-            </div>
-        </div>
-        <!-- Stage Card 3 -->
-        <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl border-2 border-emerald-500">
-            <img src="/api/placeholder/600/400" alt="Stage: Casablanca → Rabat" class="w-full h-48 object-cover">
-            <div class="p-6">
-            <h3 class="font-bold text-xl mb-2">Casablanca → Rabat</h3>
-            <p class="text-gray-600">May 7, 2023 - May 9, 2023</p>
-            <div class="flex items-center mt-2">
-                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm">Upcoming</span>
-            </div>
-            <a href="#" class="mt-4 inline-block text-emerald-500 hover:text-emerald-600">View Stage Details →</a>
-            </div>
-        </div>
-        </div>
+        <?php endforeach;} ?>
     </div>
 </section>
 

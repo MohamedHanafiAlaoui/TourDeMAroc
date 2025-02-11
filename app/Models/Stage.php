@@ -14,6 +14,8 @@
         protected $id_category;
         
         protected $nameCategory;
+        protected $nameRegion;
+
         public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null)
         {
             $this->id_stage = $id_stage;
@@ -38,44 +40,54 @@
             $this->name = $name;
         }
         
-        public function getStLocation($start_location)
+        public function setStLocation($start_location)
         {
             $this->start_location = $start_location;
         }
         
-        public function getEnLocation($end_location)
+        public function setEnLocation($end_location)
         {
             $this->end_location = $end_location;
         }
         
-        public function getDistance($distance_km)
+        public function setDistance($distance_km)
         {
             $this->distance_km = $distance_km;
         }
         
-        public function get($name)
+        public function setStDate($start_date)
         {
-            $this->name = $name;
+            $this->start_date = $start_date;
         }
         
-        public function ($name)
+        public function setEnDate($end_date)
         {
-            $this->name = $name;
+            $this->end_date = $end_date;
         }
         
-        public function ($name)
+        public function setIdRegion($id_region)
         {
-            $this->name = $name;
+            $this->id_region = $id_region;
         }
         
-        public function ($name)
+        public function setDiffcLevel($difficulty_level)
         {
-            $this->name = $name;
+            $this->difficulty_level = $difficulty_level;
         }
-        
-        public function ($name)
+
+        public function setIdCategory($id_category)
         {
-            $this->name = $name;
+            $this->id_category = $id_category;
+        }
+
+        public function setNameCategory($nameCategory)
+        {
+            $this->nameCategory = $nameCategory;
+        }
+
+        public function setNameRegion($nameRegion)
+        {
+            $this->nameRegion = $nameRegion;
         }
         
 
@@ -89,14 +101,49 @@
             return $this->name;
         }
 
+        public function getStLocation()
+        {
+            return $this->start_location;
+        }
+        
+        public function getEnLocation()
+        {
+            return $this->end_location;
+        }
+        
+        public function getDistance()
+        {
+            return $this->distance_km;
+        }
+        
+        public function getStDate()
+        {
+            return $this->start_date;
+        }
+        
+        public function getEnDate()
+        {
+            return $this->end_date;
+        }
+        
+        public function getIdRegion()
+        {
+            return $this->id_region;
+        }
+        
+        public function getDiffcLevel()
+        {
+            return $this->difficulty_level;
+        }
+
         public function getIdCategory()
         {
             return $this->id_category;
         }
 
-        public function All()
+        public static function All()
         {
-            $sql = "SELECT * FROM stage";
+            $sql = "SELECT * FROM stages";
 
             self::$db->query($sql);
             $result = self::$db->results();
@@ -104,6 +151,26 @@
             $stages = [];
             foreach ($result as $value) {
                 $stages[] = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+            }
+            return $stages;
+        }
+
+        public static function NextStages()
+        {
+            $sql = "SELECT s.*, r.id_region, r.name AS name_region FROM stages s JOIN regions r ON s.id_region = r.id_region ORDER BY s.start_date DESC";
+
+            self::$db->query($sql);
+            $result = self::$db->results();
+
+            $stages = [];
+
+            $i=0;
+            while ($i > 0 && $i < 4) { 
+                $value = $stages[$i];
+                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class->setNameCategory($value['name_region']);
+                
+                $i++;
             }
             return $stages;
         }

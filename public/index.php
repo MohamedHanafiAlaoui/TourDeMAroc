@@ -7,6 +7,7 @@
         }
     }
 
+    
     // Require all core files
     require_all_files(__DIR__ . '/../app/Core');
     $db = new Database();
