@@ -11,7 +11,7 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-xl">
         <div class="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
-            <form class="space-y-6" action="#" method="POST">
+            <form class="space-y-6" action="<?= url('signup') ?>" method="POST">
                 <div class="flex justify-center space-x-4 mb-8">
                     <label class="relative cursor-pointer">
                         <input type="radio" name="role" value="fan" class="peer sr-only">
@@ -56,7 +56,7 @@
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                    <input type="password" name="confirm-password" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
+                    <input type="password" name="confirm_password" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
                 </div>
                 
                 <!-- Notification Checkbox -->
