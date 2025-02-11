@@ -157,20 +157,18 @@
 
         public static function NextStages()
         {
-            $sql = "SELECT s.*, r.id_region, r.name AS name_region FROM stages s JOIN regions r ON s.id_region = r.id_region ORDER BY s.start_date DESC";
+            $sql = "SELECT s.*, r.id_region, r.name AS name_region FROM stages s JOIN regions r ON s.id_region = r.id_region ORDER BY s.start_date DESC LIMIT 3";
 
             self::$db->query($sql);
             $result = self::$db->results();
 
             $stages = [];
 
-            $i=0;
-            while ($i > 0 && $i < 4) { 
-                $value = $stages[$i];
+            foreach ($result as $key => $value) {
                 $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
                 $class->setNameCategory($value['name_region']);
                 
-                $i++;
+                $stages[] = $class; 
             }
             return $stages;
         }

@@ -20,6 +20,13 @@
         <h2 class="text-3xl font-bold text-gray-900 mb-4">Race Stages</h2>
         <p class="text-gray-600 max-w-2xl mx-auto">Explore each stage of the Tour de Maroc – from start to finish.</p>
         </div>
+        <?php 
+            $color = [
+                'facile' => "bg-emerald-100 text-emerald-700",
+                'medium' => "bg-yellow-100 text-yellow-700",
+                'difficile' => "bg-red-100 text-red-700",
+            ] 
+        ?>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Stage Card -->
         <?php if (!$nextStages) { ?>
@@ -33,7 +40,7 @@
                 <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?></h3>
                 <p class="text-gray-600"><?= htmlspecialchars($stage->getStDate()) ?> - <?= htmlspecialchars($stage->getEnDate()) ?></p>
                 <div class="flex items-center mt-2">
-                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm"><?= htmlspecialchars($stage->getNameRegion()) ?></span>
+                    <span class="px-3 py-1 <?= htmlspecialchars($color[$stage->getDiffcLevel()]) ?> rounded-full text-sm"><?= htmlspecialchars($stage->getDiffcLevel()) ?></span>
                 </div>
                 <a href="#" class="mt-4 inline-block text-emerald-500 hover:text-emerald-600">View Stage Details →</a>
                 </div>
