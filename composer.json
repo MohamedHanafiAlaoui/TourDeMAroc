@@ -1,0 +1,17 @@
+{
+    "name": "ycode/tour-de-maroc",
+    "autoload": {
+        "psr-4": {
+            "Ycode\\TourDeMaroc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "youssef elhoubi",
+            "email": "elhoubiyoussef@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
