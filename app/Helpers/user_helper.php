@@ -1,6 +1,6 @@
 <?php
 
-    function user(): Teacher | Student | User | null
+    function user(): Cyclist | Fan | Admin | null
     {
         static $cachedUser = null;
 

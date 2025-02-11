@@ -20,7 +20,6 @@ class SignupController extends BaseController
             'notify' => trim($_POST['notify'] ?? '')
         ];
 
-        print_r($data);
         $errors = [
             'role_err' => '',
             'first_name_err' => '',
