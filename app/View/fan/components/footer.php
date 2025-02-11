@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Contact</h3>
-                    <ul class="space-y-2 text-gray-<ul class="space-y-2 text-gray-400">
+                    <ul class="space-y-2 text-gray-400">
                         <li class="flex items-center">
                             <i class="fas fa-envelope mr-2 text-emerald-400"></i>
                             info@tourdemaroc.com
@@ -64,5 +64,38 @@
             </div>
         </div>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        let successMessage = <?= json_encode(flash("success")); ?>;
+        if (successMessage) {
+            Swal.fire("Success", successMessage, "success");
+        }
+
+        let errorMessage = <?= json_encode(flash("error")); ?>;
+        if (errorMessage) {
+            Swal.fire("Error", errorMessage, "error");
+        }
+
+        let warningMessage = <?= json_encode(flash("warning")); ?>;
+        if (warningMessage) {
+            Swal.fire("Warning", warningMessage, "warning");
+        }
+
+        let forms = document.querySelectorAll('form');
+        if (forms.length > 0) {
+            forms.forEach(form => {
+                if(form.method == "get") return;
+                let input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', 'csrf_token');
+                input.value = "<?= generateCsrfToken() ?>";
+                form.appendChild(input);
+            });
+        }
+    </script>
 </body>
 </html>
