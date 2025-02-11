@@ -21,20 +21,22 @@
     $router = new Router();
     $request = new Request();
     // examples of the routs 
-    $router->get('/', [HomeController::class, 'index'], ["visitor"]);
+    $router->get('/', [HomeController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/tour', [HomeController::class, 'details'], ["visitor"]);
-    $router->get('/cyclists', [CyclistsController::class, 'index'], ["visitor"]);
-    $router->get('/cyclists/{id}', [CyclistsController::class, 'show'], ["visitor"]);
+    $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor"]);
+    $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor"]);
     $router->get('/stages', [StagesController::class, 'index'], ["visitor"]);
     $router->get('/stages/{id}', [StagesController::class, 'show'], ["visitor"]);
     $router->get('/ranking', [RankingController::class, 'index'], ["visitor"]);
+    $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
+    $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     // $router->post('/courses/enroll/{id}', [CoursesController::class, 'enroll'], ["student"]);
     
     
-    $router->get('/cyclist/profile', [CyclistsController::class, 'profile'], ["visitor"]);
-
+    $router->get('/cyclist/profile', [CyclistController::class, 'profile'], ["visitor"]);
 
     $router->get('/login', [LoginController::class, 'index'], ["visitor"]);
+    $router->post('/login', [LoginController::class, 'login'], ["visitor"]);
     $router->get('/signup', [SignupController::class, 'index'], ["visitor"]);
     $router->post('/signup', [SignupController::class, 'signup'], ["visitor"]);
 

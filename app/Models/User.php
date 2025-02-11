@@ -125,7 +125,7 @@ class User extends BaseModel
 
     public function save(){}
 
-    public static function find($id): Fan | Cyclist | self | null
+    public static function find($id): Fan | Cyclist | Admin | null
     {
         $sql = "SELECT * FROM users WHERE id = :id";
         self::$db->query($sql);
@@ -136,12 +136,12 @@ class User extends BaseModel
         if (self::$db->rowCount() > 0) {
             switch ($result["role_id"]) {
                 case self::$adminRoleId:
-                    return new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
+                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
                 case self::$fanRoleId:
                     $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
                     return $fan;
                 case self::$cyclistRoleId:
-                    $cyclist =  new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
+                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
                     return $cyclist;
             }
         } else {
