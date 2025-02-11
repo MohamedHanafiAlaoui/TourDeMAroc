@@ -37,6 +37,7 @@
 
     $router->get('/login', [LoginController::class, 'index'], ["visitor"]);
     $router->get('/signup', [SignupController::class, 'index'], ["visitor"]);
+    $router->post('/signup', [SignupController::class, 'signup'], ["visitor"]);
 
 
     $router->dispatch($request);
