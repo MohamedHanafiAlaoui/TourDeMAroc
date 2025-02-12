@@ -21,8 +21,8 @@ CREATE TABLE teams (
 -- Table principale des utilisateurs
 CREATE TABLE users (
     id_user SERIAL PRIMARY KEY,
-    firstname VARCHAR(250) NOT NULL,
-    lastname VARCHAR(250) NOT NULL,
+    first_name VARCHAR(250) NOT NULL,
+    last_name VARCHAR(250) NOT NULL,
     email VARCHAR(250) UNIQUE NOT NULL,
     password TEXT NOT NULL,
     photo TEXT,

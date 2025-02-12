@@ -83,7 +83,7 @@ class Cyclist extends User {
 
     public static function TopCyclists($number)
     {
-        $sql = "SELECT c.id_user, c.firstname, c.lastname, c.photo, t.id_team, t.name AS teamname 
+        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.id_team, t.name AS teamname 
                 FROM cyclists c JOIN teams t ON c.id_team = t.id_team
                 ORDER BY total_points DESC LIMIT :number";
         self::$db->query($sql);
@@ -94,7 +94,7 @@ class Cyclist extends User {
         $cyclests = [];
 
         foreach ($result as $key => $value) {
-            $cyclist = new self($value['id_user'], $value['firstname'], $value['lastname'], $value['photo']);
+            $cyclist = new self($value['id'], $value['first_name'], $value['last_name'], $value['photo']);
             $cyclist->setIdTeme($value['id_team']);
             $cyclist->setNameTeme($value['teamname']);
 
