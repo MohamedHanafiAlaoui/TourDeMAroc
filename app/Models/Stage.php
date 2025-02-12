@@ -247,16 +247,16 @@
         public function createStage($name,$start_location,$end_location,$distance_km,$start_date,$end_date,$id_region,$difficulty_level,$id_category,$photo){
             $query = "INSERT INTO stages (name, start_location, end_location,distance_km,start_date , end_date,category_id,region_id, region_id,difficulty_level,photo) VALUES (:name ,:start_location,:end_location,:distance_km,:start_date,:end_date,:category_id,:region_id,:difficulty_level,:photo)";
             self::$db->query($query);
-            $this->db->bind(':name', $name);
-            $this->db->bind(':start_location', $start_location);
-            $this->db->bind(':end_location', $end_location);
-            $this->db->bind(':distance_km', $distance_km);
-            $this->db->bind(':start_date', $start_date);
-            $this->db->bind(':end_date', $end_date);
-            $this->db->bind(':category_id', $id_category);
-            $this->db->bind(':region_id', $id_region);
-            $this->db->bind(':difficulty_level', $difficulty_level);
-            $this->db->bind(':photo', $photo);
+            self::$db->bind(':name', $name);
+            self::$db->bind(':start_location', $start_location);
+            self::$db->bind(':end_location', $end_location);
+            self::$db->bind(':distance_km', $distance_km);
+            self::$db->bind(':start_date', $start_date);
+            self::$db->bind(':end_date', $end_date);
+            self::$db->bind(':category_id', $id_category);
+            self::$db->bind(':region_id', $id_region);
+            self::$db->bind(':difficulty_level', $difficulty_level);
+            self::$db->bind(':photo', $photo);
             $status = self::$db->execute();
             return $status;
         }
