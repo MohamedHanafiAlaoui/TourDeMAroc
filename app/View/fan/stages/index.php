@@ -69,40 +69,6 @@
       </div>
     </div>
 
-    <!-- Stage Card 2 -->
-    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-      <img
-        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
-        alt="Stage Map"
-        class="w-full h-48 object-cover"
-      />
-      <div class="p-6">
-        <h3 class="font-bold text-xl mb-2">Stage 2: Rabat → Fez</h3>
-        <p class="text-gray-600 mb-1"><strong>Distance:</strong> 200 km</p>
-        <p class="text-gray-600 mb-4"><strong>Type:</strong> Urban</p>
-        <a href="<?= url('stages/1') ?>"
-          class="inline-block bg-emerald-500 text-white py-2 px-4 rounded hover:bg-emerald-600 transition duration-300"
-        >View Details</a>
-      </div>
-    </div>
-
-    <!-- Stage Card 3 -->
-    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-      <img
-        src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
-        alt="Stage Map"
-        class="w-full h-48 object-cover"
-      />
-      <div class="p-6">
-        <h3 class="font-bold text-xl mb-2">Stage 3: Fez → Meknes</h3>
-        <p class="text-gray-600 mb-1"><strong>Distance:</strong> 65 km</p>
-        <p class="text-gray-600 mb-4"><strong>Type:</strong> Nature</p>
-        <a href="<?= url('stages/1') ?>"
-          class="inline-block bg-emerald-500 text-white py-2 px-4 rounded hover:bg-emerald-600 transition duration-300"
-        >View Details</a>
-      </div>
-    </div>
-
     <!-- Additional stage cards can be added here -->
   </div>
 
@@ -127,3 +93,25 @@
     </nav>
   </div>
 </main>
+
+<script>
+  // touver la valeur drs input de search et filrage
+  let searchInput = document.getElementById("search");
+  let filterType = document.getElementById("stage-type");
+  let filterDistance = document.getElementById("distance");
+
+  function fetchStage() {
+    const url = `fetch?search=${searchInput}&type=${filterType}&distance=${filterDistance}`
+
+    fetch(url)
+    .then(result => result.json())
+    .then((result) => {
+      
+    }).catch((err) => {
+      console.log(err);
+    });
+
+
+  }
+
+</script>

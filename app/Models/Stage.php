@@ -216,16 +216,16 @@
             }
             if ($distanceFilter) {
                 switch ($distanceFilter) {
-                    case 1:
+                    case "short":
                         $sql .= " AND s.distance_km < 100";
                         self::$db->bind(':distance_km', $categoryFilter);
                         break;
                     
-                    case 2:
+                    case "medium":
                         $sql .= " AND s.distance_km >= 100 AND s.distance_km <= 200 ";
                         break;
                 
-                    case 3:
+                    case "long":
                         $sql .= " AND s.distance_km >200 ";
                         break;
                 }
