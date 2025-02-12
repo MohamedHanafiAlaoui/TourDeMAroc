@@ -9,18 +9,8 @@
                 $path = "/" . $path;
             }
 
-            $authPages = ["/signup", "/login", "/forget-password", "/reset-password"];
             
-            if (in_array($path, $authPages)) {
-                $path = APPROOT . "View/auth" . $path . ".php";
-            }
-            else if (isLoggedIn() && user()->isAdmin()) {
-                $path = APPROOT . "View/admin" . $path . ".php";
-            }elseif (isLoggedIn() && user()->isCyclist()){
-                $path = APPROOT . "View/cyclist" . $path . ".php";
-            }else{
-                $path = APPROOT . "View/fan" . $path . ".php";
-            }
+            $path = APPROOT . "View" . $path . ".php";
 
             $role = "fan";
             if (isLoggedIn() && user()->isAdmin()) {

@@ -3,16 +3,16 @@ class CyclistController extends BaseController {
 
     public function index()
     {
-        $this->render("cyclists/index");
+        $this->render("fan/cyclists/index");
     }
 
     public function show($id)
     {
-        $this->render("cyclists/show");
+        $this->render("fan/cyclists/show");
     }
 
     public function profile()
     {
-        $this->render("profile/index");
+        $this->render("cyclist/profile/index");
     }
 }

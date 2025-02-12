@@ -9,7 +9,7 @@ class StagesController extends BaseController {
 
     public function show($id)
     {
-        $this->render("/stages/show");
+        $this->render("fan/stages/show");
     }
 
     // public function fetchStages()
