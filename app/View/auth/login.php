@@ -16,7 +16,7 @@
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                     <input type="password" name="password" id="password" class="block w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Create password">
-                    <a href="#" class="text-sm text-emerald-500 hover:underline mt-2 block">Forgot password?</a>
+                    <a href="<?= url("forget-password") ?>" class="text-sm text-emerald-500 hover:underline mt-2 block">Forgot password?</a>
                 </div>
                 <!-- Submit Button -->
                 <button type="submit" class="w-full py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">Create account</button>
