@@ -170,13 +170,3 @@ CREATE TABLE historys(
 
 -- Ajout des rôles
 INSERT INTO roles(name_user) VALUES ('admin'), ('cyclist'), ('fan');
-
--- Ajout des utilisateurs de base
-INSERT INTO users (firstname, lastname, email, password, role_id) VALUES 
-('Admin', 'User', 'admin@example.com', 'adminpass', 1),
-('Fan', 'User', 'fan@example.com', 'fanpass', 2),
-('Cyclist', 'User', 'cyclist@example.com', 'cyclistpass', 3);
-
--- Ajout d'un cycliste
-INSERT INTO cyclists (firstname, lastname, email, password, role_id, nationality, total_points) VALUES 
-('Cyclist A', 'Champ', 'cyclistA@example.com', 'cyclistpass', 3, 'France', 100);
