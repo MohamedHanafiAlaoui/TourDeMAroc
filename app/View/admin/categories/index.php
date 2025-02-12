@@ -3,7 +3,7 @@
     <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Add New Category</h3>
         
-        <form action="<?= URLROOT . 'categories/store' ?>" method="POST" class="flex flex-col gap-4">
+        <form action="<?= url('categories/create') ?>" method="POST" class="flex flex-col gap-4">
             <!-- Category Name Input -->
             <div class="flex-1">
                 <label for="category_name" class="block mb-2 text-sm font-medium text-gray-700">
@@ -59,7 +59,7 @@
 
         <!-- Categories Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <?php foreach ($categories as $category): ?>
+            <?php foreach ($data["categories"] as $category): ?>
             <div class="group shadow-md relative bg-gray-50 rounded-lg p-4 hover:bg-emerald-50 transition-colors">
                 <!-- Category Name -->
                 <h4 class="text-gray-700 font-medium"><?= $category->getName() ?></h4>

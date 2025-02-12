@@ -20,19 +20,19 @@
             $this->name = $name;
         }
 
-        public function getIdCategory()
+        public function getId()
         {
             return $this->id_category;
         }
-        public function getNameCategory()
+        public function getName()
         {
             return $this->name;
         }
         public function save()
     {
-        $query = "INSERT INTO categories (name) VALUES (':name') RETURNING id";
+        $query = "INSERT INTO categories (name) VALUES (:name) RETURNING id";
         self::$db->query($query);
-        self::$db->bind(":name",$this->name);
+        self::$db->bind(":name", $this->name);
         $result = self::$db->single();
         $this->id_category = $result["id"];
         $this->name= $result["name"];

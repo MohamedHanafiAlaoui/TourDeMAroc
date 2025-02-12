@@ -34,6 +34,7 @@
 
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
     $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);
+    $router->post('/categories/create', [CategoryController::class, 'store'], ["admin"]);
     $router->get('/regions', [RegionController::class, 'index'], ["admin"]);
 
     $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor"]);
