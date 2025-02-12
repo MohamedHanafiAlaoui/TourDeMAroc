@@ -53,7 +53,7 @@
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-lg font-semibold text-gray-800">Stage Categories</h3>
             <span class="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-sm">
-                <?= count($categories) ?> Categories
+                <?= $data["countCatigories"] ?> Categories
             </span>
         </div>
 

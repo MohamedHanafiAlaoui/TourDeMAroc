@@ -72,4 +72,10 @@
             }
             return $categorys;
         }
+        public static function countCatigoreis(){
+            $sql = "SELECT COUNT(*) as totale FROM categories ";
+            self::$db->query($sql);
+            $result = self::$db->single();
+            return $result['totale'];
+        }
     }

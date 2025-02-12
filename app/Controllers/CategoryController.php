@@ -5,7 +5,8 @@ class CategoryController extends BaseController
     public function index()
     {
         $categories = Category::all();
-        $data= ["categories"=>$categories];
+        $countCatigories = Category::countCatigoreis();
+        $data= ["categories"=>$categories,"countCatigories"=>$countCatigories];
         $this->render("admin/categories/index",$data);
     }
     public function store()
