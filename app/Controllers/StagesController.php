@@ -1,16 +1,11 @@
 <?php
-class StageController extends BaseController {
+class StagesController extends BaseController {
 
     public function index()
     {
         $NumberPagination = Stage::Pagination(3);
         $categorys = Category::All();
-
-        if (isLoggedIn() && user()->isAdmin()) {
-            $this->render("admin/stages/index", ["categories" => $categorys]);
-        }else{
-            $this->render("fan/stages/index", compact("categorys", "NumberPagination"));
-        }
+        $this->render("fan/stages/index", compact("categorys", "NumberPagination"));
     }
 
     public function show($id)

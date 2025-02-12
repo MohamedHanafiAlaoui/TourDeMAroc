@@ -182,7 +182,7 @@
       }
 
 
-      // Search functionality with debounce
+      // Search functionality with 
       let debounceTimeout;
       searchInput.addEventListener("input", (e) => {
         clearTimeout(debounceTimeout);
