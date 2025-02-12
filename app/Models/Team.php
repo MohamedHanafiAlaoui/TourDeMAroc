@@ -34,12 +34,12 @@
         
         public function getName()
         {
-            return $this->id;
+            return $this->name;
         }
         
         public function getCountry()
         {
-            return $this->id;
+            return $this->country;
         }
 
         public static function fetchTeam($search = null)

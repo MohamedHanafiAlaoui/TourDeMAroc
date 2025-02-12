@@ -137,13 +137,21 @@
       //   stagesContainer.appendChild(stageElement);
       // });
 
+      // initial le bare de recherche
+      let searchInput = document.getElementById("team-search");
+      fetchTeam();
+
       //fonction qui permer de fetcher data des teams
-      function fetch(name) {
-        const url = `/fetch?searche=${name}`;
+      function fetchTeam() {
+        console.log(searchInput.value);
+        
+        const url = `fetch?search=${searchInput.value}`;
         
         fetch(url)
-        .then(result => result.JSON)
+        .then(result => result.json())
         .then((data) => {
+          console.log(data);
+          
           renderTeams(data);
         }).catch((err) => {
           console.log(err);
@@ -167,7 +175,7 @@
             <div class="flex items-center justify-between mb-4">
               <span class="text-3xl">${getFirstTwoChars(team.name_Team)}</span>
               <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
-                ${team.riders} riders
+                riders
               </span>
             </div>
             <h3 class="text-xl font-bold text-gray-800">${team.name_Team}</h3>
@@ -179,19 +187,10 @@
 
 
       // Search functionality with debounce
-      const searchInput = document.getElementById("team-search");
       let debounceTimeout;
       searchInput.addEventListener("input", (e) => {
         clearTimeout(debounceTimeout);
-        debounceTimeout = setTimeout(() => {
-          const searchTerm = e.target.value.toLowerCase();
-          const filteredTeams = teams.filter(
-            (team) =>
-              team.name.toLowerCase().includes(searchTerm) ||
-              team.country.toLowerCase().includes(searchTerm)
-          );
-          renderTeams(filteredTeams);
-        }, 300);
+        debounceTimeout = setTimeout(fetchTeam(), 300);
       });
 
       // Responsive navigation menu for mobile devices

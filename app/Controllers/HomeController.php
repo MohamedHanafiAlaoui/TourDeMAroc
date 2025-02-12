@@ -16,12 +16,13 @@ class HomeController extends BaseController {
 
     public function fetchTeam()
     {
-        $teams = Team::fetchTeam();
+        $search = $_GET['search'] ?? null;
+        $teams = Team::fetchTeam($search);
         $FormerTeams = array_map(function($team) {
             return [
                 'id_team' => $team->getId(),
-                'name_Team' => $team->getId(),
-                'country' => $team->getId(),
+                'name_Team' => $team->getName(),
+                'country' => $team->getCountry(),
             ];
         }, $teams);
 
