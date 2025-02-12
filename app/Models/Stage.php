@@ -15,8 +15,8 @@
         
         private $nameCategory;
         private $nameRegion;
-
-        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null)
+        private $photo;
+        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null,$photo=null)
         {
             $this->id_stage = $id_stage;
             $this->name = $name;
@@ -28,6 +28,7 @@
             $this->id_region = $id_region;
             $this->difficulty_level = $difficulty_level;
             $this->id_category = $id_category;
+            $this->photo = $photo;
         }
 
         public function setId($id_stage)
@@ -160,14 +161,14 @@
 
             $stages = [];
             foreach ($result as $value) {
-                $stages[] = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $stages[] = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
             }
             return $stages;
         }
 
         public static function NextStages()
         {
-            $sql = "SELECT s.*, r.id_region, r.name AS name_region FROM stages s JOIN regions r ON s.id_region = r.id_region ORDER BY s.start_date DESC LIMIT 3";
+            $sql = "SELECT s.*, r.id, r.name AS name_region FROM stages s JOIN regions r ON s.region_id = r.id ORDER BY s.start_date DESC LIMIT 3";
 
             self::$db->query($sql);
             $result = self::$db->results();
@@ -175,7 +176,7 @@
             $stages = [];
 
             foreach ($result as $key => $value) {
-                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value['name_region']);
 
                 $stages[] = $class; 
@@ -185,14 +186,14 @@
 
         public static function show()
         {
-            $sql = "SELECT s.*, c.name AS categoryname FROM stages s JOIN categories c ON s.id_category = c.id_category ORDER BY s.start_date DESC";
+            $sql = "SELECT s.*, c.name AS categoryname FROM stages s JOIN categories c ON s.category_id = c.id ORDER BY s.start_date DESC";
 
             self::$db->query($sql);
             $result = self::$db->results();
 
             $stages = [];
             foreach ($result as $value) {
-                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value['categoryname']);
                 
                 $stages[] = $class;
@@ -202,8 +203,8 @@
 
         public static function fetchStage($search = null, $categoryFilter = null, $distanceFilter = null)
         {
-            $sql = "SELECT s.*, c.id_category, c.name AS category_name FROM stages s 
-                    JOIN categories c ON c.id_category = s.id_category WHERE 1 = 1"; 
+            $sql = "SELECT s.*, c.id AS category_id, c.name AS category_name FROM stages s 
+                    JOIN categories c ON c.id= s.id WHERE 1 = 1"; 
             self::$db->query($sql);        
 
             if ($search) {
@@ -211,8 +212,8 @@
                 self::$db->bind(':name', $search);
             }
             if ($categoryFilter) {
-                $sql .= " AND s.category_name = :id_category";
-                self::$db->bind(':id_category', $categoryFilter);
+                $sql .= " AND s.category_name = :id";
+                self::$db->bind(':id', $categoryFilter);
             }
             if ($distanceFilter) {
                 switch ($distanceFilter) {
@@ -236,12 +237,28 @@
             $stages = [];
 
             foreach ($result as $key => $value) {
-                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value['nameCategory']);
 
                 $stages[] = $class; 
             }
             return $stages;
+        }
+        public function createStage($name,$start_location,$end_location,$distance_km,$start_date,$end_date,$id_region,$difficulty_level,$id_category,$photo){
+            $query = "INSERT INTO stages (name, start_location, end_location,distance_km,start_date , end_date,category_id,region_id, region_id,difficulty_level,photo) VALUES (:name ,:start_location,:end_location,:distance_km,:start_date,:end_date,:category_id,:region_id,:difficulty_level,:photo)";
+            self::$db->query($query);
+            $this->db->bind(':name', $name);
+            $this->db->bind(':start_location', $start_location);
+            $this->db->bind(':end_location', $end_location);
+            $this->db->bind(':distance_km', $distance_km);
+            $this->db->bind(':start_date', $start_date);
+            $this->db->bind(':end_date', $end_date);
+            $this->db->bind(':category_id', $id_category);
+            $this->db->bind(':region_id', $id_region);
+            $this->db->bind(':difficulty_level', $difficulty_level);
+            $this->db->bind(':photo', $photo);
+            $status = self::$db->execute();
+            return $status;
         }
 
     }

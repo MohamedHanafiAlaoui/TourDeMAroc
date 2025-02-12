@@ -5,13 +5,13 @@ class HomeController extends BaseController {
     {
         $nextStages = Stage::NextStages();
         $TopCyclists = Cyclist::TopCyclists(4);
-        $this->render("/", compact("nextStages", "TopCyclists"));
+        $this->render("fan/index", compact("nextStages", "TopCyclists"));
     }
 
     public function details()
     {
         $Stages = Stage::show();
-        $this->render("/tour/index", compact("Stages"));
+        $this->render("fan/tour/index", compact("Stages"));
     }
 
     

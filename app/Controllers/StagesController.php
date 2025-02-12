@@ -4,7 +4,7 @@ class StagesController extends BaseController {
     public function index()
     {
         $categorys = Category::All();
-        $this->render("/stages/index", compact("categorys"));
+        $this->render("fan/stages/index", compact("categorys"));
     }
 
     public function show($id)
