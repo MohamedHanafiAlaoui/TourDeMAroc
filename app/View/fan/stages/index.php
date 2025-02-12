@@ -78,6 +78,8 @@
   let filterType = document.getElementById("stage-type");
   let filterDistance = document.getElementById("distance");
 
+  let NbPage = 0;
+
 
   // Search functionality with 
   let debounceTimeout;
@@ -95,8 +97,8 @@
   });
 
   function fetchStage() {
-    const url = `api/Stages?search=${searchInput.value}&type=${filterType.value}&distance=${filterDistance.value}`
-
+    const url = `api/Stages?search=${searchInput.value}&type=${filterType.value}&distance=${filterDistance.value}&NumberPage=${NbPage}`
+    
     fetch(url)
     .then(result => result.json())
     .then((data) => {
@@ -108,8 +110,6 @@
 
   function toString(stages)
   {
-    console.log(stages);
-    
     stagesGrid.innerHTML = ``;
     if (!stages) {
       const stageCard = document.createElement("div");
@@ -140,44 +140,80 @@
         
         stagesGrid.appendChild(stageCard);
       });
-      PaginationBar(stages[0]['page_stage']);
-      
+      // PaginationBar(stages[0]['page_stage']);
+      // Next_page
+      Next_page.addEventListener('click' , () => {
+        if (NbPage < stages[0]['page_stage']-1) {
+          
+          NbPage+= 1;
+          fetchStage();
+        }    
+      });
     }
   }
 
-  //les element de pagination 
-  let paginationGrid = document.getElementById('paginationGrid');
-  let Previous_page = document.getElementById('Previous_page');
-  let Next_page = document.getElementById('Next_page');
+  // //les element de pagination 
+  // let paginationGrid = document.getElementById('paginationGrid');
+  // let Previous_page = document.getElementById('Previous_page');
+  // let Next_page = document.getElementById('Next_page');
 
-  function PaginationBar(NbPage) {
-    paginationGrid.innerHTML = '';
-    paginationGrid.appendChild(Previous_page);
-    for (let index = 0; index < NbPage; index++) {
+  // function PaginationBar(NbPage) {
+  //   paginationGrid.innerHTML = '';
+  //   paginationGrid.appendChild(Previous_page);
+  //   for (let index = 0; index < NbPage; index++) {
 
-      const radioButton = document.createElement('input');
-      radioButton.type = 'radio';
-      radioButton.id = `page${index}`;
-      radioButton.name = 'pagination';
-      radioButton.value = index;
-      radioButton.classList.add('hidden');
+  //     const radioButton = document.createElement('input');
+  //     radioButton.type = 'radio';
+  //     radioButton.id = `page${index}`;
+  //     radioButton.name = 'pagination';
+  //     radioButton.value = index;
+  //     radioButton.classList.add('hidden');
       
-      const label = document.createElement('label');
-      label.setAttribute('for', `page${index}`);
-      label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
-      label.textContent = index + 1;
+  //     const label = document.createElement('label');
+  //     label.setAttribute('for', `page${index}`);
+  //     label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
+  //     label.textContent = index + 1;
 
-      if (index == 0) {
-        label.classList.add('text-emerald-500');
-      } else {
-        label.classList.add('text-gray-700');
-      }
+  //     if (index == 0) {
+  //       label.classList.add('text-emerald-500');
+  //     } else {
+  //       label.classList.add('text-gray-700');
+  //     }
 
-      paginationGrid.appendChild(radioButton);
-      paginationGrid.appendChild(label);
-    }
-    paginationGrid.appendChild(Next_page);
+  //     paginationGrid.appendChild(radioButton);
+  //     paginationGrid.appendChild(label);
+  //   }
+  //   paginationGrid.appendChild(Next_page);
+  // }
+
+  // Previous_page
+  Previous_page.addEventListener('click' , () => {
+    if (NbPage > 0) {
+      NbPage--;
+      fetchStage();
+    }    
+  });
+
+  
+
+  // inistialiser le style des input de pagination
+  function styleInit(){
+      document.querySelector('#paginationGrid .text-emerald-500').classList.replace('text-emerald-500', 'text-gray-700');
   }
-
+  
+  // continaire de pagination 
+  radioButtons = document.querySelectorAll('#paginationGrid label');
+  
+  radioButtons.forEach(element => {
+      element.addEventListener('click', () => {
+          styleInit();
+          const input = document.querySelector(`#${element.getAttribute('for')}`);
+          element.classList.replace('text-gray-700', 'text-emerald-500');
+          NbPage = input.value;
+          fetchStage();
+      })
+  });
+  
+  
   document.addEventListener('DOMContentLoaded', fetchStage)
 </script>

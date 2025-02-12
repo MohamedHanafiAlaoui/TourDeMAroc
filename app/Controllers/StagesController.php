@@ -18,7 +18,7 @@ class StagesController extends BaseController {
         $search = $_GET['search'] ?? null;
         $type = $_GET['type'] ?? null;
         $distance = $_GET['distance'] ?? null;
-        $NbPage = $_GET['NbPage'] ?? 0;
+        $NbPage = $_GET['NumberPage'] ?? 0;
 
         $stages = Stage::fetchStage($search, $type, $distance);
         
