@@ -38,7 +38,7 @@
 
             $categorys = [];
             foreach ($result as $value) {
-                $categorys[] = new self($value['id_category'], $value['name']);
+                $categorys[] = new self($value['id'], $value['name']);
             }
             return $categorys;
         }
