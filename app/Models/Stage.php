@@ -244,4 +244,13 @@
             return $stages;
         }
 
+        public static function Pagination($NbPage) 
+        {
+            $sql = "SELECT COUNT(*) FROM stages";
+            self::$db->query($sql);
+
+            $result = self::$db->result();
+            return ceil($result['COUNT(*)'] / $NbPage);
+        }
+
     }
