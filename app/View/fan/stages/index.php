@@ -103,15 +103,17 @@
     .then(result => result.json())
     .then((data) => {
       toString(data);
+      PaginationBar(PageTotal);
     }).catch((err) => {
       console.log(err);
     });
   }
-
+  let buton = null;
+  
   function toString(stages)
   {
     stagesGrid.innerHTML = ``;
-    if (!stages) {
+    if (stages == []) {
       const stageCard = document.createElement("div");
       stageCard.className = "h-72 flex justify-center";
       stageCard.innerHTML = `<span class="text-red-500">No Stage exist</span>`;
@@ -140,56 +142,77 @@
         
         stagesGrid.appendChild(stageCard);
       });
-      // PaginationBar(stages[0]['page_stage']);
-      // Next_page
-      Next_page.addEventListener('click' , () => {
-        if (NbPage < stages[0]['page_stage']-1) {
-          
-          NbPage+= 1;
-          fetchStage();
-        }    
-      });
     }
+    
+    PageTotal = stages == null ? stages[0]['page_stage'] : 0;
+  }
+  
+  //les element de pagination 
+  let paginationGrid = document.getElementById('paginationGrid');
+  let Previous_page = document.getElementById('Previous_page');
+  let Next_page = document.getElementById('Next_page');
+
+  // continaire de pagination 
+  let radioButtons = document.querySelectorAll('#paginationGrid label');
+  
+  radioButtons.forEach(element => {
+      element.addEventListener('click', () => {
+        const input = document.querySelector(`#${element.getAttribute('for')}`);
+        styleInit(element);
+        NbPage = input.value;
+        fetchStage();
+      })
+  });
+  
+  let PageTotal = radioButtons.length;  
+
+  function PaginationBar(NbPage) {
+    paginationGrid.innerHTML = '';
+    paginationGrid.appendChild(Previous_page);
+    for (let index = 0; index < NbPage; index++) {
+
+      const radioButton = document.createElement('input');
+      radioButton.type = 'radio';
+      radioButton.id = `page${index}`;
+      radioButton.name = 'pagination';
+      radioButton.value = index;
+      radioButton.classList.add('hidden');
+      
+      const label = document.createElement('label');
+      label.setAttribute('for', `page${index}`);
+      label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
+      label.textContent = index + 1;
+
+      if (index == 0) {
+        label.classList.add('text-emerald-500');
+      } else {
+        label.classList.add('text-gray-700');
+      }
+
+      paginationGrid.appendChild(radioButton);
+      paginationGrid.appendChild(label);
+    }
+    paginationGrid.appendChild(Next_page);
+    
   }
 
-  // //les element de pagination 
-  // let paginationGrid = document.getElementById('paginationGrid');
-  // let Previous_page = document.getElementById('Previous_page');
-  // let Next_page = document.getElementById('Next_page');
-
-  // function PaginationBar(NbPage) {
-  //   paginationGrid.innerHTML = '';
-  //   paginationGrid.appendChild(Previous_page);
-  //   for (let index = 0; index < NbPage; index++) {
-
-  //     const radioButton = document.createElement('input');
-  //     radioButton.type = 'radio';
-  //     radioButton.id = `page${index}`;
-  //     radioButton.name = 'pagination';
-  //     radioButton.value = index;
-  //     radioButton.classList.add('hidden');
+  // Next_page
+  Next_page.addEventListener('click' , () => {
+    if (NbPage < PageTotal-1) {
       
-  //     const label = document.createElement('label');
-  //     label.setAttribute('for', `page${index}`);
-  //     label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
-  //     label.textContent = index + 1;
-
-  //     if (index == 0) {
-  //       label.classList.add('text-emerald-500');
-  //     } else {
-  //       label.classList.add('text-gray-700');
-  //     }
-
-  //     paginationGrid.appendChild(radioButton);
-  //     paginationGrid.appendChild(label);
-  //   }
-  //   paginationGrid.appendChild(Next_page);
-  // }
+      NbPage++;
+      buton = document.querySelector(`label[for="page${NbPage}"]`);
+      styleInit(buton);
+      fetchStage();
+    }    
+  });
 
   // Previous_page
   Previous_page.addEventListener('click' , () => {
     if (NbPage > 0) {
       NbPage--;
+      buton = document.querySelector(`label[for="page${NbPage}"]`);
+      styleInit(buton);
       fetchStage();
     }    
   });
@@ -197,22 +220,10 @@
   
 
   // inistialiser le style des input de pagination
-  function styleInit(){
+  function styleInit(btn){
       document.querySelector('#paginationGrid .text-emerald-500').classList.replace('text-emerald-500', 'text-gray-700');
+      btn.classList.replace('text-gray-700', 'text-emerald-500');
   }
-  
-  // continaire de pagination 
-  radioButtons = document.querySelectorAll('#paginationGrid label');
-  
-  radioButtons.forEach(element => {
-      element.addEventListener('click', () => {
-          styleInit();
-          const input = document.querySelector(`#${element.getAttribute('for')}`);
-          element.classList.replace('text-gray-700', 'text-emerald-500');
-          NbPage = input.value;
-          fetchStage();
-      })
-  });
   
   
   document.addEventListener('DOMContentLoaded', fetchStage)
