@@ -192,7 +192,7 @@
 
             $stages = [];
             foreach ($result as $value) {
-                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['category_id']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value['categoryname']);
                 
                 $stages[] = $class;
@@ -203,22 +203,22 @@
         public static function fetchStage($search = null, $categoryFilter = null, $distanceFilter = null)
         {
             $sql = "SELECT s.*, c.id AS category_id, c.name AS category_name FROM stages s 
-                    JOIN categories c ON c.id= s.id WHERE 1 = 1"; 
+                    JOIN categories c ON c.id= s.category_id WHERE 1 = 1"; 
             self::$db->query($sql);        
+            $params = array();
 
             if ($search) {
-                $sql .= " AND s.name LIKE :name";
-                self::$db->bind(':name', $search);
+                $sql .= " AND s.name ILIKE :name";
+                $params[':name'] = "%" . $search . "%";
             }
             if ($categoryFilter) {
-                $sql .= " AND s.category_name = :id";
-                self::$db->bind(':id', $categoryFilter);
+                $sql .= " AND s.category_id = :category_id";
+                $params[':category_id'] = $categoryFilter;
             }
             if ($distanceFilter) {
                 switch ($distanceFilter) {
                     case "short":
                         $sql .= " AND s.distance_km < 100";
-                        self::$db->bind(':distance_km', $categoryFilter);
                         break;
                     
                     case "medium":
@@ -232,12 +232,18 @@
             }
 
             $sql .= " ORDER BY s.start_date DESC";
+
+            self::$db->query($sql);
+            foreach ($params as $key => $value) {
+                self::$db->bind($key, $value);
+            }
             $result = self::$db->results();
+            
             $stages = [];
 
             foreach ($result as $key => $value) {
                 $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
-                $class->setNameCategory($value['nameCategory']);
+                $class->setNameCategory($value['category_name']);
 
                 $stages[] = $class; 
             }

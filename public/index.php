@@ -33,7 +33,8 @@
 
 
 
-    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor"]);
+    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor", "fan", "cyclist"]);
+    $router->get('/api/Stages', [StagesController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);
 
     
     
