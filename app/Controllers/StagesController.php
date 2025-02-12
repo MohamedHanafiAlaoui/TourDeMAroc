@@ -3,11 +3,11 @@ class StagesController extends BaseController {
 
     public function index()
     {
-        $this->render("/stages/index");
+        $this->render("fan/stages/index");
     }
 
     public function show($id)
     {
-        $this->render("/stages/show");
+        $this->render("fan/stages/show");
     }
 }
