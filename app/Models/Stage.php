@@ -243,5 +243,8 @@
             }
             return $stages;
         }
+        public function createStage($name,$start_location,$end_location,$distance_km,$start_date,$end_date,$id_region,$difficulty_level,$id_category){
+
+        }
 
     }
