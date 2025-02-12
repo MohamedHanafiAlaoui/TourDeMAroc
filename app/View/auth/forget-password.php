@@ -18,7 +18,7 @@
                 <button type="submit" class="w-full py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">Send Reset Link</button>
 
                 <!-- Back to Login -->
-                <p class="text-center text-sm text-gray-600">Remember your password? <a href="login.html" class="text-emerald-500 hover:underline">Back to Login</a></p>
+                <p class="text-center text-sm text-gray-600">Remember your password? <a href="<?= url("login") ?>" class="text-emerald-500 hover:underline">Back to Login</a></p>
             </form>
         </div>
     </div>
