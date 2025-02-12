@@ -48,9 +48,9 @@
             self::$db->query($sql);
             
             if ($search) {
-                $sql .= " WHERE name = :name";
+                $sql .= " WHERE name ILIKE :name";
                 self::$db->query($sql);
-                self::$db->bind(":name", $search);
+                self::$db->bind(":name", "%$search%");
             }
 
             $result = self::$db->results();

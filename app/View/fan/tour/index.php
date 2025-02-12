@@ -143,15 +143,11 @@
 
       //fonction qui permer de fetcher data des teams
       function fetchTeam() {
-        console.log(searchInput.value);
-        
-        const url = `fetch?search=${searchInput.value}`;
+        const url = `api/Teams?search=${searchInput.value}`;
         
         fetch(url)
         .then(result => result.json())
         .then((data) => {
-          console.log(data);
-          
           renderTeams(data);
         }).catch((err) => {
           console.log(err);
@@ -190,7 +186,7 @@
       let debounceTimeout;
       searchInput.addEventListener("input", (e) => {
         clearTimeout(debounceTimeout);
-        debounceTimeout = setTimeout(fetchTeam(), 300);
+        debounceTimeout = setTimeout(fetchTeam, 150);
       });
 
       // Responsive navigation menu for mobile devices

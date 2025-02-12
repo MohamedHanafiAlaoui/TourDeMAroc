@@ -231,6 +231,7 @@
                 }
             }
 
+            $sql .= " ORDER BY s.start_date DESC";
             $result = self::$db->result();
             $stages = [];
 

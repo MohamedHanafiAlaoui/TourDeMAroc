@@ -24,7 +24,7 @@
     // examples of the routs 
     $router->get('/', [HomeController::class, 'index'], ["visitor"]);
     $router->get('/tour', [HomeController::class, 'details'], ["visitor"]);
-    $router->get('/fetch', [HomeController::class, 'fetchTeam'], ["visitor"]);
+    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor"]);
     $router->get('/cyclists', [CyclistsController::class, 'index'], ["visitor"]);
     $router->get('/cyclists/{id}', [CyclistsController::class, 'show'], ["visitor"]);
     $router->get('/stages', [StagesController::class, 'index'], ["visitor"]);
