@@ -45,8 +45,6 @@ class AuthController extends BaseController
             }
 
             $_SESSION['user_id'] = $user->getId();
-            echo $user->getId();
-            die($user->getId());
             redirect("");
         }
         else{
