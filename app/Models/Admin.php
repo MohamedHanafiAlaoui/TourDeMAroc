@@ -1,6 +1,7 @@
 <?php
 class Admin extends User {
-    public function __construct() {
+    public function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null) {
+        parent::__construct($id, $first_name, $last_name, $email, $password , $role_id, $created_at);
     }
     public function __get($name){
         return $this->$name;

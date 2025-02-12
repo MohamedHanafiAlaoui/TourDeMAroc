@@ -160,14 +160,14 @@
 
             $stages = [];
             foreach ($result as $value) {
-                $stages[] = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $stages[] = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
             }
             return $stages;
         }
 
         public static function NextStages()
         {
-            $sql = "SELECT s.*, r.id, r.name AS name_region FROM stages s JOIN regions r ON s.id = r.id ORDER BY s.start_date DESC LIMIT 3";
+            $sql = "SELECT s.*, r.id, r.name AS name_region FROM stages s JOIN regions r ON s.region_id = r.id ORDER BY s.start_date DESC LIMIT 3";
 
             self::$db->query($sql);
             $result = self::$db->results();
@@ -175,7 +175,7 @@
             $stages = [];
 
             foreach ($result as $key => $value) {
-                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value['name_region']);
 
                 $stages[] = $class; 
@@ -185,14 +185,14 @@
 
         public static function show()
         {
-            $sql = "SELECT s.*, c.name AS categoryname FROM stages s JOIN categories c ON s.id = c.id ORDER BY s.start_date DESC";
+            $sql = "SELECT s.*, c.name AS categoryname FROM stages s JOIN categories c ON s.category_id = c.id ORDER BY s.start_date DESC";
 
             self::$db->query($sql);
             $result = self::$db->results();
 
             $stages = [];
             foreach ($result as $value) {
-                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value['categoryname']);
                 
                 $stages[] = $class;
@@ -202,7 +202,7 @@
 
         public static function fetchStage($search = null, $categoryFilter = null, $distanceFilter = null)
         {
-            $sql = "SELECT s.*, c.id, c.name AS category_name FROM stages s 
+            $sql = "SELECT s.*, c.id AS category_id, c.name AS category_name FROM stages s 
                     JOIN categories c ON c.id= s.id WHERE 1 = 1"; 
             self::$db->query($sql);        
 
@@ -236,7 +236,7 @@
             $stages = [];
 
             foreach ($result as $key => $value) {
-                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value['nameCategory']);
 
                 $stages[] = $class; 

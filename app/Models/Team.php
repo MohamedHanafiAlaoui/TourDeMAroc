@@ -57,7 +57,7 @@
 
             $teams = [];
             foreach ($result as $value) {
-                $teams[] = new self($value['id_team'], $value['name'], $value['country']);
+                $teams[] = new self($value['id'], $value['name'], $value['country']);
             }
             return $teams;
         }
