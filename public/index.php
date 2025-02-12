@@ -25,13 +25,19 @@
     $router->get('/tour', [HomeController::class, 'details'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor", "fan", "cyclist"]);
-    $router->get('/stages', [StagesController::class, 'index'], ["visitor", "fan", "cyclist"]);
-    $router->get('/stages/{id}', [StagesController::class, 'show'], ["visitor", "fan", "cyclist"]);
+    $router->get('/stages', [StageController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
 
 
+    $router->get('/', [DashboardController::class, 'index'], ["admin"]);
+    $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);
+    $router->get('/regions', [RegionController::class, 'index'], ["admin"]);
+    $router->get('/stages', [StageController::class, 'index'], ["admin"]);
+    $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
+    $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
 
     $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor", "fan", "cyclist"]);
     $router->get('/api/Stages', [StagesController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);

@@ -15,8 +15,8 @@
         
         private $nameCategory;
         private $nameRegion;
-
-        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null)
+        private $photo;
+        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null,$photo=null)
         {
             $this->id_stage = $id_stage;
             $this->name = $name;
@@ -28,6 +28,7 @@
             $this->id_region = $id_region;
             $this->difficulty_level = $difficulty_level;
             $this->id_category = $id_category;
+            $this->photo = $photo;
         }
 
         public function setId($id_stage)
@@ -249,8 +250,21 @@
             }
             return $stages;
         }
-        public function createStage($name,$start_location,$end_location,$distance_km,$start_date,$end_date,$id_region,$difficulty_level,$id_category){
-
+        public function createStage($name,$start_location,$end_location,$distance_km,$start_date,$end_date,$id_region,$difficulty_level,$id_category,$photo){
+            $query = "INSERT INTO stages (name, start_location, end_location,distance_km,start_date , end_date,category_id,region_id, region_id,difficulty_level,photo) VALUES (:name ,:start_location,:end_location,:distance_km,:start_date,:end_date,:category_id,:region_id,:difficulty_level,:photo)";
+            self::$db->query($query);
+            $this->db->bind(':name', $name);
+            $this->db->bind(':start_location', $start_location);
+            $this->db->bind(':end_location', $end_location);
+            $this->db->bind(':distance_km', $distance_km);
+            $this->db->bind(':start_date', $start_date);
+            $this->db->bind(':end_date', $end_date);
+            $this->db->bind(':category_id', $id_category);
+            $this->db->bind(':region_id', $id_region);
+            $this->db->bind(':difficulty_level', $difficulty_level);
+            $this->db->bind(':photo', $photo);
+            $status = self::$db->execute();
+            return $status;
         }
 
         public static function Pagination($NbPage) 

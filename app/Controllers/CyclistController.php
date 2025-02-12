@@ -15,4 +15,9 @@ class CyclistController extends BaseController {
     {
         $this->render("cyclist/profile/index");
     }
+
+    public function unverifiedCyclists()
+    {
+        $this->render("admin/unverified-cyclists/index");
+    }
 }
