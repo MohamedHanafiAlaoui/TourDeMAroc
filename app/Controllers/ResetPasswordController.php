@@ -3,11 +3,11 @@ class ResetPasswordController extends BaseController {
 
     public function index()
     {
-        $this->render("forget-password");
+        $this->render("auth/forget-password");
     }
 
     public function reset()
     {
-        $this->render("reset-password");
+        $this->render("auth/reset-password");
     }
 }

@@ -3,11 +3,18 @@ class HomeController extends BaseController {
 
     public function index()
     {
-        $this->render("/");
+        $nextStages = Stage::NextStages();
+        $TopCyclists = Cyclist::TopCyclists(4);
+        $this->render("/", compact("nextStages", "TopCyclists"));
     }
 
     public function details()
     {
-        $this->render("/tour/index");
+        $Stages = Stage::show();
+        $this->render("/tour/index", compact("Stages"));
     }
+
+    
+
+    
 }

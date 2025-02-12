@@ -30,6 +30,12 @@
     $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
+
+
+
+    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor"]);
+
+    
     
     $router->get('/login', [AuthController::class, 'login'], ["visitor"]);
     $router->post('/login', [AuthController::class, 'signin'], ["visitor"]);
@@ -40,3 +46,6 @@
     $router->get('/reset-password', [ResetPasswordController::class, 'reset'], ["visitor"]);
 
     $router->dispatch($request);
+
+    //  create stage / create category / create region / verify cyclist / accept comment / 
+    // report / like / commenter / favorite / notification

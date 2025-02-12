@@ -38,7 +38,35 @@
   <section class="max-w-7xl mx-auto px-4">
     <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">Tour Stages</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="stages-container">
-      <!-- Stage cards will be injected via JavaScript -->
+      <!-- Stage cards -->
+      <?php if (!$Stages) { ?>
+            <div class="h-40 text-red-500 flex justify-center ">
+                <p>No Stage exists</p>
+            </div>
+        <?php } else { $i=1; foreach ($Stages as $key => $stage): ?>
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-2xl font-bold text-emerald-500">Stage <?= htmlspecialchars($i) ?></span>
+                <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
+                  <?= htmlspecialchars($stage->getDistance()) ?> km
+                </span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800 mb-2"><?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?></h3>
+              <p class="text-gray-600 flex items-center">
+                <i class="fas fa-mountain mr-2 text-emerald-500"></i> <?= htmlspecialchars($stage->getNameCategory()) ?>
+              </p>
+            </div>
+            <div class="bg-emerald-50 px-6 py-4">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-emerald-600 font-medium">Details</span>
+                <button class="text-emerald-500 hover:text-emerald-600 transition">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        <?php $i++; endforeach;} ?>
     </div>
   </section>
 
@@ -65,59 +93,71 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Tour Stages Data (10 stages)
-      const stages = [
-        { start: "Casablanca", end: "Rabat", distance: 90, type: "Coastal", icon: "fa-water" },
-        { start: "Rabat", end: "Fez", distance: 200, type: "Urban", icon: "fa-city" },
-        { start: "Fez", end: "Meknes", distance: 65, type: "Nature", icon: "fa-tree" },
-        { start: "Meknes", end: "Marrakech", distance: 350, type: "Mountain", icon: "fa-mountain" },
-        { start: "Marrakech", end: "Agadir", distance: 250, type: "Coastal", icon: "fa-water" },
-        { start: "Agadir", end: "Essaouira", distance: 180, type: "Coastal", icon: "fa-water" },
-        { start: "Essaouira", end: "Safi", distance: 140, type: "Coastal", icon: "fa-water" },
-        { start: "Safi", end: "El Jadida", distance: 160, type: "Coastal", icon: "fa-water" },
-        { start: "El Jadida", end: "Casablanca", distance: 100, type: "Urban", icon: "fa-city" },
-        { start: "Casablanca", end: "Mohammedia", distance: 30, type: "Urban", icon: "fa-city" }
-      ];
+      // // // Tour Stages Data (10 stages)
+      // // const stages = [
+      // //   { start: "Casablanca", end: "Rabat", distance: 90, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Rabat", end: "Fez", distance: 200, type: "Urban", icon: "fa-city" },
+      // //   { start: "Fez", end: "Meknes", distance: 65, type: "Nature", icon: "fa-tree" },
+      // //   { start: "Meknes", end: "Marrakech", distance: 350, type: "Mountain", icon: "fa-mountain" },
+      // //   { start: "Marrakech", end: "Agadir", distance: 250, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Agadir", end: "Essaouira", distance: 180, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Essaouira", end: "Safi", distance: 140, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Safi", end: "El Jadida", distance: 160, type: "Coastal", icon: "fa-water" },
+      // //   { start: "El Jadida", end: "Casablanca", distance: 100, type: "Urban", icon: "fa-city" },
+      // //   { start: "Casablanca", end: "Mohammedia", distance: 30, type: "Urban", icon: "fa-city" }
+      // // ];
 
-      // Render Stages
-      const stagesContainer = document.getElementById("stages-container");
-      stages.forEach((stage, index) => {
-        const stageElement = document.createElement("div");
-        stageElement.className = "bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300";
-        stageElement.innerHTML = `
-          <div class="p-6">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-2xl font-bold text-emerald-500">Stage ${index + 1}</span>
-              <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
-                ${stage.distance} km
-              </span>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">${stage.start} → ${stage.end}</h3>
-            <p class="text-gray-600 flex items-center">
-              <i class="fas ${stage.icon} mr-2 text-emerald-500"></i> ${stage.type}
-            </p>
-          </div>
-          <div class="bg-emerald-50 px-6 py-4">
-            <div class="flex justify-between items-center">
-              <span class="text-sm text-emerald-600 font-medium">Details</span>
-              <button class="text-emerald-500 hover:text-emerald-600 transition">
-                <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        `;
-        stagesContainer.appendChild(stageElement);
-      });
+      // // Render Stages
+      // const stagesContainer = document.getElementById("stages-container");
+      // stages.forEach((stage, index) => {
+      //   const stageElement = document.createElement("div");
+      //   stageElement.className = "bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300";
+      //   stageElement.innerHTML = `
+      //     <div class="p-6">
+      //       <div class="flex items-center justify-between mb-4">
+      //         <span class="text-2xl font-bold text-emerald-500">Stage ${index + 1}</span>
+      //         <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
+      //           ${stage.distance} km
+      //         </span>
+      //       </div>
+      //       <h3 class="text-xl font-semibold text-gray-800 mb-2">${stage.start} → ${stage.end}</h3>
+      //       <p class="text-gray-600 flex items-center">
+      //         <i class="fas ${stage.icon} mr-2 text-emerald-500"></i> ${stage.type}
+      //       </p>
+      //     </div>
+      //     <div class="bg-emerald-50 px-6 py-4">
+      //       <div class="flex justify-between items-center">
+      //         <span class="text-sm text-emerald-600 font-medium">Details</span>
+      //         <button class="text-emerald-500 hover:text-emerald-600 transition">
+      //           <i class="fas fa-chevron-right"></i>
+      //         </button>
+      //       </div>
+      //     </div>
+      //   `;
+      //   stagesContainer.appendChild(stageElement);
+      // });
 
-      // Teams Data
-      const teams = [
-        { name: "Team Morocco", country: "Morocco", flag: "🇲🇦", riders: 8 },
-        { name: "Team France", country: "France", flag: "🇫🇷", riders: 8 },
-        { name: "Team Spain", country: "Spain", flag: "🇪🇸", riders: 8 },
-        { name: "Team Italy", country: "Italy", flag: "🇮🇹", riders: 8 },
-        { name: "Team Belgium", country: "Belgium", flag: "🇧🇪", riders: 8 },
-        { name: "Team Netherlands", country: "Netherlands", flag: "🇳🇱", riders: 8 }
-      ];
+      // initial le bare de recherche
+      let searchInput = document.getElementById("team-search");
+      fetchTeam();
+
+      //fonction qui permer de fetcher data des teams
+      function fetchTeam() {
+        const url = `api/Teams?search=${searchInput.value}`;
+        
+        fetch(url)
+        .then(result => result.json())
+        .then((data) => {
+          renderTeams(data);
+        }).catch((err) => {
+          console.log(err);
+        });
+      }
+
+      // fonction pour get les 2 caractere d'un string
+      function getFirstTwoChars(string) {
+        return string.slice(0,2).toUpperCase();
+      }
 
       // Render Teams
       function renderTeams(teamsToRender) {
@@ -129,35 +169,24 @@
             "bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300 transform hover:-translate-y-1";
           teamCard.innerHTML = `
             <div class="flex items-center justify-between mb-4">
-              <span class="text-3xl">${team.flag}</span>
+              <span class="text-3xl">${getFirstTwoChars(team.name_Team)}</span>
               <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
-                ${team.riders} riders
+                riders
               </span>
             </div>
-            <h3 class="text-xl font-bold text-gray-800">${team.name}</h3>
+            <h3 class="text-xl font-bold text-gray-800">${team.name_Team}</h3>
             <p class="text-gray-600">${team.country}</p>
           `;
           teamsGrid.appendChild(teamCard);
         });
       }
 
-      // Initial render of teams
-      renderTeams(teams);
 
       // Search functionality with debounce
-      const searchInput = document.getElementById("team-search");
       let debounceTimeout;
       searchInput.addEventListener("input", (e) => {
         clearTimeout(debounceTimeout);
-        debounceTimeout = setTimeout(() => {
-          const searchTerm = e.target.value.toLowerCase();
-          const filteredTeams = teams.filter(
-            (team) =>
-              team.name.toLowerCase().includes(searchTerm) ||
-              team.country.toLowerCase().includes(searchTerm)
-          );
-          renderTeams(filteredTeams);
-        }, 300);
+        debounceTimeout = setTimeout(fetchTeam, 150);
       });
 
       // Responsive navigation menu for mobile devices
@@ -205,4 +234,8 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
     });
+
+   
+
+
   </script>
