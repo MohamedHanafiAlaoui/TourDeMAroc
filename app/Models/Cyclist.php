@@ -83,8 +83,8 @@ class Cyclist extends User {
 
     public static function TopCyclists($number)
     {
-        $sql = "SELECT c.id_user, c.firstname, c.lastname, c.photo, t.id_team, t.name AS teamname 
-                FROM cyclists c JOIN teams t ON c.id_team = t.id_team
+        $sql = "SELECT c.id, c.firstname, c.lastname, c.photo, t.id, t.name AS teamname 
+                FROM cyclists c JOIN teams t ON c.id= t.id
                 ORDER BY total_points DESC LIMIT :number";
         self::$db->query($sql);
         self::$db->bind(':number', $number);

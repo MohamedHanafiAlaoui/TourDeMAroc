@@ -11,7 +11,7 @@ class HomeController extends BaseController {
     public function details()
     {
         $Stages = Stage::show();
-        $this->render("/tour/index", compact("Stages"));
+        $this->render("/fan/tour/index", compact("Stages"));
     }
 
     

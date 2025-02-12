@@ -24,7 +24,7 @@ class Admin extends User {
         self::$db->query($query);
         $totaleUsers = self::$db->single();
         // team with the most number of approved cyclists
-        $query = "SELECT t.name FROM teams t JOIN cyclists c ON c.id_team = t.id_team AND c.approved = TRUE GROUP BY t.name ORDER BY count(*) DESC LIMIT 1 ";
+        $query = "SELECT t.name FROM teams t JOIN cyclists c ON c.id = t.id AND c.approved = TRUE GROUP BY t.name ORDER BY count(*) DESC LIMIT 1 ";
         self::$db->query($query);
         $teamWithMostPlayers = self::$db->single();
         // un resoved repportes 
