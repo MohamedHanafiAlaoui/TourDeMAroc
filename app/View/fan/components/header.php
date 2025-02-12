@@ -31,9 +31,16 @@
                         <a href="<?= url('ranking') ?>" class="text-gray-600 hover:text-emerald-500 transition">Rankings</a>
                     </div>
                 </div>
-                <a href="<?= url('login') ?>" class="bg-emerald-500 text-white px-6 py-2 rounded-full hover:bg-emerald-600 transition">
-                    Sign In
-                </a>
+                <?php if (isLoggedIn()): ?>
+                    <!-- Only Profile Icon -->
+                    <a href="<?= url('profile') ?>" class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full hover:bg-gray-200 transition">
+                        <i class="fas fa-user text-gray-600 text-lg"></i>
+                    </a>
+                <?php else: ?>
+                    <a href="<?= url('login') ?>" class="bg-emerald-500 text-white px-6 py-2 rounded-full hover:bg-emerald-600 transition">
+                        Sign In
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

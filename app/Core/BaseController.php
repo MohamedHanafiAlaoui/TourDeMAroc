@@ -9,7 +9,9 @@
                 $path = "/" . $path;
             }
 
-            if ($path == "/signup" || $path == "/login") {
+            $authPages = ["/signup", "/login", "/forget-password", "/reset-password"];
+            
+            if (in_array($path, $authPages)) {
                 $path = APPROOT . "View/auth" . $path . ".php";
             }
             else if (isLoggedIn() && user()->isAdmin()) {
