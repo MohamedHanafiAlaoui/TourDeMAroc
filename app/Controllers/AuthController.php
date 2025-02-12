@@ -4,7 +4,7 @@ class AuthController extends BaseController
 
     public function login()
     {
-        $this->render("/login");
+        $this->render("auth/login");
     }
 
     public function signin()
@@ -56,7 +56,7 @@ class AuthController extends BaseController
 
     public function signup()
     {
-        $this->render("/signup");
+        $this->render("auth/signup");
     }
 
     public function register()

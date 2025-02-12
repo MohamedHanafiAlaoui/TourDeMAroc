@@ -3,11 +3,11 @@ class HomeController extends BaseController {
 
     public function index()
     {
-        $this->render("/");
+        $this->render("/fan/index");
     }
 
     public function details()
     {
-        $this->render("/tour/index");
+        $this->render("/fan/tour/index");
     }
 }

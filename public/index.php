@@ -40,3 +40,6 @@
     $router->get('/reset-password', [ResetPasswordController::class, 'reset'], ["visitor"]);
 
     $router->dispatch($request);
+
+    //  create stage / create category / create region / verify cyclist / accept comment / 
+    // report / like / commenter / favorite / notification
