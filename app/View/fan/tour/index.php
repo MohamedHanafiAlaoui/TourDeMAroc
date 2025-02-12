@@ -38,7 +38,35 @@
   <section class="max-w-7xl mx-auto px-4">
     <h2 class="text-3xl font-bold text-gray-800 mb-12 text-center">Tour Stages</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="stages-container">
-      <!-- Stage cards will be injected via JavaScript -->
+      <!-- Stage cards -->
+      <?php if (!$Stages) { ?>
+            <div class="h-40 text-red-500 flex justify-center ">
+                <p>No Stage exists</p>
+            </div>
+        <?php } else { $i=1; foreach ($Stages as $key => $stage): ?>
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300">
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-2xl font-bold text-emerald-500">Stage <?= htmlspecialchars($i) ?></span>
+                <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
+                  <?= htmlspecialchars($stage->getDistance()) ?> km
+                </span>
+              </div>
+              <h3 class="text-xl font-semibold text-gray-800 mb-2"><?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?></h3>
+              <p class="text-gray-600 flex items-center">
+                <i class="fas fa-mountain mr-2 text-emerald-500"></i> <?= htmlspecialchars($stage->getNameCategory()) ?>
+              </p>
+            </div>
+            <div class="bg-emerald-50 px-6 py-4">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-emerald-600 font-medium">Details</span>
+                <button class="text-emerald-500 hover:text-emerald-600 transition">
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        <?php $i++; endforeach;} ?>
     </div>
   </section>
 
@@ -65,49 +93,49 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Tour Stages Data (10 stages)
-      const stages = [
-        { start: "Casablanca", end: "Rabat", distance: 90, type: "Coastal", icon: "fa-water" },
-        { start: "Rabat", end: "Fez", distance: 200, type: "Urban", icon: "fa-city" },
-        { start: "Fez", end: "Meknes", distance: 65, type: "Nature", icon: "fa-tree" },
-        { start: "Meknes", end: "Marrakech", distance: 350, type: "Mountain", icon: "fa-mountain" },
-        { start: "Marrakech", end: "Agadir", distance: 250, type: "Coastal", icon: "fa-water" },
-        { start: "Agadir", end: "Essaouira", distance: 180, type: "Coastal", icon: "fa-water" },
-        { start: "Essaouira", end: "Safi", distance: 140, type: "Coastal", icon: "fa-water" },
-        { start: "Safi", end: "El Jadida", distance: 160, type: "Coastal", icon: "fa-water" },
-        { start: "El Jadida", end: "Casablanca", distance: 100, type: "Urban", icon: "fa-city" },
-        { start: "Casablanca", end: "Mohammedia", distance: 30, type: "Urban", icon: "fa-city" }
-      ];
+      // // // Tour Stages Data (10 stages)
+      // // const stages = [
+      // //   { start: "Casablanca", end: "Rabat", distance: 90, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Rabat", end: "Fez", distance: 200, type: "Urban", icon: "fa-city" },
+      // //   { start: "Fez", end: "Meknes", distance: 65, type: "Nature", icon: "fa-tree" },
+      // //   { start: "Meknes", end: "Marrakech", distance: 350, type: "Mountain", icon: "fa-mountain" },
+      // //   { start: "Marrakech", end: "Agadir", distance: 250, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Agadir", end: "Essaouira", distance: 180, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Essaouira", end: "Safi", distance: 140, type: "Coastal", icon: "fa-water" },
+      // //   { start: "Safi", end: "El Jadida", distance: 160, type: "Coastal", icon: "fa-water" },
+      // //   { start: "El Jadida", end: "Casablanca", distance: 100, type: "Urban", icon: "fa-city" },
+      // //   { start: "Casablanca", end: "Mohammedia", distance: 30, type: "Urban", icon: "fa-city" }
+      // // ];
 
-      // Render Stages
-      const stagesContainer = document.getElementById("stages-container");
-      stages.forEach((stage, index) => {
-        const stageElement = document.createElement("div");
-        stageElement.className = "bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300";
-        stageElement.innerHTML = `
-          <div class="p-6">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-2xl font-bold text-emerald-500">Stage ${index + 1}</span>
-              <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
-                ${stage.distance} km
-              </span>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-800 mb-2">${stage.start} → ${stage.end}</h3>
-            <p class="text-gray-600 flex items-center">
-              <i class="fas ${stage.icon} mr-2 text-emerald-500"></i> ${stage.type}
-            </p>
-          </div>
-          <div class="bg-emerald-50 px-6 py-4">
-            <div class="flex justify-between items-center">
-              <span class="text-sm text-emerald-600 font-medium">Details</span>
-              <button class="text-emerald-500 hover:text-emerald-600 transition">
-                <i class="fas fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        `;
-        stagesContainer.appendChild(stageElement);
-      });
+      // // Render Stages
+      // const stagesContainer = document.getElementById("stages-container");
+      // stages.forEach((stage, index) => {
+      //   const stageElement = document.createElement("div");
+      //   stageElement.className = "bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300";
+      //   stageElement.innerHTML = `
+      //     <div class="p-6">
+      //       <div class="flex items-center justify-between mb-4">
+      //         <span class="text-2xl font-bold text-emerald-500">Stage ${index + 1}</span>
+      //         <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
+      //           ${stage.distance} km
+      //         </span>
+      //       </div>
+      //       <h3 class="text-xl font-semibold text-gray-800 mb-2">${stage.start} → ${stage.end}</h3>
+      //       <p class="text-gray-600 flex items-center">
+      //         <i class="fas ${stage.icon} mr-2 text-emerald-500"></i> ${stage.type}
+      //       </p>
+      //     </div>
+      //     <div class="bg-emerald-50 px-6 py-4">
+      //       <div class="flex justify-between items-center">
+      //         <span class="text-sm text-emerald-600 font-medium">Details</span>
+      //         <button class="text-emerald-500 hover:text-emerald-600 transition">
+      //           <i class="fas fa-chevron-right"></i>
+      //         </button>
+      //       </div>
+      //     </div>
+      //   `;
+      //   stagesContainer.appendChild(stageElement);
+      // });
 
       // Teams Data
       const teams = [

@@ -141,6 +141,16 @@
             return $this->id_category;
         }
 
+        public function getNameCategory()
+        {
+            return $this->nameCategory;
+        }
+
+        public function getNameRegion()
+        {
+            return $this->nameRegion;
+        }
+
         public static function All()
         {
             $sql = "SELECT * FROM stages";
@@ -169,6 +179,23 @@
                 $class->setNameCategory($value['name_region']);
 
                 $stages[] = $class; 
+            }
+            return $stages;
+        }
+
+        public static function show()
+        {
+            $sql = "SELECT s.*, c.name AS categoryname FROM stages s JOIN categories c ON s.id_category = c.id_category ORDER BY s.start_date DESC";
+
+            self::$db->query($sql);
+            $result = self::$db->results();
+
+            $stages = [];
+            foreach ($result as $value) {
+                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class->setNameCategory($value['categoryname']);
+                
+                $stages[] = $class;
             }
             return $stages;
         }

@@ -61,7 +61,7 @@
 
             <?php if (!$TopCyclists) { ?>
                 <div class="h-40 text-red-500 flex justify-center ">
-                    <p>No Stage exists</p>
+                    <p>No Cyclist exists</p>
                 </div>
             <?php } else { foreach ($TopCyclists as $key => $cyclist): ?>
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
