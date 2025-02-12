@@ -13,4 +13,18 @@ class HomeController extends BaseController {
         $Stages = Stage::show();
         $this->render("/tour/index", compact("Stages"));
     }
+
+    public function fetchTeam()
+    {
+        $teams = Team::fetchTeam();
+        $FormerTeams = array_map(function($team) {
+            return [
+                'id_team' => $team->getId(),
+                'name_Team' => $team->getId(),
+                'country' => $team->getId(),
+            ];
+        }, $teams);
+
+        echo json_encode($FormerTeams);
+    }
 }

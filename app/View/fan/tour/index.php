@@ -137,15 +137,23 @@
       //   stagesContainer.appendChild(stageElement);
       // });
 
-      // Teams Data
-      const teams = [
-        { name: "Team Morocco", country: "Morocco", flag: "🇲🇦", riders: 8 },
-        { name: "Team France", country: "France", flag: "🇫🇷", riders: 8 },
-        { name: "Team Spain", country: "Spain", flag: "🇪🇸", riders: 8 },
-        { name: "Team Italy", country: "Italy", flag: "🇮🇹", riders: 8 },
-        { name: "Team Belgium", country: "Belgium", flag: "🇧🇪", riders: 8 },
-        { name: "Team Netherlands", country: "Netherlands", flag: "🇳🇱", riders: 8 }
-      ];
+      //fonction qui permer de fetcher data des teams
+      function fetch(name) {
+        const url = `/fetch?searche=${name}`;
+        
+        fetch(url)
+        .then(result => result.JSON)
+        .then((data) => {
+          renderTeams(data);
+        }).catch((err) => {
+          console.log(err);
+        });
+      }
+
+      // fonction pour get les 2 caractere d'un string
+      function getFirstTwoChars(string) {
+        return string.slice(0,2).toUpperCase();
+      }
 
       // Render Teams
       function renderTeams(teamsToRender) {
@@ -157,20 +165,18 @@
             "bg-gray-50 rounded-xl p-6 hover:shadow-lg transition duration-300 transform hover:-translate-y-1";
           teamCard.innerHTML = `
             <div class="flex items-center justify-between mb-4">
-              <span class="text-3xl">${team.flag}</span>
+              <span class="text-3xl">${getFirstTwoChars(team.name_Team)}</span>
               <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
                 ${team.riders} riders
               </span>
             </div>
-            <h3 class="text-xl font-bold text-gray-800">${team.name}</h3>
+            <h3 class="text-xl font-bold text-gray-800">${team.name_Team}</h3>
             <p class="text-gray-600">${team.country}</p>
           `;
           teamsGrid.appendChild(teamCard);
         });
       }
 
-      // Initial render of teams
-      renderTeams(teams);
 
       // Search functionality with debounce
       const searchInput = document.getElementById("team-search");
@@ -233,4 +239,8 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
     });
+
+   
+
+
   </script>
