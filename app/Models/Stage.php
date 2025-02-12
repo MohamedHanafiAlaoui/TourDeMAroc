@@ -232,7 +232,7 @@
             }
 
             $sql .= " ORDER BY s.start_date DESC";
-            $result = self::$db->result();
+            $result = self::$db->results();
             $stages = [];
 
             foreach ($result as $key => $value) {
@@ -249,8 +249,8 @@
             $sql = "SELECT COUNT(*) FROM stages";
             self::$db->query($sql);
 
-            $result = self::$db->result();
-            return ceil($result['COUNT(*)'] / $NbPage);
+            $result = self::$db->results();
+            return ceil($result[0]['count'] / $NbPage);
         }
 
     }

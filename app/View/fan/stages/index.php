@@ -74,32 +74,15 @@
 
   <!-- Pagination -->
   <div class="mt-12 flex justify-center">
-    <nav class="inline-flex rounded-md shadow">
-      <a href="#"
-        class="px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-      >Previous</a>
-      <a href="#"
-        class="px-4 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-      >1</a>
-      <a href="#"
-        class="px-4 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-emerald-500 hover:bg-gray-50"
-      >2</a>
-      <a href="#"
-        class="px-4 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-      >3</a>
-      <a href="#"
-        class="px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-      >Next</a>
-    </nav>
-    <span id="Previous_page" class="px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Previous</span>
+    <span id="Previous_page" class="cursor-pointer px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Previous</span>
     <?php for ($i=0; $i < $NumberPagination; $i++): ?>
-      <?php $stylePg = ($i == 1) ? 'text-emerald-500' : 'text-gray-700'; ?>
+      <?php $stylePg = ($i == 0) ? 'text-emerald-500' : 'text-gray-700'; ?>
       <input type="radio" id="page<?= htmlspecialchars($i) ?>" name="pagination" value="<?= htmlspecialchars($i) ?>" class="hidden">
-      <label for="page<?= htmlspecialchars($i) ?>" class=" <?= htmlspecialchars($stylePg) ?> px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+      <label for="page<?= htmlspecialchars($i) ?>" class=" <?= htmlspecialchars($stylePg) ?> px-4 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium hover:bg-gray-50">
       <?= htmlspecialchars($i) ?>
       </label>
     <?php endfor; ?> 
-    <span id="Next_page" class="px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Next</span>
+    <span id="Next_page" class="cursor-pointer px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Next</span>
 
   </div>
 </main>

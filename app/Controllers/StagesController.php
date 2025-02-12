@@ -5,7 +5,7 @@ class StagesController extends BaseController {
     {
         $NumberPagination = Stage::Pagination(3);
         $categorys = Category::All();
-        $this->render("/stages/index", compact("categorys", "NumberPagination"));
+        $this->render("fan/stages/index", compact("categorys", "NumberPagination"));
     }
 
     public function show($id)
