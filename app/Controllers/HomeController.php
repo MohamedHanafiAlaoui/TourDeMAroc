@@ -28,4 +28,6 @@ class HomeController extends BaseController {
 
         echo json_encode($FormerTeams);
     }
+
+    
 }

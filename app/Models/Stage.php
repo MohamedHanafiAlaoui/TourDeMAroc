@@ -200,4 +200,47 @@
             return $stages;
         }
 
+        public static function fetchStage($search = null, $categoryFilter = null, $distanceFilter = null)
+        {
+            $sql = "SELECT s.*, c.id_category, c.name AS category_name FROM stages s 
+                    JOIN categories c ON c.id_category = s.id_category WHERE 1 = 1"; 
+            self::$db->query($sql);        
+
+            if ($search) {
+                $sql .= " AND s.name LIKE :name";
+                self::$db->bind(':name', $search);
+            }
+            if ($categoryFilter) {
+                $sql .= " AND s.category_name = :id_category";
+                self::$db->bind(':id_category', $categoryFilter);
+            }
+            if ($distanceFilter) {
+                switch ($distanceFilter) {
+                    case 1:
+                        $sql .= " AND s.distance_km < 100";
+                        self::$db->bind(':distance_km', $categoryFilter);
+                        break;
+                    
+                    case 2:
+                        $sql .= " AND s.distance_km >= 100 AND s.distance_km <= 200 ";
+                        break;
+                
+                    case 3:
+                        $sql .= " AND s.distance_km >200 ";
+                        break;
+                }
+            }
+
+            $result = self::$db->result();
+            $stages = [];
+
+            foreach ($result as $key => $value) {
+                $class = new self($value['id_stage'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['id_region'], $value['difficulty_level'], $value['id_category']);
+                $class->setNameCategory($value['nameCategory']);
+
+                $stages[] = $class; 
+            }
+            return $stages;
+        }
+
     }

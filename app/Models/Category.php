@@ -29,7 +29,7 @@
             return $this->name;
         }
 
-        public function All()
+        public static function All()
         {
             $sql = "SELECT * FROM categories";
 

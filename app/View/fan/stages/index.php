@@ -29,10 +29,9 @@
           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500"
         >
           <option value="">All Types</option>
-          <option value="Coastal">Coastal</option>
-          <option value="Urban">Urban</option>
-          <option value="Nature">Nature</option>
-          <option value="Mountain">Mountain</option>
+          <?php foreach ($categorys as $key => $value): ?>
+            <option value="<?= htmlspecialchars($value->getIdCategory()) ?>"><?= htmlspecialchars($value->getNameCategory()) ?></option>
+          <?php endforeach; ?>
         </select>
       </div>
       <div>
