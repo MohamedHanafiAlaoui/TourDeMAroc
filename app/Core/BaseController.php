@@ -10,7 +10,7 @@
             }
 
             
-            $path = APPROOT . "View" . $path . ".php";
+            $path = APPROOT . "View" . $path . ".php";  
 
             $role = "fan";
             if (isLoggedIn() && user()->isAdmin()) {
