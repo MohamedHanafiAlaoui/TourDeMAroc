@@ -94,7 +94,8 @@ CREATE TABLE stages (
     category_id INT REFERENCES categories(id) ON DELETE SET NULL, 
     region_id INT REFERENCES regions(id) ON DELETE CASCADE,
     difficulty_level difficulty NOT NULL,
-    photo TEXT
+    photo TEXT,
+    description TEXT NOT NULL
 );
 
 -- ===============================
