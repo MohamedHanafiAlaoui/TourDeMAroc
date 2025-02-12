@@ -3,4 +3,4 @@
 /assets/images
 /assets/pdfs
 /vendor/
-/app/Config
+/app/Config/config.php
