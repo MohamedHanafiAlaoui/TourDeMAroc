@@ -78,6 +78,8 @@
   let filterType = document.getElementById("stage-type");
   let filterDistance = document.getElementById("distance");
 
+  let radioButtons = document.querySelectorAll('#paginationGrid label');
+  let PageTotal = radioButtons.length; 
   let NbPage = 0;
 
 
@@ -102,6 +104,10 @@
     fetch(url)
     .then(result => result.json())
     .then((data) => {
+      if (data.length == 0) {
+        PageTotal = 0;
+      }
+      
       toString(data);
       PaginationBar(PageTotal);
     }).catch((err) => {
@@ -141,10 +147,12 @@
           </div>`;
         
         stagesGrid.appendChild(stageCard);
+
+        PageTotal = stage['page_stage'];
+        
+        
       });
     }
-    
-    PageTotal = stages == null ? stages[0]['page_stage'] : 0;
   }
   
   //les element de pagination 
@@ -153,7 +161,6 @@
   let Next_page = document.getElementById('Next_page');
 
   // continaire de pagination 
-  let radioButtons = document.querySelectorAll('#paginationGrid label');
   
   radioButtons.forEach(element => {
       element.addEventListener('click', () => {
@@ -164,7 +171,7 @@
       })
   });
   
-  let PageTotal = radioButtons.length;  
+   
 
   function PaginationBar(NbPage) {
     paginationGrid.innerHTML = '';
