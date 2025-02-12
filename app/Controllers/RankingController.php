@@ -3,6 +3,6 @@ class RankingController extends BaseController {
 
     public function index()
     {
-        $this->render("/ranking/index");
+        $this->render("/fan/ranking/index");
     }
 }
