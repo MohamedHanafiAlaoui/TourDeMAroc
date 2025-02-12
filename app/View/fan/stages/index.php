@@ -57,13 +57,13 @@
   </div>
 
   <!-- Pagination -->
-  <div class="mt-12 flex justify-center">
+  <div id="paginationGrid" class="mt-12 flex justify-center">
     <span id="Previous_page" class="cursor-pointer px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Previous</span>
     <?php for ($i=0; $i < $NumberPagination; $i++): ?>
       <?php $stylePg = ($i == 0) ? 'text-emerald-500' : 'text-gray-700'; ?>
       <input type="radio" id="page<?= htmlspecialchars($i) ?>" name="pagination" value="<?= htmlspecialchars($i) ?>" class="hidden">
       <label for="page<?= htmlspecialchars($i) ?>" class=" <?= htmlspecialchars($stylePg) ?> px-4 py-2 border-t border-b border-gray-300 bg-white text-sm font-medium hover:bg-gray-50">
-      <?= htmlspecialchars($i) ?>
+      <?= htmlspecialchars($i + 1) ?>
       </label>
     <?php endfor; ?> 
     <span id="Next_page" class="cursor-pointer px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">Next</span>
@@ -77,6 +77,7 @@
   let searchInput = document.getElementById("search");
   let filterType = document.getElementById("stage-type");
   let filterDistance = document.getElementById("distance");
+
 
   // Search functionality with 
   let debounceTimeout;
@@ -99,8 +100,6 @@
     fetch(url)
     .then(result => result.json())
     .then((data) => {
-      console.log(data);
-      
       toString(data);
     }).catch((err) => {
       console.log(err);
@@ -141,7 +140,43 @@
         
         stagesGrid.appendChild(stageCard);
       });
+      PaginationBar(stages[0]['page_stage']);
+      
     }
+  }
+
+  //les element de pagination 
+  let paginationGrid = document.getElementById('paginationGrid');
+  let Previous_page = document.getElementById('Previous_page');
+  let Next_page = document.getElementById('Next_page');
+
+  function PaginationBar(NbPage) {
+    paginationGrid.innerHTML = '';
+    paginationGrid.appendChild(Previous_page);
+    for (let index = 0; index < NbPage; index++) {
+
+      const radioButton = document.createElement('input');
+      radioButton.type = 'radio';
+      radioButton.id = `page${index}`;
+      radioButton.name = 'pagination';
+      radioButton.value = index;
+      radioButton.classList.add('hidden');
+      
+      const label = document.createElement('label');
+      label.setAttribute('for', `page${index}`);
+      label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
+      label.textContent = index + 1;
+
+      if (index == 0) {
+        label.classList.add('text-emerald-500');
+      } else {
+        label.classList.add('text-gray-700');
+      }
+
+      paginationGrid.appendChild(radioButton);
+      paginationGrid.appendChild(label);
+    }
+    paginationGrid.appendChild(Next_page);
   }
 
   document.addEventListener('DOMContentLoaded', fetchStage)

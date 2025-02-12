@@ -226,7 +226,7 @@
                         break;
                 
                     case "long":
-                        $sql .= " AND s.distance_km >200 ";
+                        $sql .= " AND s.distance_km > 200 ";
                         break;
                 }
             }
