@@ -48,6 +48,7 @@
     $router->post('/login', [AuthController::class, 'signin'], ["visitor"]);
     $router->get('/signup', [AuthController::class, 'signup'], ["visitor"]);
     $router->post('/signup', [AuthController::class, 'register'], ["visitor"]);
+    $router->post('/logout', [AuthController::class, 'logout'], ["admin", "fan", "cyclist"]);
     
     $router->get('/forget-password', [ResetPasswordController::class, 'index'], ["visitor"]);
     $router->post('/forget-password', [ResetPasswordController::class, 'store'], ["visitor"]);
