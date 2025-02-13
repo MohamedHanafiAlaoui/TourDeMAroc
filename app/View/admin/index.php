@@ -77,7 +77,7 @@
                             Team
                         </th>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            Total Time
+                            Total ponits
                         </th>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             Stage Wins
@@ -85,6 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php foreach ($data["TopCyclists"] as $cyclist) : ?>
                     <tr>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <div class="flex items-center">
@@ -92,41 +93,21 @@
                                     <img class="w-full h-full rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg" alt="" />
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-gray-900 whitespace-no-wrap">John Doe</p>
+                                    <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getFirstName()?> <?=$stage->getLastName()?></p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Team Morocco</p>
+                            <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getNameTeam()?></p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">32h 10m 15s</p>
+                            <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getTotalePoints()?></p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">2</p>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-10 h-10">
-                                    <img class="w-full h-full rounded-full" src="https://randomuser.me/api/portraits/women/2.jpg" alt="" />
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-gray-900 whitespace-no-wrap">Jane Smith</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Team France</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">32h 15m 30s</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">1</p>
-                        </td>
-                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
