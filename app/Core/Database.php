@@ -19,7 +19,7 @@ class Database
 
         // Try to connect to the database
         try {
-            $dsn = "pgsql:host={$this->host};port = 3307;dbname={$this->dbName}";
+            $dsn = "pgsql:host={$this->host};dbname={$this->dbName}";
             $this->pdo = new PDO($dsn, $this->username, $this->password);
 
             // Best practice because of it help catching errrors

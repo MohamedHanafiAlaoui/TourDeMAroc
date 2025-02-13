@@ -1,3 +1,4 @@
+
 <!-- Main Content -->
 <main class="max-w-7xl mx-auto px-4 pb-10 pt-28">
   <!-- Page Title & Introduction -->
@@ -7,7 +8,6 @@
       Explore all the stages of the Tour de Maroc and get an overview of the challenging courses.
     </p>
   </div>
-
   <!-- Search and Filter Section -->
   <div class="bg-white rounded-lg shadow-md p-6 mb-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -30,7 +30,7 @@
         >
           <option value="">All Types</option>
           <?php foreach ($categorys as $key => $value): ?>
-            <option value="<?= htmlspecialchars($value->getIdCategory()) ?>"><?= htmlspecialchars($value->getNameCategory()) ?></option>
+            <option value="<?= htmlspecialchars($value->getId()) ?>"><?= htmlspecialchars($value->getName()) ?></option>
           <?php endforeach; ?>
         </select>
       </div>
