@@ -1,4 +1,5 @@
-<?php $regions = [] ?>
+<?php
+$regions=[];?>
 <section class="p-6">
     <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Add New Region</h3>
@@ -17,6 +18,7 @@
                         placeholder="Enter region name"
                         autocomplete="off"
                     />
+                    <?php if (isset($_SESSION["error"])) : echo $_SESSION["error"]; endif; ?>
                 </div>
             </div>
 
@@ -53,13 +55,13 @@
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-lg font-semibold text-gray-800">Stage Categories</h3>
             <span class="px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-sm">
-                <?= count($regions) ?> Categories
+                <?= $data["regionCount"]?> Categories
             </span>
         </div>
 
         <!-- Categories Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <?php foreach ($regions as $region): ?>
+            <?php foreach ($data["region"] as $region): ?>
             <div class="group shadow-md relative bg-gray-50 rounded-lg p-4 hover:bg-emerald-50 transition-colors">
                 <!-- Region Name -->
                 <h4 class="text-gray-700 font-medium"><?= $region->getName() ?></h4>

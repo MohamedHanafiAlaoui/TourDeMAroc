@@ -3,6 +3,7 @@ class DashboardController extends BaseController {
 
     public function index()
     {
-        $this->render("admin/index");
+        $PlatfromStatistics = Admin::platformStatiscs();
+        $this->render("admin/index",$PlatfromStatistics);
     }
 }
