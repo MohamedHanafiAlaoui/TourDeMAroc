@@ -4,6 +4,9 @@ class DashboardController extends BaseController {
     public function index()
     {
         $PlatfromStatistics = Admin::platformStatiscs();
-        $this->render("admin/index",$PlatfromStatistics);
+        $curentStage  =  stage::curentStage();
+        $upcomingStages =  Stage::NextStages();
+        $data=["PlatfromStatistics"=>$PlatfromStatistics,"curentStage"=>$curentStage,"nextStages"=>$upcomingStages];
+        $this->render("admin/index",$data);
     }
 }

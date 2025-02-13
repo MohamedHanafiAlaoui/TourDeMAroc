@@ -17,7 +17,7 @@
         private $nameCategory;
         private $nameRegion;
         private $photo;
-        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null,$photo=null)
+        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null,$photo=null , $Description=null)
         {
             $this->id_stage = $id_stage;
             $this->name = $name;
@@ -30,6 +30,7 @@
             $this->difficulty_level = $difficulty_level;
             $this->id_category = $id_category;
             $this->photo = $photo;
+            $this->Description = $Description;
         }
 
         public function setId($id_stage)
@@ -310,6 +311,18 @@
 
             $result = self::$db->results();
             return ceil($result[0]['count'] / $NbPage);
+        }
+        public static function curentStage(){
+            $query = "SELECT * FROM stages S WHERE CURRENT_DATE BETWEEN S.start_date AND S.end_date LIMIT 1";
+            self::$db->query($query);
+            $result = self::$db->single();
+            if ($result) {
+                $stage = new Stage($result["id"], $result["name"], $result["start_location"] , $result["end_location"] , $$result["distance_km"] , $result["start_date"] , $result["end_date"], $result["id_region"], $result["difficulty_level"] , $result["id_category"],$result["photo"],$result["description"]);
+                return $stage;
+            }
+            else{
+                return null;
+            }
         }
 
     }
