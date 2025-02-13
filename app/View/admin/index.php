@@ -7,8 +7,8 @@
                     <i class="fas fa-bicycle text-white text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-gray-500">Total Cyclists</p>
-                    <p class="text-2xl font-semibold text-gray-700">120</p>
+                    <p class="text-gray-500">Total Approved Cyclists</p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data["totalApprovedCyclests"]?></p>
                 </div>
             </div>
         </div>
@@ -18,8 +18,8 @@
                     <i class="fas fa-road text-white text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-gray-500">Total Stages</p>
-                    <p class="text-2xl font-semibold text-gray-700">10</p>
+                    <p class="text-gray-500">Total Users</p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data["totalUsers"]?></p>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-gray-500">Current Leader</p>
-                    <p class="text-2xl font-semibold text-gray-700">John Doe</p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data["teamWithMostPlayers"]?></p>
                 </div>
             </div>
         </div>
@@ -40,8 +40,8 @@
                     <i class="fas fa-clock text-white text-2xl"></i>
                 </div>
                 <div class="ml-4">
-                    <p class="text-gray-500">Days Remaining</p>
-                    <p class="text-2xl font-semibold text-gray-700">5</p>
+                    <p class="text-gray-500">Unresolved Reports</p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data["unresolvedReports"]?></p>
                 </div>
             </div>
         </div>

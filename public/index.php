@@ -34,6 +34,10 @@
 
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
     $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);
+    $router->post('/categories/create', [CategoryController::class, 'store'], ["admin"]);
+    $router->post('/categories/delete', [CategoryController::class, 'delete'], ["admin"]);
+    $router->post('/regions/delete', [RegionController::class, 'delete'], ["admin"]);
+    $router->post('/regions/store', [RegionController::class, 'createRegion'], ["admin"]);
     $router->get('/regions', [RegionController::class, 'index'], ["admin"]);
     $router->get('/stages', [StageController::class, 'index'], ["admin"]);
     $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
