@@ -44,16 +44,20 @@ class Like extends BaseModel
 
     public function isLikedByFan()
     {
-        $sql ="SELECT COUNT(*) FROM stage_likes WHERE id_fan = ? AND stage_id = ?";
-        self::$db->query($sql, [$this->id_fan, $this->stage_id]);
-        return self::$db->fetchColumn() > 0;
+        $sql ="SELECT COUNT(*) as count FROM stage_likes WHERE id_fan = :id_fan AND stage_id = :stage_id";
+        self::$db->query($sql);
+        self::$db->bind(':id_fan', $this->id_fan);
+        self::$db->bind(':stage_id', $this->stage_id);
+        return self::$db->single()["count"] > 0;
     }
     
     public function save()
     {
         if(!$this->isLikedByFan()) {
-            $sql = "INSERT INTO stages_likes (id_fan, stage_id) VALUES (?, ?)";
-            self::$db->query($sql, [$this->id_fan, $this->stage_id]);
+            $sql = "INSERT INTO stages_likes (id_fan, stage_id) VALUES (:if_fan, :stage_id)";
+            self::$db->query($sql);
+            self::$db->bind(':id_fan', $this->id_fan);
+            self::$db->bind(':stage_id', $this->stage_id);
             return self::$db->execute();
         }
         return false;
@@ -61,15 +65,18 @@ class Like extends BaseModel
 
     public function remove()
     {
-        $sql = "DELETE FROM stage_likes WHERE id_fan = ? AND stage_id = ?";
-        self::$db->query($sql, [$this->id_fan, $this->stage_id]);
+        $sql = "DELETE FROM stage_likes WHERE id_fan = :id_fan AND stage_id = :stage_id";
+        self::$db->query($sql);
+        self::$db->bind(':id_fan', $this->id_fan);
+        self::$db->bind(':stage_id', $this->stage_id);
         return self::$db->execute();
     }
 
     public static function getFanLikes($id_fan)
     {
-        $sql = "SELECT * FROM stage_likes WHERE id_fan = ?";
-        self::$db->query($sql, [$id_fan]);
+        $sql = "SELECT * FROM stage_likes WHERE id_fan = :id_fan";
+        self::$db->query($sql);
+        self::$db->bind(':id_fan', $id_fan);
         $result = self::$db->results();
 
         $likes = [];
@@ -81,7 +88,9 @@ class Like extends BaseModel
 
     public static function countLikes($stage_id)
     {
-        $sql = "SELECT COUNT(*) FROM stages_likes WHERE stage_id = ?";
-        self::$db->fetchColumn();
+        $sql = "SELECT COUNT(*) as total FROM stage_likes WHERE stage_id = :stage_id";
+        self::$db->query($sql);
+        self::$db->bind(':stage_id', $stage_id);
+        return self::$db->single()["total"];
     }
 }
