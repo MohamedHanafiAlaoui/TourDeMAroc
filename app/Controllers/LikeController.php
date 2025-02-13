@@ -34,5 +34,18 @@ class LikeController extends BaseController
             'likeCount' => $likeCount
         ]);
     }
+
+    public function getLikeCount($params)
+    {
+        $stage_id = $params['id'] ?? null;
+
+        if (!$stage_id) {
+            echo json_encode(['error' => 'Missing stage ID']);
+            return;
+        }
+
+        $likeCount = Like::countLikes($stage_id);
+        echo json_encode(['likeCount' => $likeCount]);
+    }
 }
 ?>
