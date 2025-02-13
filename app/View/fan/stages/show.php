@@ -1,33 +1,62 @@
 <div class="pt-20 max-w-7xl mx-auto px-4 py-10">
   <div class="bg-white rounded-2xl shadow-xl p-8">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1: Casablanca → Rabat</h1>
-        <p class="text-xl text-gray-600">May 1, 2025 -> May 15, 2025</p>
+
+      <?php foreach($details as $detail)  :?>
+        
+      <div> 
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1:   <?php echo $detail->getStLocation() ; ?> →  <?php echo $detail->getEnLocation() ; ?></h1>
+        <p class="text-xl text-gray-600"><?php
+                                          $date = (new DateTime( $detail->getStDate()))->format("F j, Y");
+                                         echo $date ; ?>  → 
+                                         
+                                         <?php
+
+                                            $date = (new DateTime( $detail->getEnDate()))->format("F j, Y");
+                                            echo $date ; ?>
+                                          </p>
       </div>
 
 
-      <div class="mt-4 md:mt-0 inline-flex items-center gap-2">
-        <button id="likeButton" class="inline-flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors duration-200">
-          <i id="heartIcon" class="far fa-heart text-lg"></i>
-          <span id="likeCount" class="text-base">64</span>
-        </button>
-        <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full inline-flex items-center gap-2">
-          <i class="fas fa-flag-checkered"></i>
-          <span class="font-medium">Stage Complete</span>
-        </div>
-      </div>
+        <?php
+        
 
+        if (( $detail->getStLocation()) >= (date("Y-m-d"))  ) {
+       
 
+           echo '
+        <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
+           <i class="fas fa-flag-checkered mr-2"></i>
+           <span class="font-semibold">Stage Complete1</span>
+        </div>';
+        }elseif (( $detail->getEnDate()) <= (date("Y-m-d"))) {
+          echo '
+          <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
+             <i class="fas fa-flag-checkered mr-2"></i>
+             <span class="font-semibold">Stage Complete2</span>
+          </div>';
+        }else {
+          echo '
+          <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
+             <i class="fas fa-flag-checkered mr-2"></i>
+             <span class="font-semibold">Stage Complete"</span>
+          </div>';
+        }
+
+        ?>
+        
+ 
+      
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Distance</h3>
-        <p class="text-2xl font-bold text-emerald-600">90 km</p>
+        <p class="text-2xl font-bold text-emerald-600"><?php 
+        echo $detail->getDistance() ; ?> km</p>
       </div>
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Type</h3>
-        <p class="text-2xl font-bold text-emerald-600">Coastal</p>
+        <p class="text-2xl font-bold text-emerald-600"><?php echo $detail->getNameRegion() ; ?></p>
       </div>
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Reached Players</h3>
@@ -37,10 +66,8 @@
     <div class="mb-8">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Stage Description</h2>
       <p class="text-gray-600 leading-relaxed">
-        This coastal stage takes riders on a scenic journey from the bustling city of Casablanca to the historic capital of Rabat.
-        Cyclists will face gentle rolling hills and enjoy breathtaking views of the Atlantic Ocean. The route passes through
-        charming coastal towns, offering a mix of urban and natural landscapes. Expect potential crosswinds that could split
-        the peloton and create exciting racing conditions.
+
+      <?php echo $detail->getDescription() ; ?>
       </p>
     </div>
     <div class="mb-8">
@@ -51,6 +78,7 @@
         <li>Technical finish with a slight uphill in the last 2 km</li>
       </ul>
     </div>
+    <?php endforeach;  ?>
   </div>
 </div>
 
