@@ -89,7 +89,7 @@
         <i class="fas fa-medal mr-3 text-amber-400"></i>Stage Results
       </h2>
     </div>
-    
+
     <div class="overflow-x-auto">
       <table class="w-full">
         <thead class="bg-gray-50">
@@ -111,26 +111,70 @@
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const rankings = [
-      { rank: 1, name: "John Doe", team: "Morocco", time: "2h15m30s", points: 50, nationality: "ma", trend: "up" },
-      { rank: 2, name: "Alice Smith", team: "France", time: "+0m15s", points: 40, nationality: "fr", trend: "down" },
-      { rank: 3, name: "Carlos Rodriguez", team: "USA", time: "+0m32s", points: 30, nationality: "us", trend: "up" },
-      { rank: 4, name: "Emma Wilson", team: "Morocco", time: "+0m45s", points: 20, nationality: "ma", trend: "neutral" },
-      { rank: 5, name: "Liam Brown", team: "Canada", time: "+1m00s", points: 10, nationality: "ca", trend: "down" }
+  document.addEventListener("DOMContentLoaded", function() {
+    const rankings = [{
+        rank: 1,
+        name: "John Doe",
+        team: "Morocco",
+        time: "2h15m30s",
+        points: 50,
+        nationality: "ma",
+        trend: "up"
+      },
+      {
+        rank: 2,
+        name: "Alice Smith",
+        team: "France",
+        time: "+0m15s",
+        points: 40,
+        nationality: "fr",
+        trend: "down"
+      },
+      {
+        rank: 3,
+        name: "Carlos Rodriguez",
+        team: "USA",
+        time: "+0m32s",
+        points: 30,
+        nationality: "us",
+        trend: "up"
+      },
+      {
+        rank: 4,
+        name: "Emma Wilson",
+        team: "Morocco",
+        time: "+0m45s",
+        points: 20,
+        nationality: "ma",
+        trend: "neutral"
+      },
+      {
+        rank: 5,
+        name: "Liam Brown",
+        team: "Canada",
+        time: "+1m00s",
+        points: 10,
+        nationality: "ca",
+        trend: "down"
+      }
     ];
 
     const rankingBody = document.getElementById("ranking-body");
-    
+
     rankings.forEach(player => {
       const row = document.createElement("tr");
       row.className = "hover:bg-gray-50 transition-colors";
-      
+
       let trendIcon = "";
-      switch(player.trend) {
-        case "up": trendIcon = `<i class="fas fa-arrow-up text-emerald-500"></i>`; break;
-        case "down": trendIcon = `<i class="fas fa-arrow-down text-red-500"></i>`; break;
-        default: trendIcon = `<i class="fas fa-minus text-gray-400"></i>`;
+      switch (player.trend) {
+        case "up":
+          trendIcon = `<i class="fas fa-arrow-up text-emerald-500"></i>`;
+          break;
+        case "down":
+          trendIcon = `<i class="fas fa-arrow-down text-red-500"></i>`;
+          break;
+        default:
+          trendIcon = `<i class="fas fa-minus text-gray-400"></i>`;
       }
 
       row.innerHTML = `
@@ -154,19 +198,64 @@
       rankingBody.appendChild(row);
     });
   });
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const likeButton = document.getElementById('likeButton');
+    const heartIcon = document.getElementById('heartIcon');
+    const likeCount = document.getElementById('likeCount');
+    let isLiked = false;
+    let likes = 64;
+
+    likeButton.addEventListener('click', function() {
+      if (isLiked) {
+        likes--;
+        heartIcon.classList.remove('fas', 'text-red-500');
+        heartIcon.classList.add('far');
+        likeButton.classList.remove('text-red-500');
+        likeButton.classList.add('text-gray-500');
+      } else {
+        likes++;
+        heartIcon.classList.remove('far');
+        heartIcon.classList.add('fas', 'text-red-500');
+        likeButton.classList.remove('text-gray-500');
+        likeButton.classList.add('text-red-500');
+      }
+      isLiked = !isLiked;
+      likeCount.textContent = likes;
+    });
+  });
 </script>
 
 <style>
   .animate-pulse-slow {
     animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+
   @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
   }
-  .medal-1::after { content: "🥇"; }
-  .medal-2::after { content: "🥈"; }
-  .medal-3::after { content: "🥉"; }
+
+  .medal-1::after {
+    content: "🥇";
+  }
+
+  .medal-2::after {
+    content: "🥈";
+  }
+
+  .medal-3::after {
+    content: "🥉";
+  }
+
   .team-flag::before {
     content: "";
     display: inline-block;
@@ -176,8 +265,20 @@
     margin-right: 8px;
     border-radius: 2px;
   }
-  .team-flag.morocco::before { background-image: url('https://flagcdn.com/ma.svg'); }
-  .team-flag.france::before { background-image: url('https://flagcdn.com/fr.svg'); }
-  .team-flag.usa::before { background-image: url('https://flagcdn.com/us.svg'); }
-  .team-flag.saudi-arabia::before { background-image: url('https://flagcdn.com/sa.svg'); }
+
+  .team-flag.morocco::before {
+    background-image: url('https://flagcdn.com/ma.svg');
+  }
+
+  .team-flag.france::before {
+    background-image: url('https://flagcdn.com/fr.svg');
+  }
+
+  .team-flag.usa::before {
+    background-image: url('https://flagcdn.com/us.svg');
+  }
+
+  .team-flag.saudi-arabia::before {
+    background-image: url('https://flagcdn.com/sa.svg');
+  }
 </style>

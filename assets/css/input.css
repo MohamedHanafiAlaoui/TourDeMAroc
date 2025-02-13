@@ -17,10 +17,14 @@ html {
     scroll-behavior: smooth;
 }
 
-html::-webkit-scrollbar {
+*::-webkit-scrollbar {
     @apply w-1
 }
 
-html::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
     @apply rounded-2xl bg-green-200
+}
+
+input, select, textarea {
+    outline: none;
 }

@@ -2,7 +2,7 @@
     "name": "ycode/tour-de-maroc",
     "autoload": {
         "psr-4": {
-            "Ycode\\TourDeMaroc\\": "src/"
+            "App\\": "app/"
         }
     },
     "authors": [
