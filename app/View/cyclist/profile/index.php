@@ -16,7 +16,7 @@
       <!-- Profile Details with Improved Typography -->
       <div class="md:ml-12 space-y-2">
         <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
-          John Doe
+          <?= $informations->get ?>
         </h1>
         <div>
           <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
@@ -89,7 +89,7 @@
   </section>
 
   <!-- Enhanced Experience Modal -->
-  <div id="experienceModal" class="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 hidden 
+  <div id="experienceModal" class="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 
     transition-opacity duration-300">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative transform transition-transform duration-300 
       scale-95 opacity-0" id="modalContent">
@@ -162,6 +162,7 @@
   <script>
     // Modal Animation Logic
     const experienceModal = document.getElementById('experienceModal');
+    experienceModal.classList.add("heddin");
     const modalContent = document.getElementById('modalContent');
 
     document.getElementById('openExperienceModal').addEventListener('click', () => {
