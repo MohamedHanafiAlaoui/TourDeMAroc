@@ -68,7 +68,7 @@
                     <img src="/api/placeholder/400/500" alt="<?= htmlspecialchars($cyclist->getFullName()) ?>" class="w-full h-64 object-cover">
                     <div class="p-6 text-center">
                         <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($cyclist->getFullName()) ?></h3>
-                        <p class="text-emerald-500">Team <?= htmlspecialchars($cyclist->getNameTeam()) ?></p>
+                        <p class="text-emerald-500">Team : <?= htmlspecialchars($cyclist->getTeam()) ?></p>
                     </div>
                 </div>
             <?php endforeach;} ?>
