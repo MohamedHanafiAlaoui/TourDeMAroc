@@ -16,25 +16,25 @@
       <!-- Profile Details with Improved Typography -->
       <div class="md:ml-12 space-y-2">
         <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
-          <?= $informations->get ?>
+          <?= $cyclist->getFullName() ?>
         </h1>
         <div>
           <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
             <div class="flex items-center">
               <i class="fas fa-users text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Team:</span> Team Morocco</span>
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Team:</span> <?= $cyclist->getTeam() ?></span>
             </div>
             <div class="flex items-center">
               <i class="fas fa-flag text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Nationality:</span> Moroccan</span>
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Nationality:</span> <?= $cyclist->getNationality() ?></span>
             </div>
             <div class="flex items-center">
-              <i class="fas fa-birthday-cake text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Birthday:</span> January 1, 1990</span>
+              <i class="fas fa-birthday-cake text-emerald-500 w-6"></i>    
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Birthday:</span> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></span>
             </div>
             <div class="flex items-center">
               <i class="fas fa-envelope text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Email:</span> john.doe@example.com</span>
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Email:</span> <?= $cyclist->getEmail() ?></span>
             </div>
             <div class="flex items-center">
               <i class="fas fa-phone text-emerald-500 w-6"></i>
@@ -162,8 +162,8 @@
   <script>
     // Modal Animation Logic
     const experienceModal = document.getElementById('experienceModal');
-    experienceModal.classList.add("heddin");
     const modalContent = document.getElementById('modalContent');
+    experienceModal.classList.add('hidden');
 
     document.getElementById('openExperienceModal').addEventListener('click', () => {
       experienceModal.classList.remove('hidden');

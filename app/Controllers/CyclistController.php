@@ -13,8 +13,8 @@ class CyclistController extends BaseController {
 
     public function profile()
     {
-        $informations = Cyclist::findCyclist(1);
-        $this->render("cyclist/profile/index", compact("informations"));
+        $cyclist = Cyclist::findCyclist(1);
+        $this->render("cyclist/profile/index", compact("cyclist"));
     }
 
     public function unverifiedCyclists()
