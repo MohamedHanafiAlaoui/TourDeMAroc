@@ -79,5 +79,9 @@ class Like extends BaseModel
         return $likes;
     }
 
-    
+    public static function countLikes($stage_id)
+    {
+        $sql = "SELECT COUNT(*) FROM stages_likes WHERE stage_id = ?";
+        self::$db->fetchColumn();
+    }
 }
