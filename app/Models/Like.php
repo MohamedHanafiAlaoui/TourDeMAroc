@@ -59,7 +59,25 @@ class Like extends BaseModel
         return false;
     }
 
-    
+    public function remove()
+    {
+        $sql = "DELETE FROM stage_likes WHERE id_fan = ? AND stage_id = ?";
+        self::$db->query($sql, [$this->id_fan, $this->stage_id]);
+        return self::$db->execute();
+    }
+
+    public static function getFanLikes($id_fan)
+    {
+        $sql = "SELECT * FROM stage_likes WHERE id_fan = ?";
+        self::$db->query($sql, [$id_fan]);
+        $result = self::$db->results();
+
+        $likes = [];
+        foreach ($result as $row) {
+            $likes[] = new self($row['id'], $row['id_fan'], $row['stage_id']);
+        }
+        return $likes;
+    }
 
     
 }
