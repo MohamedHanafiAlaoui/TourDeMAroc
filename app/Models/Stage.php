@@ -168,7 +168,7 @@
 
         public static function NextStages()
         {
-            $sql = "SELECT s.*, r.id, r.name AS name_region FROM stages s JOIN regions r ON s.region_id = r.id ORDER BY s.start_date DESC LIMIT 3";
+            $sql = "SELECT s.*, r.id, r.name AS name_region FROM stages s JOIN regions r ON s.region_id = r.id ORDER BY s.start_date LIMIT 3";
 
             self::$db->query($sql);
             $result = self::$db->results();
@@ -186,7 +186,7 @@
 
         public static function show()
         {
-            $sql = "SELECT s.*, c.name AS categoryname FROM stages s JOIN categories c ON s.category_id = c.id ORDER BY s.start_date DESC";
+            $sql = "SELECT s.*, c.name AS categoryname FROM stages s JOIN categories c ON s.category_id = c.id ORDER BY s.start_date";
 
             self::$db->query($sql);
             $result = self::$db->results();

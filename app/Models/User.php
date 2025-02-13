@@ -21,6 +21,7 @@ class User extends BaseModel
         $this->email = $email;
         $this->password = $password;
         $this->role_id = $role_id;
+        $this->created_at = $created_at;
     }
 
     public function getId()
