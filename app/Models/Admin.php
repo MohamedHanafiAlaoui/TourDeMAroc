@@ -1,14 +1,31 @@
 <?php
 class Admin extends User {
-    public function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null) {
-        parent::__construct($id, $first_name, $last_name, $email, $password , $role_id, $created_at);
-    }
-    public function __get($name){
-        return $this->$name;
-    }
-    public function __set($name, $value){
-        $this->$name = $value;
-    }
+
+    public function update() 
+    {
+        $sql = "UPDATE admins 
+                SET first_name = :first_name, 
+                    last_name = :last_name, 
+                    email = :email, 
+                    password = :password, 
+                    role_id = :role_id,
+                    password_token_hash = :password_token_hash,
+                    password_token_expires_at = :password_token_expires_at
+                WHERE id = :id";
+    
+        self::$db->query($sql);
+        self::$db->bind(':first_name', $this->first_name);
+        self::$db->bind(':last_name', $this->last_name);
+        self::$db->bind(':email', $this->email);
+        self::$db->bind(':password', $this->password);
+        self::$db->bind(':role_id', $this->role_id);
+        self::$db->bind(':password_token_hash', $this->password_token_hash);
+        self::$db->bind(':password_token_expires_at', $this->password_token_expires_at);
+        self::$db->bind(':id', $this->id);
+
+        return self::$db->execute();
+    } 
+
     public function approveCyclest($id):bool{
         $query = "UPDATE cyclists SET approved = TRUE WHERE id = :id ";
         self::$db->query($query);
@@ -16,6 +33,7 @@ class Admin extends User {
         self::$db->execute();
         return true;
     }
+
     public function platformStatiscs(){
         $query = "SELECT count(*) as totalCyclest FROM cyclists WHERE approved = TRUE ";
         self::$db->query($query);

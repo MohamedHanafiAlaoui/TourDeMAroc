@@ -49,7 +49,9 @@
     $router->post('/signup', [AuthController::class, 'register'], ["visitor"]);
     
     $router->get('/forget-password', [ResetPasswordController::class, 'index'], ["visitor"]);
+    $router->post('/forget-password', [ResetPasswordController::class, 'store'], ["visitor"]);
     $router->get('/reset-password', [ResetPasswordController::class, 'reset'], ["visitor"]);
+    $router->post('/reset-password', [ResetPasswordController::class, 'update'], ["visitor"]);
 
     $router->dispatch($request);
 
