@@ -7,11 +7,11 @@
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-xl">
         <div class="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
-            <form class="space-y-6" action="#" method="POST">
+            <form class="space-y-6" action="<?= url('forget-password') ?>" method="POST">
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                    <input type="email" name="email" id="email" required class="block w-full mt-1 px-4 py-2 border outline-none border-gray-300 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Enter your email">
+                    <input type="email" name="email" id="email" class="block w-full mt-1 px-4 py-2 border outline-none border-gray-300 rounded-lg focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Enter your email">
                 </div>
 
                 <!-- Submit Button -->
