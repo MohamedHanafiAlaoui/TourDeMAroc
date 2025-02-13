@@ -50,6 +50,18 @@
             </span>
           </div>
         </div>
+
+        <!-- Cool Logout Button -->
+        <form method="POST" action="<?= url('logout') ?>" class="mt-6">
+          <button class="flex items-center justify-center bg-emerald-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Logout
+          </button>
+        </form>
       </div>
     </div>
   </section>

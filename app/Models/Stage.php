@@ -12,7 +12,8 @@
         private $id_region;
         private $difficulty_level;
         private $id_category;
-        
+        private $Description;
+
         private $nameCategory;
         private $nameRegion;
         private $photo;
@@ -81,6 +82,12 @@
             $this->id_category = $id_category;
         }
 
+        public function setDescription($Description)
+        {
+            $this->Description = $Description;
+        }
+          
+
         public function setNameCategory($nameCategory)
         {
             $this->nameCategory = $nameCategory;
@@ -140,6 +147,11 @@
         public function getIdCategory()
         {
             return $this->id_category;
+        }
+
+        public function getDescription()
+        {
+            return $this->Description;
         }
 
         public function getNameCategory()
@@ -253,20 +265,44 @@
         public function createStage($name,$start_location,$end_location,$distance_km,$start_date,$end_date,$id_region,$difficulty_level,$id_category,$photo){
             $query = "INSERT INTO stages (name, start_location, end_location,distance_km,start_date , end_date,category_id,region_id, region_id,difficulty_level,photo) VALUES (:name ,:start_location,:end_location,:distance_km,:start_date,:end_date,:category_id,:region_id,:difficulty_level,:photo)";
             self::$db->query($query);
-            $this->db->bind(':name', $name);
-            $this->db->bind(':start_location', $start_location);
-            $this->db->bind(':end_location', $end_location);
-            $this->db->bind(':distance_km', $distance_km);
-            $this->db->bind(':start_date', $start_date);
-            $this->db->bind(':end_date', $end_date);
-            $this->db->bind(':category_id', $id_category);
-            $this->db->bind(':region_id', $id_region);
-            $this->db->bind(':difficulty_level', $difficulty_level);
-            $this->db->bind(':photo', $photo);
+            self::$db->bind(':name', $name);
+            self::$db->bind(':start_location', $start_location);
+            self::$db->bind(':end_location', $end_location);
+            self::$db->bind(':distance_km', $distance_km);
+            self::$db->bind(':start_date', $start_date);
+            self::$db->bind(':end_date', $end_date);
+            self::$db->bind(':category_id', $id_category);
+            self::$db->bind(':region_id', $id_region);
+            self::$db->bind(':difficulty_level', $difficulty_level);
+            self::$db->bind(':photo', $photo);
             $status = self::$db->execute();
             return $status;
         }
 
+         //add find
+         public static function find(int $id)
+         {
+             $sql = "SELECT s.*, c.name AS category_name, r.name AS region_name
+                   
+                     FROM stages s
+                     LEFT JOIN categories c ON s.category_id = c.id
+                     LEFT JOIN regions r ON s.region_id = r.id
+                     WHERE s.id = :id";
+             self::$db->query($sql);
+             self::$db->bind(':id', $id);
+             $result = self::$db->results();
+             if (!$result) return null;
+             $stage = [];
+             foreach ($result as $key => $value) {
+                 $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], null, $value['difficulty_level'], $value['category_id']);
+                 $class->setNameCategory($value['category_name']);
+                 $class->setNameRegion($value['region_name']);
+                 $class->setDescription($value['description']);
+                 $stage[] = $class; 
+             }
+             return $stage;   
+         }
+     
         public static function Pagination($NbPage) 
         {
             $sql = "SELECT COUNT(*) FROM stages";
