@@ -13,7 +13,7 @@
     <aside id="sidebar" class="fixed overflow-y-scroll no-scrollbar top-0 left-0 h-screen w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40">
         <!-- Logo -->
         <div class="flex items-center justify-center h-16 border-b">
-            <span class="text-emerald-600 font-bold text-2xl">Tour de Maroc Admin</span>
+            <span class="text-emerald-600 font-bold text-2xl">Tour de Maroc</span>
         </div>
     
         <!-- Navigation Menu -->
@@ -56,10 +56,14 @@
 
                 <!-- Course Management Section -->
                 <div class="space-y-1 pt-2">
-                    <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Races</p>
+                    <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Stages</p>
                     <a href="<?= URLROOT . 'stages' ?>" class="<?= isActive("stages") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-flag-checkered"></i>
-                        <span>Manage Races</span>
+                        <span>Manage Stages</span>
+                    </a>
+                    <a href="<?= URLROOT . 'reports' ?>" class="<?= isActive("reports") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <i class="fa-solid fa-newspaper"></i>
+                        <span>Reports</span>
                     </a>
                 </div>
     
