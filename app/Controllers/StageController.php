@@ -14,8 +14,8 @@ class StageController extends BaseController {
 
     public function show($id)
     {
-        $details = Stage::find($id);
-        $this->render("fan/stages/show",compact("details"));
+        $detail = Stage::find($id);
+        $this->render("fan/stages/show",compact("detail"));
     }
 
     public function fetchStages()
