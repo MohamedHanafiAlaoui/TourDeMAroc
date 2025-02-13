@@ -12,7 +12,8 @@
         private $id_region;
         private $difficulty_level;
         private $id_category;
-        
+        private $Description;
+
         private $nameCategory;
         private $nameRegion;
         private $photo;
@@ -81,6 +82,12 @@
             $this->id_category = $id_category;
         }
 
+        public function setDescription($Description)
+        {
+            $this->Description = $Description;
+        }
+          
+
         public function setNameCategory($nameCategory)
         {
             $this->nameCategory = $nameCategory;
@@ -140,6 +147,11 @@
         public function getIdCategory()
         {
             return $this->id_category;
+        }
+
+        public function getDescription()
+        {
+            return $this->Description;
         }
 
         public function getNameCategory()
@@ -260,5 +272,30 @@
             $status = self::$db->execute();
             return $status;
         }
+
+         //add find
+         public static function find(int $id)
+         {
+             $sql = "SELECT s.*, c.name AS category_name, r.name AS region_name
+                   
+                     FROM stages s
+                     LEFT JOIN categories c ON s.category_id = c.id
+                     LEFT JOIN regions r ON s.region_id = r.id
+                     WHERE s.id = :id";
+             self::$db->query($sql);
+             self::$db->bind(':id', $id);
+             $result = self::$db->results();
+             if (!$result) return null;
+             $stage = [];
+             foreach ($result as $key => $value) {
+                 $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], null, $value['difficulty_level'], $value['category_id']);
+                 $class->setNameCategory($value['category_name']);
+                 $class->setNameRegion($value['region_name']);
+                 $class->setDescription($value['description']);
+                 $stage[] = $class; 
+             }
+             return $stage;   
+         }
+     
 
     }
