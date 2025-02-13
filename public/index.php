@@ -25,8 +25,8 @@
     $router->get('/tour', [HomeController::class, 'details'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor", "fan", "cyclist"]);
-    $router->get('/stages', [StagesController::class, 'index'], ["visitor", "fan", "cyclist"]);
-    $router->get('/stages/{id}', [StagesController::class, 'show'], ["visitor", "fan", "cyclist"]);
+    $router->get('/stages', [StageController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
@@ -39,8 +39,12 @@
     $router->post('/regions/delete', [RegionController::class, 'delete'], ["admin"]);
     $router->post('/regions/store', [RegionController::class, 'createRegion'], ["admin"]);
     $router->get('/regions', [RegionController::class, 'index'], ["admin"]);
+    $router->get('/stages', [StageController::class, 'index'], ["admin"]);
+    $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
+    $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
 
-    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor"]);
+    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor", "fan", "cyclist"]);
+    $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);
 
     
     
@@ -48,9 +52,12 @@
     $router->post('/login', [AuthController::class, 'signin'], ["visitor"]);
     $router->get('/signup', [AuthController::class, 'signup'], ["visitor"]);
     $router->post('/signup', [AuthController::class, 'register'], ["visitor"]);
+    $router->post('/logout', [AuthController::class, 'logout'], ["admin", "fan", "cyclist"]);
     
     $router->get('/forget-password', [ResetPasswordController::class, 'index'], ["visitor"]);
+    $router->post('/forget-password', [ResetPasswordController::class, 'store'], ["visitor"]);
     $router->get('/reset-password', [ResetPasswordController::class, 'reset'], ["visitor"]);
+    $router->post('/reset-password', [ResetPasswordController::class, 'update'], ["visitor"]);
 
     $router->dispatch($request);
 

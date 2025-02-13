@@ -57,7 +57,7 @@
                 <!-- Course Management Section -->
                 <div class="space-y-1 pt-2">
                     <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Races</p>
-                    <a href="<?= URLROOT . 'courses' ?>" class="<?= isActive("courses") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <a href="<?= URLROOT . 'stages' ?>" class="<?= isActive("stages") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-flag-checkered"></i>
                         <span>Manage Races</span>
                     </a>
@@ -66,11 +66,7 @@
                 <!-- Cyclist Management -->
                 <div class="space-y-1 pt-2">
                     <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Cyclist Management</p>
-                    <a href="<?= URLROOT . 'teachers' ?>" class="<?= isActive("teachers") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <i class="fas fa-biking"></i>
-                        <span>Verified Cyclists</span>
-                    </a>
-                    <a href="<?= URLROOT . 'unverified-teachers' ?>" class="<?= isActive("unverified-teachers") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <a href="<?= URLROOT . 'unverified-cyclists' ?>" class="<?= isActive("unverified-cyclists") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-user-clock"></i>
                         <span>Pending Verification</span>
                     </a>
@@ -79,13 +75,9 @@
                 <!-- Fan Management -->
                 <div class="space-y-1 pt-2">
                     <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Fan Management</p>
-                    <a href="<?= URLROOT . 'students' ?>" class="<?= isActive("students") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <a href="<?= URLROOT . 'pending-comments' ?>" class="<?= isActive("pending-comments") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-users"></i>
-                        <span>Active Fans</span>
-                    </a>
-                    <a href="<?= URLROOT . 'banned-students' ?>" class="<?= isActive("banned-students") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
-                        <i class="fas fa-user-slash"></i>
-                        <span>Banned Users</span>
+                        <span>Pending Comments</span>
                     </a>
                 </div>
     

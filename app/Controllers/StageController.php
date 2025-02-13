@@ -1,17 +1,21 @@
 <?php
-class StagesController extends BaseController {
+class StageController extends BaseController {
 
     public function index()
     {
         $NumberPagination = Stage::Pagination(3);
         $categorys = Category::All();
-        $this->render("fan/stages/index", compact("categorys", "NumberPagination"));
+
+        if (isLoggedIn() && user()->isAdmin()) {
+            $this->render("admin/stages/index", ["categories" => $categorys]);
+        }else{
+            $this->render("fan/stages/index", compact("categorys", "NumberPagination"));
+        }
     }
 
     public function show($id)
     {
-        $details = Stage::find($id);
-        $this->render("fan/stages/show",compact("details"));
+        $this->render("fan/stages/show");
     }
 
     public function fetchStages()

@@ -67,9 +67,9 @@ class Database
         return $this->stmt->fetch(PDO::FETCH_ASSOC);  // Fetch as an associative array
     }
 
-    public function results()
+    public function results($param = null)
     {
-        $this->execute();
+        $this->execute($param);
         return $this->stmt->fetchAll(PDO::FETCH_ASSOC);  // Fetch as an associative array
     }
 
