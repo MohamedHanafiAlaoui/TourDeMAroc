@@ -1,3 +1,4 @@
+
 <!-- Main Content -->
 <main class="max-w-7xl mx-auto px-4 pb-10 pt-28">
   <!-- Page Title & Introduction -->
@@ -7,7 +8,6 @@
       Explore all the stages of the Tour de Maroc and get an overview of the challenging courses.
     </p>
   </div>
-
   <!-- Search and Filter Section -->
   <div class="bg-white rounded-lg shadow-md p-6 mb-8">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -30,7 +30,7 @@
         >
           <option value="">All Types</option>
           <?php foreach ($categorys as $key => $value): ?>
-            <option value="<?= htmlspecialchars($value->getIdCategory()) ?>"><?= htmlspecialchars($value->getNameCategory()) ?></option>
+            <option value="<?= htmlspecialchars($value->getId()) ?>"><?= htmlspecialchars($value->getName()) ?></option>
           <?php endforeach; ?>
         </select>
       </div>
@@ -72,58 +72,64 @@
 </main>
 
 <script>
-  // touver la valeur drs input de search et filrage
-  const stagesGrid = document.getElementById("stages-grid");
-  let searchInput = document.getElementById("search");
-  let filterType = document.getElementById("stage-type");
-  let filterDistance = document.getElementById("distance");
 
-  let radioButtons = document.querySelectorAll('#paginationGrid label');
-  let PageTotal = radioButtons.length; 
-  let NbPage = 0;
+  // Obtenir les éléments de la page
+const stagesGrid = document.getElementById("stages-grid");
+let searchInput = document.getElementById("search");
+let filterType = document.getElementById("stage-type");
+let filterDistance = document.getElementById("distance");
 
+let radioButtons = document.querySelectorAll('#paginationGrid label');
+// //les element de pagination 
+  let paginationGrid = document.getElementById('paginationGrid');
+  let Previous_page = document.getElementById('Previous_page');
+  let Next_page = document.getElementById('Next_page');
+let PageTotal = 0; 
+let NbPage = 0;
 
-  // Search functionality with 
-  let debounceTimeout;
-  searchInput.addEventListener("input", (e) => {
+// Fonction de recherche avec debounce
+let debounceTimeout;
+searchInput.addEventListener("input", (e) => {
     clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(fetchStage, 150);
+    debounceTimeout = setTimeout(() => {
+      if (searchInput.value.trim() !== "") {
+        fetchStage();
+      } else {
+        NbPage = 0;
+        fetchStage();
+      }
+    }, 150);
   });
+  
+filterDistance.addEventListener("input", () => { NbPage = 0; fetchStage()});
+filterType.addEventListener("input", () => { NbPage = 0; fetchStage()});
 
-  filterDistance.addEventListener("input", (e) => {
-    fetchStage();
-  });
-
-  filterType.addEventListener("input", (e) => {
-    fetchStage();
-  });
-
-  function fetchStage() {
-    const url = `api/Stages?search=${searchInput.value}&type=${filterType.value}&distance=${filterDistance.value}&NumberPage=${NbPage}`
+// Fonction de récupération des données
+function fetchStage() {
+    const url = `api/Stages?search=${searchInput.value}&type=${filterType.value}&distance=${filterDistance.value}&NumberPage=${NbPage}`;
     
     fetch(url)
     .then(result => result.json())
     .then((data) => {
-      if (data.length == 0) {
-        PageTotal = 0;
-      }
-      
-      toString(data);
-      PaginationBar(PageTotal);
+        if (data.length == 0) {
+            PageTotal = 0;
+        } else {
+            PageTotal = data[0]['page_stage'];
+        }
+        toString(data);
+        PaginationBar(PageTotal);
     }).catch((err) => {
-      console.log(err);
+        console.log(err);
     });
-  }
-  let buton = null;
-  
-  function toString(stages)
-  {
+}
+
+// Affichage des données des étapes
+function toString(stages) {
     stagesGrid.innerHTML = ``;
-    if (stages == []) {
+    if (stages.length == 0) {
       const stageCard = document.createElement("div");
       stageCard.className = "h-72 flex justify-center";
       stageCard.innerHTML = `<span class="text-red-500">No Stage exist</span>`;
-      
       stagesGrid.appendChild(stageCard);
     } else {
       stages.forEach(stage => {
@@ -147,91 +153,88 @@
           </div>`;
         
         stagesGrid.appendChild(stageCard);
-
-        PageTotal = stage['page_stage'];
-        
-        
       });
     }
-  }
-  
-  //les element de pagination 
-  let paginationGrid = document.getElementById('paginationGrid');
-  let Previous_page = document.getElementById('Previous_page');
-  let Next_page = document.getElementById('Next_page');
+}
 
-  // continaire de pagination 
-  
-  radioButtons.forEach(element => {
-      element.addEventListener('click', () => {
-        const input = document.querySelector(`#${element.getAttribute('for')}`);
-        styleInit(element);
-        NbPage = input.value;
-        fetchStage();
-      })
-  });
-  
-   
-
-  function PaginationBar(NbPage) {
+// Fonction pour gérer la pagination
+function PaginationBar(PageTotal) {
     paginationGrid.innerHTML = '';
     paginationGrid.appendChild(Previous_page);
-    for (let index = 0; index < NbPage; index++) {
 
-      const radioButton = document.createElement('input');
-      radioButton.type = 'radio';
-      radioButton.id = `page${index}`;
-      radioButton.name = 'pagination';
-      radioButton.value = index;
-      radioButton.classList.add('hidden');
-      
-      const label = document.createElement('label');
-      label.setAttribute('for', `page${index}`);
-      label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
-      label.textContent = index + 1;
+    // Ajouter des boutons de pagination si PageTotal est supérieur à 0
+    if (PageTotal > 0) {
+        for (let index = 0; index < PageTotal; index++) {
+            const radioButton = document.createElement('input');
+            radioButton.type = 'radio';
+            radioButton.id = `page${index}`;
+            radioButton.name = 'pagination';
+            radioButton.value = index;
+            radioButton.classList.add('hidden');
+            
+            const label = document.createElement('label');
+            label.setAttribute('for', `page${index}`);
+            label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
+            label.textContent = index + 1;
 
-      if (index == 0) {
-        label.classList.add('text-emerald-500');
-      } else {
-        label.classList.add('text-gray-700');
-      }
+            if (index == 0) { 
+                label.classList.add('text-emerald-500');
+                radioButton.checked = true;
+            } else {
+                label.classList.add('text-gray-700');
+            }
 
-      paginationGrid.appendChild(radioButton);
-      paginationGrid.appendChild(label);
+            paginationGrid.appendChild(radioButton);
+            paginationGrid.appendChild(label);
+        }
     }
+
     paginationGrid.appendChild(Next_page);
-    
-  }
+    radioButtons = document.querySelectorAll('#paginationGrid label');
+    ButtonPagination();
+}
 
-  // Next_page
-  Next_page.addEventListener('click' , () => {
-    if (NbPage < PageTotal-1) {
-      
-      NbPage++;
-      buton = document.querySelector(`label[for="page${NbPage}"]`);
-      styleInit(buton);
-      fetchStage();
-    }    
-  });
+// Gérer les événements des boutons de pagination
+function ButtonPagination() {
+    radioButtons.forEach(element => {
+        element.addEventListener('click', () => {
+            const input = document.querySelector(`#${element.getAttribute('for')}`);
+            NbPage = input.value;
+            fetchStage();
+            
+            styleInit();
+            
+        });
+    });
 
-  // Previous_page
-  Previous_page.addEventListener('click' , () => {
-    if (NbPage > 0) {
-      NbPage--;
-      buton = document.querySelector(`label[for="page${NbPage}"]`);
-      styleInit(buton);
-      fetchStage();
-    }    
-  });
+    // Gestion du bouton "Suivant"
+    Next_page.addEventListener('click', () => {
+        if (NbPage < PageTotal - 1) {
+            NbPage++;
+            fetchStage();
+            styleInit();
+        }
+    });
 
-  
+    // Gestion du bouton "Précédent"
+    Previous_page.addEventListener('click', () => {
+        if (NbPage > 0) {
+            NbPage--;
+            fetchStage();
+            styleInit();
+            
+        }
+    });
+}
 
-  // inistialiser le style des input de pagination
-  function styleInit(btn){
-      document.querySelector('#paginationGrid .text-emerald-500').classList.replace('text-emerald-500', 'text-gray-700');
-      btn.classList.replace('text-gray-700', 'text-emerald-500');
-  }
-  
-  
-  document.addEventListener('DOMContentLoaded', fetchStage)
+function styleInit() {
+  document.querySelector('#paginationGrid .text-emerald-500').classList.replace('text-emerald-500', 'text-gray-700');
+  const btn = document.querySelector('#paginationGrid input:checked');
+  document.querySelector(`label[for="page${NbPage}"]`).classList.replace('text-gray-700', 'text-emerald-500');
+
+}
+
+// Initialisation de la pagination et affichage des données
+document.addEventListener('DOMContentLoaded', fetchStage);
+
 </script>

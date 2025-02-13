@@ -2,8 +2,6 @@
   <div class="bg-white rounded-2xl shadow-xl p-8">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
 
-      <?php foreach($details as $detail)  :?>
-        
       <div> 
         <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1:   <?php echo $detail->getStLocation() ; ?> →  <?php echo $detail->getEnLocation() ; ?></h1>
         <p class="text-xl text-gray-600"><?php
@@ -78,7 +76,6 @@
         <li>Technical finish with a slight uphill in the last 2 km</li>
       </ul>
     </div>
-    <?php endforeach;  ?>
   </div>
 </div>
 
