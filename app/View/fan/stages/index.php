@@ -72,182 +72,6 @@
 </main>
 
 <script>
-  // // touver la valeur drs input de search et filrage
-  // const stagesGrid = document.getElementById("stages-grid");
-  // let searchInput = document.getElementById("search");
-  // let filterType = document.getElementById("stage-type");
-  // let filterDistance = document.getElementById("distance");
-
-  // let radioButtons = document.querySelectorAll('#paginationGrid label');
-  // let PageTotal = radioButtons.length; 
-  // let NbPage = 0;
-
-
-  // // Search functionality with 
-  // let debounceTimeout;
-  // searchInput.addEventListener("input", (e) => {
-  //   clearTimeout(debounceTimeout);
-  //   debounceTimeout = setTimeout(fetchStage, 150);
-  // });
-
-  // filterDistance.addEventListener("input", (e) => {
-  //   fetchStage();
-  // });
-
-  // filterType.addEventListener("input", (e) => {
-  //   fetchStage();
-  // });
-
-  // function fetchStage() {
-  //   const url = `api/Stages?search=${searchInput.value}&type=${filterType.value}&distance=${filterDistance.value}&NumberPage=${NbPage}`
-    
-  //   fetch(url)
-  //   .then(result => result.json())
-  //   .then((data) => {
-  //     if (data.length == 0) {
-  //       PageTotal = 0;
-  //     }
-  //     toString(data);
-  //     PaginationBar(PageTotal);
-  //   }).catch((err) => {
-  //     console.log(err);
-  //   });
-  // }
-  // let buton = null;
-  
-  // function toString(stages)
-  // {
-  //   stagesGrid.innerHTML = ``;
-  //   if (stages == []) {
-  //     const stageCard = document.createElement("div");
-  //     stageCard.className = "h-72 flex justify-center";
-  //     stageCard.innerHTML = `<span class="text-red-500">No Stage exist</span>`;
-      
-  //     stagesGrid.appendChild(stageCard);
-  //   } else {
-  //     stages.forEach(stage => {
-  //       const stageCard = document.createElement("div");
-  //       stageCard.className = "bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300";
-
-  //       stageCard.innerHTML = 
-  //           `<img
-  //             src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
-  //             alt="Stage Map"
-  //             class="w-full h-48 object-cover"
-  //           />
-  //           <div class="p-6">
-  //             <h3 class="font-bold text-xl mb-2">Stage 1: ${stage['start_location']} → ${stage['end_location']}</h3>
-  //             <p class="text-gray-600 mb-1"><strong>Distance:</strong> ${stage['distance_km']} km</p>
-  //             <p class="text-gray-600 mb-4"><strong>Type:</strong> ${stage['nameCategory']}</p>
-  //             <a href="#?id=${stage['id']}"
-  //               class="inline-block bg-emerald-500 text-white py-2 px-4 rounded hover:bg-emerald-600 transition duration-300"
-  //             >View Details</a>
-  //           </div>
-  //         </div>`;
-        
-  //       stagesGrid.appendChild(stageCard);
-
-  //       PageTotal = stage['page_stage'];
-        
-        
-  //     });
-  //   }
-  // }
-  
-  // //les element de pagination 
-  // let paginationGrid = document.getElementById('paginationGrid');
-  // let Previous_page = document.getElementById('Previous_page');
-  // let Next_page = document.getElementById('Next_page');
-  // PaginationBar(PageTotal);
-  // // continaire de pagination 
-  
-  // radioButtons.forEach(element => {
-  //     element.addEventListener('click', () => {
-  //       const input = document.querySelector(`#${element.getAttribute('for')}`);
-  //       styleInit(element);
-  //       NbPage = input.value;
-  //       fetchStage();
-  //     })
-  // });
-  
-   
-
-  // function PaginationBar(NbPage) {
-  //   paginationGrid.innerHTML = '';
-  //   paginationGrid.appendChild(Previous_page);
-  //   for (let index = 0; index < NbPage; index++) {
-
-  //     const radioButton = document.createElement('input');
-  //     radioButton.type = 'radio';
-  //     radioButton.id = `page${index}`;
-  //     radioButton.name = 'pagination';
-  //     radioButton.value = index;
-  //     radioButton.classList.add('hidden');
-      
-  //     const label = document.createElement('label');
-  //     label.setAttribute('for', `page${index}`);
-  //     label.classList.add('px-4', 'py-2', 'border-t', 'border-b', 'border-gray-300', 'bg-white', 'text-sm', 'font-medium', 'hover:bg-gray-50');
-  //     label.textContent = index + 1;
-
-  //     if (index == 0) {
-  //       label.classList.add('text-emerald-500');
-  //     } else {
-  //       label.classList.add('text-gray-700');
-  //     }
-
-  //     paginationGrid.appendChild(radioButton);
-  //     paginationGrid.appendChild(label);
-  //   }
-  //   paginationGrid.appendChild(Next_page);
-  //   radioButtons = document.querySelectorAll('#paginationGrid label');
-  //   ButtonPagination();
-  // }
-
-  // function ButtonPagination(){
-  //   // continaire de pagination 
-  
-  //   console.log(radioButtons);
-  //   radioButtons.forEach(element => {
-  //       element.addEventListener('click', () => {
-  //         const input = document.querySelector(`#${element.getAttribute('for')}`);
-  //         NbPage = input.value;
-  //         fetchStage();
-  //         styleInit(element);
-  //       })
-  //   });
-    
-  //   // Next_page
-  // Next_page.addEventListener('click' , () => {
-  //   if (NbPage < PageTotal-1) {
-      
-  //     NbPage++;
-  //     buton = document.querySelector(`label[for="page${NbPage}"]`);
-  //     fetchStage();
-  //     styleInit(buton);
-  //   }    
-  // });
-
-  // // Previous_page
-  // Previous_page.addEventListener('click' , () => {
-  //   if (NbPage > 0) {
-  //     NbPage--;
-  //     buton = document.querySelector(`label[for="page${NbPage}"]`);
-  //     fetchStage();
-  //     styleInit(buton);
-  //   }    
-  // });
-  // }
-
-  
-
-  // // inistialiser le style des input de pagination
-  // function styleInit(btn){
-  //     document.querySelector('#paginationGrid .text-emerald-500').classList.replace('text-emerald-500', 'text-gray-700');
-  //     btn.classList.replace('text-gray-700', 'text-emerald-500');
-  // }
-  
-  
-  // document.addEventListener('DOMContentLoaded', fetchStage)
 
   // Obtenir les éléments de la page
 const stagesGrid = document.getElementById("stages-grid");
@@ -389,7 +213,6 @@ function ButtonPagination() {
             NbPage++;
             fetchStage();
             styleInit();
-            console.log(NbPage);
         }
     });
 
@@ -399,7 +222,6 @@ function ButtonPagination() {
             NbPage--;
             fetchStage();
             styleInit();
-            console.log(NbPage);
             
         }
     });
