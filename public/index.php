@@ -31,7 +31,9 @@
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
 
-
+    //routes des likes
+    $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);
+    $router->get('/like-count/{id}', [LikeController::class, 'getLikeCount'], ["visitor", "fan", "cyclist"]);
 
     $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor"]);
 
