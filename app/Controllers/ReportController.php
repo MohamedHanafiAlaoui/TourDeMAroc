@@ -1,12 +1,12 @@
 <?php
-class ReportsController extends BaseController {
+class ReportController extends BaseController {
 
     public function index()
     {
         $this->render("admin/reports/index");
     }
 
-    public function create()
+    public function store()
     {
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
