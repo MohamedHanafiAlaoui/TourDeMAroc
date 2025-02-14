@@ -7,6 +7,7 @@ class Cyclist extends User
     private $approved;
     private $team;
 
+
     function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null, $password_token_hash = null, $password_token_expires_at = null, $photo = null,
                                 $nationality = null, $birthdate = null, $approved = null, $team = null
                             )
@@ -17,7 +18,6 @@ class Cyclist extends User
             $this->approved = $approved;
             $this->team = $team;
         }
-
     public function setNationality($nationality)
     {
         $this->nationality = $nationality;
@@ -48,6 +48,7 @@ class Cyclist extends User
         return $this->nationality;
     }
 
+
     public function getPointsAwarded()
     {
         return $this->points_awarded;
@@ -68,6 +69,22 @@ class Cyclist extends User
         return $this->team;
     }
 
+
+
+
+    public function setTotalTime($total_time)
+    {
+        $this->total_time = $total_time;
+    }
+
+
+    public function getTotalTime()
+    {
+        return $this->total_time;
+    }
+
+
+
     public function save()
     {
         $sql = "INSERT INTO cyclists (first_name, last_name, email, password, role_id) VALUES (:first_name, :last_name, :email, :password, :role_id)";
@@ -80,7 +97,7 @@ class Cyclist extends User
         return self::$db->execute();
     }
 
-    public function update() 
+    public function update()
     {
         $sql = "UPDATE cyclists 
                 SET first_name = :first_name, 
@@ -95,7 +112,7 @@ class Cyclist extends User
                     password_token_hash = :password_token_hash,
                     password_token_expires_at = :password_token_expires_at
                 WHERE id = :id";
-    
+
         self::$db->query($sql);
         self::$db->bind(':first_name', $this->first_name);
         self::$db->bind(':last_name', $this->last_name);
@@ -109,20 +126,99 @@ class Cyclist extends User
         self::$db->bind(':photo', $this->photo);
         self::$db->bind(':team', $this->team);
         self::$db->bind(':id', $this->id);
-    
-        return self::$db->execute();
-    }    
 
-    public static function getTopCyclists($limit = null)
+        return self::$db->execute();
+    }
+
+    public static function TopCyclists($number)
     {
-        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, c.team AS team_name, 
-                   SUM(sp.points_awarded) AS total_points 
+        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.id as team_id, t.name AS team_name 
+                FROM cyclists c LEFT JOIN teams t ON c.id= t.id
+                ORDER BY total_points DESC LIMIT :number";
+        self::$db->query($sql);
+        self::$db->bind(':number', $number);
+
+        $result = self::$db->results();
+
+        $cyclests = [];
+
+        foreach ($result as $key => $value) {
+            $cyclist = new self($value['id'], $value['first_name'], $value['last_name'], $value['photo']);
+            $cyclist->setIdTeme($value['team_id']);
+            $cyclist->setTeme($value['team_name'] ?? '-------');
+
+            $cyclests[] = $cyclist;
+        }
+        return $cyclests;
+    }
+
+    // public static function getTopCyclists($limit = null)
+    // {
+    //     $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.name AS team_name, 
+    //                SUM(sp.points_awarded) AS total_points 
+    //         FROM cyclists c
+    //         JOIN stage_points sp ON c.id = sp.id_cyclist
+    //         JOIN teams t ON c.team_id = t.id
+    //         GROUP BY c.id, c.first_name, c.last_name, c.photo, t.name
+    //         ORDER BY total_points DESC";
+
+    //     if ($limit) {
+    //         $sql .= " LIMIT :limit";
+    //     }
+
+    //     self::$db->query($sql);
+
+    //     if ($limit) {
+    //         self::$db->bind(':limit', $limit);
+    //     }
+
+    //     $result = self::$db->results();
+
+
+
+    //     $cyclists = [];
+
+    //     foreach ($result as $row) {
+    //         $cyclist = new self(
+    //             $row['id'],
+    //             $row['first_name'],
+    //             $row['last_name'],
+    //             null,
+    //             null,
+    //             null,
+    //             null,
+    //             null,
+    //             null,
+    //             $row['photo'],
+    //             null,
+    //             null,
+    //             $row['total_points'],
+    //             null,
+    //             null
+    //         );
+    //         $cyclist->setTeme($row['team_name']);
+
+    //         $cyclists[] = $cyclist;
+    //     }
+
+    //     return $cyclists;
+    // }
+
+    
+    public static function getTopCyclists($limit = null)
+{
+    $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.name AS team_name, 
+                   SUM(sp.points_awarded) AS total_points,
+                   STRING_AGG(
+                       EXTRACT(HOUR FROM sp.total_time) || 'h ' || 
+                       EXTRACT(MINUTE FROM sp.total_time) || 'm', ', '
+                   ) AS total_time
             FROM cyclists c
             JOIN stage_points sp ON c.id = sp.id_cyclist
             GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
             ORDER BY total_points DESC";
-     
-     if ($limit) {
+    
+    if ($limit) {
         $sql .= " LIMIT :limit";
     }
 
@@ -134,8 +230,6 @@ class Cyclist extends User
 
     $result = self::$db->results();
 
-
-
     $cyclists = [];
 
     foreach ($result as $row) {
@@ -145,7 +239,7 @@ class Cyclist extends User
             $row['last_name'],
             null, 
             null, 
-            null, 
+            null,
             null,
             null, 
             null, 
@@ -162,15 +256,14 @@ class Cyclist extends User
     }
 
     return $cyclists;
-        
-    }
+}
 
     public static function findCyclist($id)
     {
         $sql = "SELECT * FROM cyclists WHERE id = :id";
         self::$db->query($sql);
         self::$db->bind(':id', $id);
-        
+
         $result = self::$db->single();
 
         if (self::$db->rowCount() > 0) {

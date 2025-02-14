@@ -9,7 +9,7 @@
 
   <!-- Enhanced Podium Section -->
   <div class="flex flex-col md:flex-row justify-center items-end space-y-8 md:space-y-0 md:space-x-8 mb-16">
-  <?php
+    <?php
     // Ensure there are at least 3 cyclists
     $topCyclists = array_pad($topCyclists, 3, new Cyclist());
 
@@ -23,8 +23,8 @@
       <div class="relative bg-gradient-to-b from-gray-200 to-white rounded-t-2xl shadow-xl w-32 h-48 flex flex-col justify-end">
         <div class="absolute -top-14 left-1/2 transform -translate-x-1/2">
           <div class="relative w-28 h-28">
-          <img src="<?= $secondPlace->getPhoto() ?>" alt="<?= $secondPlace->getFirstName() ?>" 
-          class="rounded-full border-4 border-silver shadow-lg w-28 h-28">
+            <img src="<?= $secondPlace->getPhoto() ?>" alt="<?= $secondPlace->getFirstName() ?>"
+              class="rounded-full border-4 border-silver shadow-lg w-28 h-28">
           </div>
         </div>
         <div class="text-center font-bold text-gray-800 py-3 bg-silver/20">
@@ -32,10 +32,10 @@
         </div>
       </div>
       <div class="mt-4 text-center">
-      <h3 class="text-xl font-bold text-gray-800"><?= $secondPlace->getFirstName() . " " . $secondPlace->getLastName() ?></h3>
-    <div class="flex items-center justify-center mt-1 space-x-2">
-      <span class="text-sm text-gray-600">🏆 <?= $secondPlace->getTotalePoints() ?> points</span>
-    </div>
+        <h3 class="text-xl font-bold text-gray-800"><?= $secondPlace->getFirstName() . " " . $secondPlace->getLastName() ?></h3>
+        <div class="flex items-center justify-center mt-1 space-x-2">
+          <span class="text-sm text-gray-600">🏆 <?= $secondPlace->getTotalePoints() ?> points</span>
+        </div>
       </div>
     </div>
 
@@ -44,8 +44,8 @@
       <div class="relative bg-gradient-to-b from-amber-200 to-white rounded-t-2xl shadow-2xl w-40 h-64 flex flex-col justify-end">
         <div class="absolute -top-20 left-1/2 transform -translate-x-1/2">
           <div class="relative w-32 h-32">
-          <img src="<?= $firstPlace->getPhoto() ?>" alt="<?= $firstPlace->getFirstName() ?>" 
-          class="rounded-full border-4 border-gold shadow-xl w-32 h-32">
+            <img src="<?= $firstPlace->getPhoto() ?>" alt="<?= $firstPlace->getFirstName() ?>"
+              class="rounded-full border-4 border-gold shadow-xl w-32 h-32">
           </div>
         </div>
         <div class="text-center font-bold text-gray-800 py-4 bg-amber-100">
@@ -53,10 +53,10 @@
         </div>
       </div>
       <div class="mt-6 text-center">
-      <h3 class="text-2xl font-bold text-gray-800"><?= $firstPlace->getFirstName() . " " . $firstPlace->getLastName() ?></h3>
-    <div class="flex items-center justify-center mt-2 space-x-2">
-      <span class="text-sm text-gray-600">🏆 <?= $firstPlace->getTotalePoints() ?> points</span>
-    </div>
+        <h3 class="text-2xl font-bold text-gray-800"><?= $firstPlace->getFirstName() . " " . $firstPlace->getLastName() ?></h3>
+        <div class="flex items-center justify-center mt-2 space-x-2">
+          <span class="text-sm text-gray-600">🏆 <?= $firstPlace->getTotalePoints() ?> points</span>
+        </div>
       </div>
     </div>
 
@@ -65,8 +65,8 @@
       <div class="relative bg-gradient-to-b from-bronze-200 to-white rounded-t-2xl shadow-xl w-32 h-40 flex flex-col justify-end">
         <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
           <div class="relative w-28 h-28">
-          <img src="<?= $thirdPlace->getPhoto() ?>" alt="<?= $thirdPlace->getFirstName() ?>" 
-          class="rounded-full border-4 border-bronze shadow-lg w-28 h-28">
+            <img src="<?= $thirdPlace->getPhoto() ?>" alt="<?= $thirdPlace->getFirstName() ?>"
+              class="rounded-full border-4 border-bronze shadow-lg w-28 h-28">
           </div>
         </div>
         <div class="text-center font-bold text-gray-800 py-3 bg-bronze/20">
@@ -74,10 +74,10 @@
         </div>
       </div>
       <div class="mt-4 text-center">
-      <h3 class="text-xl font-bold text-gray-800"><?= $thirdPlace->getFirstName() . " " . $thirdPlace->getLastName() ?></h3>
-    <div class="flex items-center justify-center mt-1 space-x-2">
-      <span class="text-sm text-gray-600">🏆 <?= $thirdPlace->getTotalePoints() ?> points</span>
-    </div>
+        <h3 class="text-xl font-bold text-gray-800"><?= $thirdPlace->getFirstName() . " " . $thirdPlace->getLastName() ?></h3>
+        <div class="flex items-center justify-center mt-1 space-x-2">
+          <span class="text-sm text-gray-600">🏆 <?= $thirdPlace->getTotalePoints() ?> points</span>
+        </div>
       </div>
     </div>
   </div>
@@ -107,41 +107,59 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-          <tr class="hover:bg-gray-50 transition-colors">
-            <td class="px-6 py-4 whitespace-nowrap font-medium">4</td>
-            <td class="px-6 py-4 whitespace-nowrap flex items-center">
-              <img src="https://img.aso.fr/core_app/img-cycling-tdf-png/1/56074/0:0,400:400-300-0-70/8b05c" alt="Emma Wilson" class="w-12 h-12 rounded-full mr-3">
-              Emma Wilson
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">2h 30m</td>
-            <td class="px-6 py-4 whitespace-nowrap font-medium">1700</td>
-            <td class="px-6 py-4 whitespace-nowrap text-emerald-500">▲ 1.2%</td>
-          </tr>
-          <tr class="hover:bg-gray-50 transition-colors">
-            <td class="px-6 py-4 whitespace-nowrap font-medium">5</td>
-            <td class="px-6 py-4 whitespace-nowrap flex items-center">
-              <img src="https://img.aso.fr/core_app/img-cycling-tdf-png/1/56074/0:0,400:400-300-0-70/8b05c" alt="Liam Brown" class="w-12 h-12 rounded-full mr-3">
-              Liam Brown
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">2h 35m</td>
-            <td class="px-6 py-4 whitespace-nowrap font-medium">1650</td>
-            <td class="px-6 py-4 whitespace-nowrap text-red-500">▼ 0.8%</td>
-          </tr>
-          <!-- More rows -->
+          <?php foreach ($allCyclists as $index => $cyclist): ?>
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap font-medium"><?= $index + 1 ?></td>
+              <td class="px-6 py-4 whitespace-nowrap flex items-center">
+                <img src="<?= $cyclist->getPhoto() ?>" alt="<?= $cyclist->getFirstName() ?>" class="w-12 h-12 rounded-full mr-3">
+                <?= $cyclist->getFirstName() . " " . $cyclist->getLastName() ?>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap"><?= $cyclist->getTotalTime() ?></td>
+              <td class="px-6 py-4 whitespace-nowrap font-medium"><?= $cyclist->getTotalePoints() ?></td>
+              <td class="px-6 py-4 whitespace-nowrap text-emerald-500"><?= $cyclist->getTeam() ?></td>
+            </tr>
+          <?php endforeach; ?>
         </tbody>
+
       </table>
     </div>
   </section>
 </main>
 
 <style>
-  .gold-gradient { background: linear-gradient(45deg, #FFD700, #FFEC8B); }
-  .silver-gradient { background: linear-gradient(45deg, #C0C0C0, #E5E4E2); }
-  .bronze-gradient { background: linear-gradient(45deg, #CD7F32, #E6B17E); }
-  .border-gold { border-color: #FFD700; }
-  .border-silver { border-color: #C0C0C0; }
-  .border-bronze { border-color: #CD7F32; }
-  .bg-gold-gradient { background: linear-gradient(45deg, rgba(255,215,0,0.2), rgba(255,236,139,0.2)); }
-  .bg-silver-gradient { background: linear-gradient(45deg, rgba(192,192,192,0.2), rgba(229,228,226,0.2)); }
-  .bg-bronze-gradient { background: linear-gradient(45deg, rgba(205,127,50,0.2), rgba(230,177,126,0.2)); }
+  .gold-gradient {
+    background: linear-gradient(45deg, #FFD700, #FFEC8B);
+  }
+
+  .silver-gradient {
+    background: linear-gradient(45deg, #C0C0C0, #E5E4E2);
+  }
+
+  .bronze-gradient {
+    background: linear-gradient(45deg, #CD7F32, #E6B17E);
+  }
+
+  .border-gold {
+    border-color: #FFD700;
+  }
+
+  .border-silver {
+    border-color: #C0C0C0;
+  }
+
+  .border-bronze {
+    border-color: #CD7F32;
+  }
+
+  .bg-gold-gradient {
+    background: linear-gradient(45deg, rgba(255, 215, 0, 0.2), rgba(255, 236, 139, 0.2));
+  }
+
+  .bg-silver-gradient {
+    background: linear-gradient(45deg, rgba(192, 192, 192, 0.2), rgba(229, 228, 226, 0.2));
+  }
+
+  .bg-bronze-gradient {
+    background: linear-gradient(45deg, rgba(205, 127, 50, 0.2), rgba(230, 177, 126, 0.2));
+  }
 </style>

@@ -1,5 +1,6 @@
 <?php
-class CyclistController extends BaseController {
+class CyclistController extends BaseController
+{
 
     public function index()
     {
@@ -72,10 +73,10 @@ class CyclistController extends BaseController {
     
     public function ranking()
     {
-        $topCyclists = Cyclist::getTopCyclists(3);
+        $topCyclists = Cyclist::getTopCyclists(3);  
 
         $allCyclists = Cyclist::getTopCyclists(); 
-   
-        $this->render("/fan/ranking/index", compact('topCyclists', 'allCyclists'));
+
+        $this->render("/fan/ranking/index", compact("topCyclists", "allCyclists"));
     }
 }
