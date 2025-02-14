@@ -310,4 +310,17 @@
             return ceil($result[0]['count'] / $NbPage);
         }
 
+        public function likesCount()
+        {
+            $sql = "SELECT COUNT(*) as likes_count
+                    FROM stage_likes
+                    WHERE stage_id = :id";
+
+            self::$db->query($sql);
+            self::$db->bind(':id', $this->id_stage);
+
+            $result = self::$db->single();
+
+            return $result["likes_count"];
+        }
     }
