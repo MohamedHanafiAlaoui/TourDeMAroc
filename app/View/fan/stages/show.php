@@ -2,50 +2,60 @@
   <div class="bg-white rounded-2xl shadow-xl p-8">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
       <div> 
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1:   <?php echo $detail->getStLocation() ; ?> →  <?php echo $detail->getEnLocation() ; ?></h1>
-        <p class="text-xl text-gray-600"><?php
-                                          $date = (new DateTime( $detail->getStDate()))->format("F j, Y");
-                                         echo $date ; ?>  → 
-                                         
-                                         <?php
-
-                                            $date = (new DateTime( $detail->getEnDate()))->format("F j, Y");
-                                            echo $date ; ?>
-                                          </p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1: <?php echo $stage->getStLocation(); ?> → <?php echo $stage->getEnLocation(); ?></h1>
+        <p class="text-xl text-gray-600">
+          <?php
+          $startDate = (new DateTime($stage->getStDate()))->format("F j, Y");
+          $endDate = (new DateTime($stage->getEnDate()))->format("F j, Y");
+          echo "$startDate → $endDate";
+          ?>
+        </p>
       </div>
 
-      <?php
-        if (( $detail->getStLocation()) >= (date("Y-m-d"))  ) {
-           echo '
-        <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
-           <i class="fas fa-flag-checkered mr-2"></i>
-           <span class="font-semibold">Stage Complete1</span>
-        </div>';
-        }elseif (( $detail->getEnDate()) <= (date("Y-m-d"))) {
-          echo '
-          <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
-             <i class="fas fa-flag-checkered mr-2"></i>
-             <span class="font-semibold">Stage Complete2</span>
-          </div>';
-        }else {
-          echo '
-          <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
-             <i class="fas fa-flag-checkered mr-2"></i>
-             <span class="font-semibold">Stage Complete"</span>
-          </div>';
+      <div class="mt-4 md:mt-0 flex items-center space-x-4">
+        <form action="<?= url("like") ?>" method="POST" class="flex items-center space-x-2">
+          <button type="submit" class="flex gap-2">
+            <span class="<?= $isLiked ? 'text-red-500' : 'text-gray-500 hover:text-red-500' ?> transition">
+              <i class="<?= $isLiked ? 'fas' : 'far' ?> fa-heart text-xl"></i>
+            </span>
+            <span id="likeCount" class="<?= $isLiked ? 'text-red-500' : 'text-gray-500' ?>"><?= $likes ?></span>
+          </button>
+          <input type="hidden" name="stage_id" value="<?= $stage->getId() ?>">
+        </form>
+
+        <?php
+        $currentDate = date("Y-m-d");
+        $stageStartDate = $stage->getStDate();
+        $stageEndDate = $stage->getEnDate();
+
+        if ($currentDate > $stageEndDate) {
+          echo '<div class="flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
+                  <i class="fas fa-flag-checkered mr-2"></i>
+                  <span class="font-semibold">Stage Completed</span>
+                </div>';
+        } elseif ($currentDate >= $stageStartDate && $currentDate <= $stageEndDate) {
+          echo '<div class="flex items-center bg-blue-100 text-blue-700 px-4 py-2 rounded-full">
+                  <i class="fas fa-running mr-2"></i>
+                  <span class="font-semibold">Stage In Progress</span>
+                </div>';
+        } else {
+          echo '<div class="flex items-center bg-gray-100 text-gray-700 px-4 py-2 rounded-full">
+                  <i class="fas fa-hourglass-start mr-2"></i>
+                  <span class="font-semibold">Upcoming Stage</span>
+                </div>';
         }
-      ?>
+        ?>
+      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Distance</h3>
-        <p class="text-2xl font-bold text-emerald-600"><?php 
-        echo $detail->getDistance() ; ?> km</p>
+        <p class="text-2xl font-bold text-emerald-600"><?php echo $stage->getDistance(); ?> km</p>
       </div>
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Type</h3>
-        <p class="text-2xl font-bold text-emerald-600"><?php echo $detail->getNameRegion() ; ?></p>
+        <p class="text-2xl font-bold text-emerald-600"><?php echo $stage->getNameRegion(); ?></p>
       </div>
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Reached Players</h3>
@@ -56,7 +66,7 @@
     <div class="mb-8">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Stage Description</h2>
       <p class="text-gray-600 leading-relaxed">
-      <?php echo $detail->getDescription() ; ?>
+        <?php echo $stage->getDescription(); ?>
       </p>
     </div>
 
@@ -70,16 +80,21 @@
     </div>
 
     <!-- Social Interaction Buttons -->
-    <div class="flex items-center space-x-4 mt-6 border-t pt-4">
-      <button id="likeButton" class="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition">
-        <i id="heartIcon" class="far fa-heart text-xl"></i>
-        <span id="likeCount">64</span>
+    <div class="flex justify-between mt-6 border-t pt-4">
+      <div class="flex items-center space-x-4">
+        <button id="reportButton" class="flex items-center space-x-2 text-gray-500 hover:text-yellow-500 transition">
+          <i class="fas fa-flag text-xl"></i>
+          <span>Report Stage</span>
+        </button>
+      </div>
+
+      <!-- Notify Button -->
+      <?php if ($currentDate < $stageStartDate): ?>
+      <button id="notifyButton" class="flex items-center space-x-2 text-white bg-blue-500 hover:bg-blue-600 transition px-4 py-2 rounded-full">
+        <i class="fas fa-bell text-xl"></i>
+        <span>Notify Me</span>
       </button>
-      
-      <button id="reportButton" class="flex items-center space-x-2 text-gray-500 hover:text-yellow-500 transition">
-        <i class="fas fa-flag text-xl"></i>
-        <span>Report Stage</span>
-      </button>
+      <?php endif; ?>
     </div>
   </div>
 </div>
@@ -106,35 +121,6 @@
         </button>
       </div>
     </form>
-  </div>
-</div>
-
-<!-- Enhanced Results Table -->
-<div class="max-w-7xl mx-auto px-4 py-8">
-  <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-    <div class="px-8 py-6 border-b border-gray-200">
-      <h2 class="text-2xl font-bold text-gray-800 flex items-center">
-        <i class="fas fa-medal mr-3 text-amber-400"></i>Stage Results
-      </h2>
-    </div>
-
-    <div class="overflow-x-auto">
-      <table class="w-full">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700 w-20">Rank</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Player</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Team</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Time</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Points</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Trend</th>
-          </tr>
-        </thead>
-        <tbody id="ranking-body" class="divide-y divide-gray-200">
-          <!-- Results populated by JavaScript -->
-        </tbody>
-      </table>
-    </div>
   </div>
 </div>
 
@@ -209,6 +195,35 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Enhanced Results Table -->
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+    <div class="px-8 py-6 border-b border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+        <i class="fas fa-medal mr-3 text-amber-400"></i>Stage Results
+      </h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700 w-20">Rank</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Player</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Team</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Time</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Points</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Trend</th>
+          </tr>
+        </thead>
+        <tbody id="ranking-body" class="divide-y divide-gray-200">
+          <!-- Results populated by JavaScript -->
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -306,26 +321,6 @@
     const likeButton = document.getElementById('likeButton');
     const heartIcon = document.getElementById('heartIcon');
     const likeCount = document.getElementById('likeCount');
-    let isLiked = false;
-    let likes = 64;
-
-    likeButton.addEventListener('click', function() {
-      if (isLiked) {
-        likes--;
-        heartIcon.classList.remove('fas', 'text-red-500');
-        heartIcon.classList.add('far');
-        likeButton.classList.remove('text-red-500');
-        likeButton.classList.add('text-gray-500');
-      } else {
-        likes++;
-        heartIcon.classList.remove('far');
-        heartIcon.classList.add('fas', 'text-red-500');
-        likeButton.classList.remove('text-gray-500');
-        likeButton.classList.add('text-red-500');
-      }
-      isLiked = !isLiked;
-      likeCount.textContent = likes;
-    });
     
     // Report Modal Functionality
     const reportButton = document.getElementById('reportButton');

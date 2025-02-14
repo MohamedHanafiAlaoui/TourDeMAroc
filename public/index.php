@@ -29,8 +29,10 @@
     $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
+    
+    $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
+    
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
-
 
 
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
