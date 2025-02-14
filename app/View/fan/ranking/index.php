@@ -51,7 +51,7 @@
         <h3 class="text-2xl font-bold text-gray-800">John Doe</h3>
         <div class="flex items-center justify-center mt-2 space-x-2">
           <span class="text-sm text-gray-600">🏆 2560 points</span>
-          <span class="text-emerald-500">▲ 2.4%</span>
+          <span class="text-emerald-500">/ Maroc</span>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@
             <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Cyclist</th>
             <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Time</th>
             <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Points</th>
-            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Trend</th>
+            <th class="px-6 py-4 text-left text-sm font-medium text-gray-700">Team</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
