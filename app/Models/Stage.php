@@ -194,6 +194,7 @@
             self::$db->bind(':description', $this->Description);
             self::$db->bind(':photo', $this->photo);
             return self::$db->execute();
+            
         }
 
         public static function NextStages()
