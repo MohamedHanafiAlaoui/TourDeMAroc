@@ -178,6 +178,23 @@
             }
             return $stages;
         }
+        public function save(){
+            $query = "INSERT INTO stages (name, start_location, end_location, distance_km, start_date, end_date, category_id, region_id, difficulty_level, photo, description)
+             VALUES (:name, :Start_location, :end_location, :distance_km, :start_date, :end_date, :category_id, :region_id, :difficulty_level, :photo, :description)";
+            self::$db->query($query);
+            self::$db->bind(':name', $this->name);
+            self::$db->bind(':Start_location', $this->start_location);
+            self::$db->bind(':end_location', $this->end_location);
+            self::$db->bind(':distance_km', $this->distance_km);
+            self::$db->bind(':start_date', $this->start_date);
+            self::$db->bind(':end_date', $this->end_date);
+            self::$db->bind(':category_id', $this->id_category);
+            self::$db->bind(':region_id', $this->id_region);
+            self::$db->bind(':difficulty_level', $this->difficulty_level);
+            self::$db->bind(':description', $this->Description);
+            self::$db->bind(':photo', $this->photo);
+            return self::$db->execute();
+        }
 
         public static function NextStages()
         {
