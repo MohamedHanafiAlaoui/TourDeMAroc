@@ -4,13 +4,11 @@
     {
         private $id;
         private $name;
-        private $country;
 
-        public function __construct($id = null, $name = null, $country = null)
+        public function __construct($id = null, $name = null)
         {
             $this->id = $id;
             $this->name = $name;
-            $this->country = $country;
         }
         public function setId($id)
         {
@@ -20,11 +18,6 @@
         public function setName($name)
         {
             $this->id = $name;
-        }
-        
-        public function setCountry($country)
-        {
-            $this->id = $country;
         }
         
         public function getId()
@@ -37,11 +30,6 @@
             return $this->name;
         }
         
-        public function getCountry()
-        {
-            return $this->country;
-        }
-
         public static function fetchTeam($search = null)
         {
             $sql = "SELECT * FROM teams";
@@ -61,5 +49,5 @@
             }
             return $teams;
         }
-        
+    
     }

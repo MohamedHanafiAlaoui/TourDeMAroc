@@ -9,7 +9,6 @@
                 return [
                     'id_team' => $team->getId(),
                     'name_Team' => $team->getName(),
-                    'country' => $team->getCountry(),
                 ];
             }, $teams);
             echo json_encode($FormerTeams);

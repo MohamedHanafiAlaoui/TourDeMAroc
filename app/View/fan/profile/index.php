@@ -50,6 +50,18 @@
             </span>
           </div>
         </div>
+
+        <!-- Cool Logout Button -->
+        <form method="POST" action="<?= url('logout') ?>" class="mt-6">
+          <button class="flex items-center justify-center bg-emerald-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            Logout
+          </button>
+        </form>
       </div>
     </div>
   </section>
@@ -112,6 +124,53 @@
         <h3 class="text-lg font-semibold text-gray-800">Early Supporter</h3>
         <p class="text-gray-600 text-sm mt-2">Joined in the first year</p>
       </div>
+    </div>
+  </section>
+
+  <!-- Favorite Cyclists Section -->
+  <section class="bg-white shadow-xl rounded-2xl p-8 transition-all duration-300 hover:shadow-2xl">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+          <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+          <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+          <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+        </svg>
+        Favorite Cyclists
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Favorite Cyclist Card (Repeat for each favorite cyclist) -->
+      <div class="group bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-6 shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105">
+        <div class="flex items-center space-x-4">
+          <img src="https://avatars.githubusercontent.com/u/110723408?v=4" alt="Cyclist Name" class="w-20 h-20 rounded-full object-cover border-2 border-emerald-500">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800">John Doe</h3>
+            <p class="text-emerald-600 font-medium">Team Greenspeed</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <p class="text-sm text-gray-600"><span class="font-medium">Wins:</span> 15</p>
+        </div>
+        <button class="mt-4 w-full bg-emerald-500 text-white px-4 py-2 rounded-lg shadow hover:bg-emerald-600 transition duration-300">View Profile</button>
+      </div>
+
+      <!-- Add more favorite cyclist cards here -->
+
+    </div>
+
+    <!-- Add Favorite Button -->
+    <div class="mt-8 text-center">
+      <a href="<?= url('cyclists') ?>" class="bg-emerald-500 w-fit text-white px-6 py-3 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300 flex items-center justify-center mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="16"></line>
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+        Add Favorite Cyclist
+      </a>
     </div>
   </section>
 </main>

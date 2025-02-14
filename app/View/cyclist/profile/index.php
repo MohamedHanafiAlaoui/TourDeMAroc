@@ -16,29 +16,42 @@
       <!-- Profile Details with Improved Typography -->
       <div class="md:ml-12 space-y-2">
         <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
-          John Doe
+          <?= $cyclist->getFullName() ?>
         </h1>
-        <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
-          <div class="flex items-center">
-            <i class="fas fa-users text-emerald-500 w-6"></i>
-            <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Team:</span> Team Morocco</span>
+        <div>
+          <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
+            <div class="flex items-center">
+              <i class="fas fa-users text-emerald-500 w-6"></i>
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Team:</span> <?= $cyclist->getTeam() ?></span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-flag text-emerald-500 w-6"></i>
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Nationality:</span> <?= $cyclist->getNationality() ?></span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-birthday-cake text-emerald-500 w-6"></i>    
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Birthday:</span> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-envelope text-emerald-500 w-6"></i>
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Email:</span> <?= $cyclist->getEmail() ?></span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-phone text-emerald-500 w-6"></i>
+              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Phone:</span> +212 600000000</span>
+            </div>
           </div>
-          <div class="flex items-center">
-            <i class="fas fa-flag text-emerald-500 w-6"></i>
-            <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Nationality:</span> Moroccan</span>
-          </div>
-          <div class="flex items-center">
-            <i class="fas fa-birthday-cake text-emerald-500 w-6"></i>
-            <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Birthday:</span> January 1, 1990</span>
-          </div>
-          <div class="flex items-center">
-            <i class="fas fa-envelope text-emerald-500 w-6"></i>
-            <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Email:</span> john.doe@example.com</span>
-          </div>
-          <div class="flex items-center">
-            <i class="fas fa-phone text-emerald-500 w-6"></i>
-            <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Phone:</span> +212 600000000</span>
-          </div>
+          <!-- Cool Logout Button -->
+          <form action="<?= url('logout') ?>" method="POST" class="mt-4">
+            <button class="flex items-center justify-center bg-emerald-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              Logout
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -76,7 +89,7 @@
   </section>
 
   <!-- Enhanced Experience Modal -->
-  <div id="experienceModal" class="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 hidden 
+  <div id="experienceModal" class="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50 
     transition-opacity duration-300">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl p-8 relative transform transition-transform duration-300 
       scale-95 opacity-0" id="modalContent">
@@ -150,6 +163,7 @@
     // Modal Animation Logic
     const experienceModal = document.getElementById('experienceModal');
     const modalContent = document.getElementById('modalContent');
+    experienceModal.classList.add('hidden');
 
     document.getElementById('openExperienceModal').addEventListener('click', () => {
       experienceModal.classList.remove('hidden');
