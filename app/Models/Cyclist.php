@@ -8,11 +8,11 @@ class Cyclist extends User {
 
     private $team_name;
 
-    function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null,
+    function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null, $password_token_hash = null, $password_token_expires_at = null, $photo = null,
                                 $nationality = null, $birthdate = null, $total_point = null, $approved = null, $team_id = null
                             )
         {
-            parent::__construct($id, $first_name, $last_name, $email, $password, $role_id, $created_at);
+            parent::__construct($id, $first_name, $last_name, $email, $password, $role_id, $created_at, $password_token_hash, $password_token_expires_at, $photo);
             $this->nationality = $nationality;
             $this->birthdate = $birthdate;
             $this->total_points = $total_point;
@@ -119,8 +119,8 @@ class Cyclist extends User {
 
     public static function TopCyclists($number)
     {
-        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.id as team_id, t.name AS teamname 
-                FROM cyclists c JOIN teams t ON c.id= t.id
+        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.id as team_id, t.name AS team_name 
+                FROM cyclists c LEFT JOIN teams t ON c.id= t.id
                 ORDER BY total_points DESC LIMIT :number";
         self::$db->query($sql);
         self::$db->bind(':number', $number);
@@ -132,7 +132,7 @@ class Cyclist extends User {
         foreach ($result as $key => $value) {
             $cyclist = new self($value['id'], $value['first_name'], $value['last_name'], $value['photo']);
             $cyclist->setIdTeme($value['team_id']);
-            $cyclist->setTeme($value['teamname']);
+            $cyclist->setTeme($value['team_name'] ?? '-------');
 
             $cyclests[] = $cyclist;
         }
@@ -148,5 +148,26 @@ class Cyclist extends User {
         $result = self::$db->single();
 
         return new Team($result["id"], $result["name"]);
+    }
+
+    public static function findCyclist($id)
+    {
+        $sql = "SELECT * FROM cyclists WHERE id = :id";
+        self::$db->query($sql);
+        self::$db->bind(':id', $id);
+        
+        $result = self::$db->single();
+
+        if (self::$db->rowCount() > 0) {
+            $nationality = $result['approved'] ? $result['nationality'] : '------';
+            $total_points = $result['approved'] ? $result['total_points'] : '------';
+            $team_id = $result['approved'] ? $result['team_id'] : '------';
+
+            $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"],null, null, $result['photo'],
+                                    $nationality, $result['birthdate'], $total_points, $result['approved'], $team_id);
+            return $cyclist;
+        } else {
+            return null;
+        }
     }
 }
