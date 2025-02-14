@@ -2,50 +2,48 @@
   <div class="bg-white rounded-2xl shadow-xl p-8">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
       <div> 
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1:   <?php echo $detail->getStLocation() ; ?> →  <?php echo $detail->getEnLocation() ; ?></h1>
-        <p class="text-xl text-gray-600"><?php
-                                          $date = (new DateTime( $detail->getStDate()))->format("F j, Y");
-                                         echo $date ; ?>  → 
-                                         
-                                         <?php
-
-                                            $date = (new DateTime( $detail->getEnDate()))->format("F j, Y");
-                                            echo $date ; ?>
-                                          </p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1: <?php echo $detail->getStLocation(); ?> → <?php echo $detail->getEnLocation(); ?></h1>
+        <p class="text-xl text-gray-600">
+          <?php
+          $startDate = (new DateTime($detail->getStDate()))->format("F j, Y");
+          $endDate = (new DateTime($detail->getEnDate()))->format("F j, Y");
+          echo "$startDate → $endDate";
+          ?>
+        </p>
       </div>
 
       <?php
-        if (( $detail->getStLocation()) >= (date("Y-m-d"))  ) {
-           echo '
-        <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
-           <i class="fas fa-flag-checkered mr-2"></i>
-           <span class="font-semibold">Stage Complete1</span>
-        </div>';
-        }elseif (( $detail->getEnDate()) <= (date("Y-m-d"))) {
-          echo '
-          <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
-             <i class="fas fa-flag-checkered mr-2"></i>
-             <span class="font-semibold">Stage Complete2</span>
-          </div>';
-        }else {
-          echo '
-          <div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
-             <i class="fas fa-flag-checkered mr-2"></i>
-             <span class="font-semibold">Stage Complete"</span>
-          </div>';
-        }
+      $currentDate = date("Y-m-d");
+      $stageStartDate = $detail->getStDate();
+      $stageEndDate = $detail->getEnDate();
+
+      if ($currentDate > $stageEndDate) {
+        echo '<div class="mt-4 md:mt-0 flex items-center bg-emerald-100 text-emerald-700 px-4 py-2 rounded-full">
+                <i class="fas fa-flag-checkered mr-2"></i>
+                <span class="font-semibold">Stage Completed</span>
+              </div>';
+      } elseif ($currentDate >= $stageStartDate && $currentDate <= $stageEndDate) {
+        echo '<div class="mt-4 md:mt-0 flex items-center bg-blue-100 text-blue-700 px-4 py-2 rounded-full">
+                <i class="fas fa-running mr-2"></i>
+                <span class="font-semibold">Stage In Progress</span>
+              </div>';
+      } else {
+        echo '<div class="mt-4 md:mt-0 flex items-center bg-gray-100 text-gray-700 px-4 py-2 rounded-full">
+                <i class="fas fa-hourglass-start mr-2"></i>
+                <span class="font-semibold">Upcoming Stage</span>
+              </div>';
+      }
       ?>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Distance</h3>
-        <p class="text-2xl font-bold text-emerald-600"><?php 
-        echo $detail->getDistance() ; ?> km</p>
+        <p class="text-2xl font-bold text-emerald-600"><?php echo $detail->getDistance(); ?> km</p>
       </div>
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Type</h3>
-        <p class="text-2xl font-bold text-emerald-600"><?php echo $detail->getNameRegion() ; ?></p>
+        <p class="text-2xl font-bold text-emerald-600"><?php echo $detail->getNameRegion(); ?></p>
       </div>
       <div class="bg-gray-100 p-4 rounded-lg">
         <h3 class="text-lg font-semibold mb-2">Reached Players</h3>
@@ -56,7 +54,7 @@
     <div class="mb-8">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Stage Description</h2>
       <p class="text-gray-600 leading-relaxed">
-      <?php echo $detail->getDescription() ; ?>
+        <?php echo $detail->getDescription(); ?>
       </p>
     </div>
 
@@ -70,15 +68,23 @@
     </div>
 
     <!-- Social Interaction Buttons -->
-    <div class="flex items-center space-x-4 mt-6 border-t pt-4">
-      <button id="likeButton" class="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition">
-        <i id="heartIcon" class="far fa-heart text-xl"></i>
-        <span id="likeCount">64</span>
-      </button>
-      
-      <button id="reportButton" class="flex items-center space-x-2 text-gray-500 hover:text-yellow-500 transition">
-        <i class="fas fa-flag text-xl"></i>
-        <span>Report Stage</span>
+    <div class="flex justify-between mt-6 border-t pt-4">
+      <div class="flex items-center space-x-4">
+        <button id="likeButton" class="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition">
+          <i id="heartIcon" class="far fa-heart text-xl"></i>
+          <span id="likeCount">64</span>
+        </button>
+        
+        <button id="reportButton" class="flex items-center space-x-2 text-gray-500 hover:text-yellow-500 transition">
+          <i class="fas fa-flag text-xl"></i>
+          <span>Report Stage</span>
+        </button>
+      </div>
+
+      <!-- Notify Button -->
+      <button id="notifyButton" class="flex items-center space-x-2 text-white bg-blue-500 hover:bg-blue-600 transition px-4 py-2 rounded-full">
+        <i class="fas fa-bell text-xl"></i>
+        <span>Notify Me</span>
       </button>
     </div>
   </div>
