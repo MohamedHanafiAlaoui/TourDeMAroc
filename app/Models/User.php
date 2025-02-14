@@ -8,12 +8,14 @@ class User extends BaseModel
     protected $password;
     protected $role_id;
     protected $created_at;
+    protected $password_token_hash;
+    protected $password_token_expires_at;
 
     static public $adminRoleId = 1;
     static public $cyclistRoleId = 2;
     static public $fanRoleId = 3;
 
-    public function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null)
+    public function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null, $password_token_hash = null, $password_token_expires_at = null)
     {
         $this->id = $id;
         $this->first_name = $first_name;
@@ -21,6 +23,9 @@ class User extends BaseModel
         $this->email = $email;
         $this->password = $password;
         $this->role_id = $role_id;
+        $this->created_at = $created_at;
+        $this->password_token_hash = $password_token_hash;
+        $this->password_token_expires_at = $password_token_expires_at;
     }
 
     public function getId()
@@ -77,6 +82,16 @@ class User extends BaseModel
         }
     }
 
+    public function getResetToken()
+    {
+        return $this->password_token_hash;
+    }
+
+    public function getResetTokenExpiresAt()
+    {
+        return $this->password_token_expires_at;
+    }
+
     public function setFirstName($first_name)
     {
         $this->first_name = $first_name;
@@ -107,6 +122,16 @@ class User extends BaseModel
         $this->created_at = $created_at;
     }
 
+    public function setResetToken($password_token_hash)
+    {
+        $this->password_token_hash = $password_token_hash;
+    }
+
+    public function setResetTokenExpiresAt($password_token_expires_at)
+    {
+        $this->password_token_expires_at = $password_token_expires_at;
+    }
+
     public function isAdmin()
     {
         return $this->getRoleId() == self::$adminRoleId;
@@ -124,6 +149,7 @@ class User extends BaseModel
     
 
     public function save(){}
+    public function update(){}
 
     public static function find($id): Fan | Cyclist | Admin | null
     {
@@ -157,8 +183,38 @@ class User extends BaseModel
         $result = self::$db->single();
 
         if (self::$db->rowCount() > 0) {
-            return new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
-        } else {
+            switch ($result["role_id"]) {
+                case self::$adminRoleId:
+                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
+                case self::$fanRoleId:
+                    $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
+                    return $fan;
+                case self::$cyclistRoleId:
+                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"]);
+                    return $cyclist;
+            }        } else {
+            return false;
+        }
+    }
+
+    public static function findByResetToken($password_token_hash)
+    {
+        $sql = "SELECT * FROM users WHERE password_token_hash = :password_token_hash";
+        self::$db->query($sql);
+        self::$db->bind(':password_token_hash', $password_token_hash);
+        $result = self::$db->single();
+
+        if (self::$db->rowCount() > 0) {
+            switch ($result["role_id"]) {
+                case self::$adminRoleId:
+                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"]);
+                case self::$fanRoleId:
+                    $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"]);
+                    return $fan;
+                case self::$cyclistRoleId:
+                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"]);
+                    return $cyclist;
+            }        } else {
             return false;
         }
     }
