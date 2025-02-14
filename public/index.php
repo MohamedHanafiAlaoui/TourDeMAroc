@@ -62,5 +62,5 @@
 
     $router->dispatch($request);
 
-    //  create stage / create category / create region / verify cyclist / accept comment / 
     // report / like / commenter / favorite / notification
+    // admin: enter who entered each stage and in how much time.
