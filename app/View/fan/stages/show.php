@@ -108,12 +108,13 @@
         <i class="fas fa-times"></i>
       </button>
     </div>
-    <form id="reportForm">
+    <form action="<?= url('reports/create') ?>" method="POST">
       <div class="mb-4">
         <label for="reportReason" class="block text-sm font-medium text-gray-700 mb-1">Reason</label>
-        <textarea id="reportReason" rows="4" 
+        <textarea id="reportReason" name="message" rows="4" 
           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
           placeholder="Please explain why you're reporting this stage..."></textarea>
+        <input type="hidden" name="stage_id" value="<?= $stage->getId() ?>">
       </div>
       <div class="flex justify-end">
         <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">
@@ -326,7 +327,6 @@
     const reportButton = document.getElementById('reportButton');
     const reportModal = document.getElementById('reportModal');
     const closeReportModal = document.getElementById('closeReportModal');
-    const reportForm = document.getElementById('reportForm');
     
     reportButton.addEventListener('click', function() {
       reportModal.classList.remove('hidden');
@@ -336,20 +336,6 @@
     closeReportModal.addEventListener('click', function() {
       reportModal.classList.remove('flex');
       reportModal.classList.add('hidden');
-    });
-    
-    reportForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const reason = document.getElementById('reportReason').value;
-      if (reason.trim()) {
-        // Here you would send the report to your backend
-        alert('Your report has been submitted. Thank you for your feedback.');
-        reportModal.classList.remove('flex');
-        reportModal.classList.add('hidden');
-        reportForm.reset();
-      } else {
-        alert('Please provide a reason for your report.');
-      }
     });
     
     // Comment Form Functionality
