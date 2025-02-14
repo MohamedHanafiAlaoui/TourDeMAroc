@@ -31,6 +31,7 @@
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     
     $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
+    $router->post('/reports/create', [ReportsController::class, 'create'], ["fan"]);
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
 
