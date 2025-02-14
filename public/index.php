@@ -36,7 +36,7 @@
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     
-    $router->get('/Profile/Information', [CyclistController::class, 'updte'], ["cyclist"]);
+    $router->post('/profile/update', [CyclistController::class, 'update'], ["cyclist"]);
 
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
     $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);

@@ -58,7 +58,7 @@ ALTER TABLE admins ADD CONSTRAINT unique_admin_id UNIQUE (id);
 
 -- Table des cyclistes (hérite de `users`)
 CREATE TABLE cyclists (
-    team_id INT REFERENCES teams(id) ON DELETE SET NULL,
+    team VARCHAR(250) NULL,
     nationality VARCHAR(250),
     birthdate DATE,
     approved BOOLEAN DEFAULT FALSE

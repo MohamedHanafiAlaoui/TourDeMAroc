@@ -1,13 +1,13 @@
 <main class="max-w-7xl mx-auto px-4 py-20">
   <!-- Enhanced Profile Section -->
   <section class="bg-white shadow-xl rounded-2xl p-8 mb-12 transition-all duration-300 hover:shadow-2xl">
-    <form id="DetailsForm" action="<?= url('/Profile/Information') ?>" method="POST" class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0">
+    <form id="DetailsForm" action="<?= url('profile/update') ?>" method="POST" enctype="multipart/form-data" class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0">
       <!-- Profile Image with Enhanced Styling -->
       <div class="relative group">
         <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
         <img id="profileImagePreview" src="https://img.aso.fr/core_app/img-cycling-tdf-png/1/56074/0:0,400:400-300-0-70/8b05c" alt="Profile Image" 
              class="w-48 h-48 rounded-full border-4 border-emerald-500/30 object-cover transform transition-transform duration-300 hover:scale-105">
-        <label for="profileImage" class="absolute bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg">
+        <label for="profileImage" class="absolute bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg hidden" >
           <i class="fas fa-camera text-white text-lg"></i>
         </label>
         <input type="file" id="profileImage" name="profileImage" accept="image/*" class="hidden" onclick="previewImage(event)">
@@ -23,14 +23,9 @@
             <div id="TeamGrid" class="flex items-center">
               <i class="fas fa-users text-emerald-500 w-6"></i>
               <span class="ml-2 font-medium text-gray-800">Team:</span> 
-              <label for="teamInput" class="ml-2  text-gray-600 "><?= $cyclist->Team()->getName() ?></label> 
+              <label for="teamInput" class="ml-2  text-gray-600 "><?= $cyclist->getTeam() ?></label> 
               <div class="ml-2 grid-cols-2 items-center hidden">
-                <select name="teamInput" class="px-2 min-w-60" id="teamInput">
-                  <option selected value=""><?= $cyclist->Team()->getName() ?></option>
-                  <?php foreach ($Teams as $key => $Team): ?>
-                    <option value="<?= $Team->getId() ?>"><?= $Team->getName() ?></option>
-                  <?php endforeach ?>
-                </select>
+                <input id="teamInput" name="teamInput" type="text" value="<?= $cyclist->getTeam() ?>" placeholder="Team">
                 <label for="teamInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="fas fa-edit"></i></label>
               </div>
             </div>
@@ -48,10 +43,10 @@
             <div id="BirthdayGrid" class="flex items-center">
               <i class="fas fa-birthday-cake text-emerald-500 w-6"></i>    
               <span class="ml-2 font-medium text-gray-800">Birthday: </span>  
-              <label for="BirthdayInput" class="ml-2 text-gray-600"> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></label>
+              <label for="BirthdateInput" class="ml-2 text-gray-600"> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></label>
               <div class="ml-2 grid-cols-2 items-center hidden">
-                <input id="BirthdayInput" name="BirthdayInput" type="date" value="$date = (new DateTime( $cyclist->getBirthdate()))->format('F j, Y') : '00-00-0000'; ?>" placeholder="Birthday">
-                <label for="BirthdayInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="ml-4 fas fa-edit"></i></label>
+                <input id="BirthdateInput" name="BirthdateInput" type="date" value="$date = (new DateTime( $cyclist->getBirthdate()))->format('F j, Y') : '00-00-0000'; ?>" placeholder="Birthday">
+                <label for="BirthdateInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="ml-4 fas fa-edit"></i></label>
               </div>
             </div>
 
@@ -72,10 +67,12 @@
               Modify
             </button>
             <div id="ComfermeForm" class="grid-cols-2 gap-5 hidden">
-              <button id="cancelButton" type="button" class=" items-center justify-center bg-yellow-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-yleowl-600 transition duration-300">
-                <i class="mr-2 fas fa-x"></i>
-                Cancel
-              </button>
+              <a href="<?= url('profile') ?>">
+                <button id="cancelButton" type="button" class=" items-center justify-center bg-yellow-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-yleowl-600 transition duration-300">
+                  <i class="mr-2 fas fa-x"></i>
+                  Cancel
+                </button>
+              </a>
               <button id="accepteButton" type="button" class=" items-center justify-center bg-blue-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
                 <i class="mr-2 fas fa-check"></i>
                 Accpete
@@ -142,7 +139,7 @@
         <div class="relative group">
           <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Add photo</label>
-          <input type="file" id="experienceImage" name="experienceImage" accept="image/*">
+          <input type="file" id="profileImage" name="exeriencepImage" accept="image/*" >
         </div>
         <!-- Input Group with Icon -->
         <div class="relative">
@@ -292,14 +289,17 @@
         }
     }
 
+    document.querySelector('label[for="profileImage"]').addEventListener('click', (event) => {previewImage(event)});
+
     function InputToggel(){
+      document.querySelector('label[for="profileImage"]').classList.toggle('hidden');
       document.querySelector('#TeamGrid > div').classList.toggle('hidden');
       document.querySelector('#NationalityGrid > div').classList.toggle('hidden');
       document.querySelector('#BirthdayGrid > div').classList.toggle('hidden');
       document.querySelector('#EmailGrid > div').classList.toggle('hidden');
       document.querySelector('#TeamGrid > label[for="teamInput"]').classList.toggle('hidden');
       document.querySelector('#NationalityGrid > label[for="NationalityInput"]').classList.toggle('hidden');
-      document.querySelector('#BirthdayGrid > label[for="BirthdayInput"]').classList.toggle('hidden');
+      document.querySelector('#BirthdayGrid > label[for="BirthdateInput"]').classList.toggle('hidden');
       document.querySelector('#EmailGrid > label[for="EmailInput"]').classList.toggle('hidden');
       ComfermeForm.classList.toggle('hidden');
       modifyButton.classList.toggle('hidden');
@@ -313,7 +313,7 @@
     // const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     // const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
 
-    // let birthdate = new Date(BirthdayInput.value);
+    // let birthdate = new Date(BirthdateInput.value);
     // const today = new Date();
     // let age = today.getFullYear() - birthdate.getFullYear();
     // console.log();
@@ -347,10 +347,10 @@
     //   // }
 
     //   if (birthdate < 18 ) {
-    //     BirthdayInput.classList.add('border-red-200','border-2');
+    //     BirthdateInput.classList.add('border-red-200','border-2');
     //     validation = false;
     //   } else {
-    //     BirthdayInput.classList.remove('border-red-200','border-2');
+    //     BirthdateInput.classList.remove('border-red-200','border-2');
     //     validation = true;
     //   }
 
