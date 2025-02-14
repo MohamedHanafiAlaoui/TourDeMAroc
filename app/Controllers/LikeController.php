@@ -1,51 +1,29 @@
 <?php
+class LikeController extends BaseController {
 
-class LikeController extends BaseController
-{
-    public function toggleLike()
+    public function like()
     {
-        if (!isset($_SESSION['fan_id'])) {
-            echo json_encode(['error' => 'User not authenticated']);
-            return;
+        $id = $_POST["stage_id"];
+
+        $stage = Stage::find($id);
+
+        if(! $stage){
+            flash("error", "This stage not found.");
+            back();
         }
 
-        $id_fan = $_SESSION['fan_id'];
-        $stage_id = $_POST['stage_id'] ?? null;
+        $fan_id = user()->getId();
 
-        if (!$stage_id) {
-            echo json_encode(['error' => 'Missing stage ID']);
-            return;
+        $like = Like::find($fan_id, $stage->getId());
+        
+        if($like){
+            $like->delete();
+        }else{
+            $newLike = new Like(null, $fan_id, $stage->getId());
+            $newLike->save();
         }
 
-        $like = new Like(null, $id_fan, $stage_id);
-
-        if ($like->isLikedByFan()) {
-            $like->remove();
-            $liked = false;
-        } else {
-            $like->save();
-            $liked = true;
-        }
-
-        $likeCount = Like::countLikes($stage_id);
-
-        echo json_encode([
-            'liked' => $liked,
-            'likeCount' => $likeCount
-        ]);
-    }
-
-    public function getLikeCount($params)
-    {
-        $stage_id = $params['id'] ?? null;
-
-        if (!$stage_id) {
-            echo json_encode(['error' => 'Missing stage ID']);
-            return;
-        }
-
-        $likeCount = Like::countLikes($stage_id);
-        echo json_encode(['likeCount' => $likeCount]);
+        back();
     }
 }
-?>
+

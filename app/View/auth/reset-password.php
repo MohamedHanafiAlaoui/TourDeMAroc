@@ -7,17 +7,18 @@
     </div>
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-xl">
         <div class="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10">
-            <form class="space-y-6" action="#" method="POST">
+            <form class="space-y-6" action="<?= url("reset-password") ?>" method="POST">
+                <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
                 <!-- New Password -->
                 <div>
-                    <label for="new-password" class="block text-sm font-medium text-gray-700">New Password</label>
-                    <input type="password" name="new-password" id="new-password" required class="block w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Enter new password">
+                    <label for="password" class="block text-sm font-medium text-gray-700">New Password</label>
+                    <input type="password" name="password" id="password" required class="block w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Enter new password">
                 </div>
 
                 <!-- Confirm Password -->
                 <div>
                     <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                    <input type="password" name="confirm-password" id="confirm-password" required class="block w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Confirm new password">
+                    <input type="password" name="confirm_password" id="confirm-password" required class="block w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Confirm new password">
                 </div>
 
                 <!-- Submit Button -->

@@ -1,7 +1,7 @@
 <!-- Hero Section -->
 <section class="relative pt-16">
     <div class="absolute inset-0 bg-gradient-to-r from-emerald-500 to-green-600 opacity-10"></div>
-    <div class="relative container mx-auto px-6 py-32">
+    <div class="relative mx-auto px-6 py-32">
         <div class="max-w-3xl">
             <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6">Experience the Thrill of Tour de Maroc</h1>
             <p class="text-xl text-gray-700 mb-12">Follow the race through Morocco's magnificent landscapes, support your favorite cyclists, and be part of the action!</p>
@@ -68,7 +68,7 @@
                     <img src="/api/placeholder/400/500" alt="<?= htmlspecialchars($cyclist->getFullName()) ?>" class="w-full h-64 object-cover">
                     <div class="p-6 text-center">
                         <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($cyclist->getFullName()) ?></h3>
-                        <p class="text-emerald-500">Team <?= htmlspecialchars($cyclist->getNameTeam()) ?></p>
+                        <p class="text-emerald-500">Team : <?= htmlspecialchars($cyclist->getTeam()) ?></p>
                     </div>
                 </div>
             <?php endforeach;} ?>

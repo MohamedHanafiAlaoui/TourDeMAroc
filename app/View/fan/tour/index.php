@@ -175,14 +175,13 @@
               </span>
             </div>
             <h3 class="text-xl font-bold text-gray-800">${team.name_Team}</h3>
-            <p class="text-gray-600">${team.country}</p>
           `;
           teamsGrid.appendChild(teamCard);
         });
       }
 
 
-      // Search functionality with debounce
+      // Search functionality with 
       let debounceTimeout;
       searchInput.addEventListener("input", (e) => {
         clearTimeout(debounceTimeout);
