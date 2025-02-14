@@ -139,15 +139,21 @@ class Cyclist extends User {
         return $cyclests;
     }
 
-    public function team()
+    public function Team()
     {
-        $sql = "SELECT * FROM teams t WHERE id = :id";
-        self::$db->query($sql);
-        self::$db->bind(':id', $this->team_id);
-        
-        $result = self::$db->single();
+        if ($this->team_id) {
+            $sql = "SELECT * FROM teams WHERE id = :id";
+            self::$db->query($sql);
+            self::$db->bind(':id', $this->team_id);
+            
+            $result = self::$db->single();
 
-        return new Team($result["id"], $result["name"]);
+            return new Team($result["id"], $result["name"]);
+        } else {
+            return new Team('--', '------');
+        }
+        
+        
     }
 
     public static function findCyclist($id)
@@ -161,10 +167,9 @@ class Cyclist extends User {
         if (self::$db->rowCount() > 0) {
             $nationality = $result['approved'] ? $result['nationality'] : '------';
             $total_points = $result['approved'] ? $result['total_points'] : '------';
-            $team_id = $result['approved'] ? $result['team_id'] : '------';
 
             $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"],null, null, $result['photo'],
-                                    $nationality, $result['birthdate'], $total_points, $result['approved'], $team_id);
+                                    $nationality, $result['birthdate'], $total_points, $result['approved'], $result['team_id']);
             return $cyclist;
         } else {
             return null;

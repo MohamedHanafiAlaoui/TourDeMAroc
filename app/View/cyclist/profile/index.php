@@ -10,7 +10,7 @@
         <label for="profileImage" class="absolute bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg">
           <i class="fas fa-camera text-white text-lg"></i>
         </label>
-        <input type="file" id="profileImage" name="profileImage" accept="image/*" class="hidden">
+        <input type="file" id="profileImage" name="profileImage" accept="image/*" class="hidden" >
       </div>
 
       <!-- Profile Details with Improved Typography -->
@@ -20,26 +20,34 @@
         </h1>
         <div>
           <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
-            <div class="flex items-center">
+
+            <form class="flex items-center">
               <i class="fas fa-users text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Team:</span> <?= $cyclist->getTeam() ?></span>
-            </div>
-            <div class="flex items-center">
+              <span class="ml-2 font-medium text-gray-800">Team:</span> 
+              <label for="teamInput" class="ml-2 hidden  text-gray-600"><?= $cyclist->Team()->getName() ?></label> 
+              <input id="teamInput" type="text" class="ml-2" value="<?= $cyclist->Team()->getName() ?>" placeholder="Team">
+            </form>
+
+            <form class="flex items-center">
               <i class="fas fa-flag text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Nationality:</span> <?= $cyclist->getNationality() ?></span>
-            </div>
-            <div class="flex items-center">
+              <span class="ml-2 font-medium text-gray-800">Nationality: </span>  <label class="ml-2 text-gray-600"> <?= $cyclist->getNationality() ?></label>
+            </form>
+
+            <form class="flex items-center">
               <i class="fas fa-birthday-cake text-emerald-500 w-6"></i>    
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Birthday:</span> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></span>
-            </div>
-            <div class="flex items-center">
+              <span class="ml-2 font-medium text-gray-800">Birthday: </span>  <label class="ml-2 text-gray-600"> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></label>
+            </form>
+
+            <form class="flex items-center">
               <i class="fas fa-envelope text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Email:</span> <?= $cyclist->getEmail() ?></span>
-            </div>
-            <div class="flex items-center">
+              <span class="ml-2 font-medium text-gray-800">Email: </span>  <label class="ml-2 text-gray-600"> <?= $cyclist->getEmail() ?></label>
+            </form>
+
+            <form class="flex items-center">
               <i class="fas fa-phone text-emerald-500 w-6"></i>
-              <span class="ml-2 text-gray-600"><span class="font-medium text-gray-800">Phone:</span> +212 600000000</span>
-            </div>
+              <span class="ml-2 font-medium text-gray-800">Phone: </span>  <label class="ml-2 text-gray-600"> +212 600000000</label>
+            </form>
+
           </div>
           <!-- Cool Logout Button -->
           <form action="<?= url('logout') ?>" method="POST" class="mt-4">
@@ -227,5 +235,19 @@
         setTimeout(() => card.remove(), 300);
       }
     });
+
+    function previewImage(event) {
+        const file = event.target.files[0]; 
+        const reader = new FileReader();  
+        
+        reader.onload = function(e) {  
+            const imgPreview = document.getElementById('profileImagePreview');  
+            imgPreview.src = e.target.result;  
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);  
+        }
+    }
   </script>
 </main>
