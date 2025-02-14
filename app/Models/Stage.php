@@ -167,14 +167,20 @@
 
         public static function All()
         {
-            $sql = "SELECT * FROM stages";
+            $sql = "SELECT S.*, C.name AS category_name, R.name AS region_name
+                        FROM stages S
+                        JOIN categories C ON S.category_id = C.id
+                        JOIN regions R ON S.region_id = R.id;";
 
             self::$db->query($sql);
             $result = self::$db->results();
 
             $stages = [];
             foreach ($result as $value) {
-                $stages[] = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
+                $class->setNameCategory($value["category_name"]);
+                $class->setNameRegion($value["region_name"]);
+                $stages[] = $class;
             }
             return $stages;
         }
