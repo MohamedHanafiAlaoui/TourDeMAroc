@@ -17,8 +17,10 @@ class StageController extends BaseController {
         $stage = Stage::find($id);
         $likes = $stage->likesCount();
         $isLiked = !!(Like::find(user()->getId(), $stage->getId()));
+
+        $comments = $stage->comments();
         
-        $this->render("fan/stages/show",compact("stage", "likes", "isLiked"));
+        $this->render("fan/stages/show",compact("stage", "likes", "isLiked", "comments"));
     }
 
     public function notify($id)

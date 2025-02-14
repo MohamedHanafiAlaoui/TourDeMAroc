@@ -1,5 +1,6 @@
 <?php
-class Cyclist extends User {
+class Cyclist extends User
+{
     private $nationality;
     private $birthdate;
     private $points_awarded;
@@ -7,7 +8,7 @@ class Cyclist extends User {
     private $team;
 
     function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null, $password_token_hash = null, $password_token_expires_at = null, $photo = null,
-                                $nationality = null, $birthdate = null, $total_point = null, $approved = null, $team = null
+                                $nationality = null, $birthdate = null, $points_awarded = null, $approved = null, $team = null
                             )
         {
             parent::__construct($id, $first_name, $last_name, $email, $password, $role_id, $created_at, $password_token_hash, $password_token_expires_at, $photo);
@@ -65,6 +66,11 @@ class Cyclist extends User {
     public function getTeam()
     {
         return $this->team;
+    }
+
+    public function getPointsAwarded()
+    {
+        return $this->points_awarded ?? 0;
     }
 
     public function save()
@@ -138,6 +144,70 @@ class Cyclist extends User {
             $cyclests[] = $cyclist;
         }
         return $cyclests;
+    }
+
+    public static function getTopCyclists($limit = null)
+    {
+        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, team AS team_name, 
+                   SUM(sp.points_awarded) AS total_points 
+            FROM cyclists c
+            JOIN stage_points sp ON c.id = sp.id_cyclist
+            JOIN teams t ON c.team_id = t.id
+            GROUP BY c.id, c.first_name, c.last_name, c.photo, t.name
+            ORDER BY total_points DESC";
+     
+     if ($limit) {
+        $sql .= " LIMIT :limit";
+    }
+
+    self::$db->query($sql);
+
+    if ($limit) {
+        self::$db->bind(':limit', $limit);
+    }
+
+    $result = self::$db->results();
+
+
+
+    $cyclists = [];
+
+    foreach ($result as $row) {
+        $cyclist = new self(
+            $row['id'],
+            $row['first_name'],
+            $row['last_name'],
+            null, 
+            null, 
+            null, 
+            null,
+            null, 
+            null, 
+            $row['photo'],
+            null, 
+            null, 
+            $row['total_points'],
+            null,
+            null  
+        );
+        $cyclist->setTeam($row['team_name']);
+
+        $cyclists[] = $cyclist;
+    }
+
+    return $cyclists;
+        
+    }
+
+    public function team()
+    {
+        $sql = "SELECT * FROM teams t WHERE id = :id";
+        self::$db->query($sql);
+        self::$db->bind(':id', $this->team);
+        
+        $result = self::$db->single();
+
+        return new Team($result["id"], $result["name"]);
     }
 
     public static function findCyclist($id)

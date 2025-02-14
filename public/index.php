@@ -28,15 +28,20 @@
     $router->get('/stages', [StageController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->post('/stages/notify/{id}', [StageController::class, 'notify'], ["fan", "cyclist"]);
     $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
-    $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->get('/ranking', [CyclistController::class, 'ranking'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     
     $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
-    $router->post('/reports/create', [ReportsController::class, 'create'], ["fan"]);
+    $router->post('/comments/store', [CommentController::class, 'store'], ["fan", "cyclist"]);
+    $router->post('/reports/store', [ReportController::class, 'store'], ["fan", "cyclist"]);
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     
     $router->post('/profile/update', [CyclistController::class, 'update'], ["cyclist"]);
+
+    //routes des likes
+    // $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);
+    // $router->get('/like-count/{id}', [LikeController::class, 'getLikeCount'], ["visitor", "fan", "cyclist"]);
 
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
     $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);
@@ -48,7 +53,7 @@
     $router->get('/stages', [StageController::class, 'index'], ["admin"]);
     $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
-    $router->get('/reports', [ReportsController::class, 'index'], ["admin"]);
+    $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
 
     $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor", "fan", "cyclist"]);
     $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);

@@ -70,9 +70,14 @@ class User extends BaseModel
         return $this->role_id;
     }
 
-    public function getPhoto()
+    public function getPhotoName()
     {
         return $this->photo;
+    }
+
+    public function getPhoto()
+    {
+        return  URLASSETS . "images/photos/".  ($this->photo ?? "default.jpg");
     }
     
     public function getRoleName()
@@ -172,16 +177,8 @@ class User extends BaseModel
         $result = self::$db->single();
 
         if (self::$db->rowCount() > 0) {
-            switch ($result["role_id"]) {
-                case self::$adminRoleId:
-                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
-                case self::$fanRoleId:
-                    $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
-                    return $fan;
-                case self::$cyclistRoleId:
-                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
-                    return $cyclist;
-            }
+            $user = self::mapping($result);
+            return $user;
         } else {
             return null;
         }
@@ -195,16 +192,9 @@ class User extends BaseModel
         $result = self::$db->single();
 
         if (self::$db->rowCount() > 0) {
-            switch ($result["role_id"]) {
-                case self::$adminRoleId:
-                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
-                case self::$fanRoleId:
-                    $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
-                    return $fan;
-                case self::$cyclistRoleId:
-                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
-                    return $cyclist;
-            }        } else {
+            $user = self::mapping($result);
+            return $user;
+        } else {
             return false;
         }
     }
@@ -217,17 +207,24 @@ class User extends BaseModel
         $result = self::$db->single();
 
         if (self::$db->rowCount() > 0) {
-            switch ($result["role_id"]) {
-                case self::$adminRoleId:
-                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result["photo"]);
-                case self::$fanRoleId:
-                    $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result["photo"]);
-                    return $fan;
-                case self::$cyclistRoleId:
-                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result["photo"]);
-                    return $cyclist;
-            }        } else {
+            $user = self::mapping($result);
+            return $user;
+        } else {
             return false;
+        }
+    }
+
+    public static function mapping($data)
+    {
+        switch ($data["role_id"]) {
+            case self::$adminRoleId:
+                return new Admin($data["id"], $data["first_name"], $data["last_name"], $data["email"], $data["password"], $data["role_id"], $data["created_at"], $data["password_token_hash"], $data["password_token_expires_at"] , $data["photo"]);
+            case self::$fanRoleId:
+                $fan = new Fan($data["id"], $data["first_name"], $data["last_name"], $data["email"], $data["password"], $data["role_id"], $data["created_at"], $data["password_token_hash"], $data["password_token_expires_at"], $data["photo"]);
+                return $fan;
+            case self::$cyclistRoleId:
+                $cyclist = new Cyclist($data["id"], $data["first_name"], $data["last_name"], $data["email"], $data["password"], $data["role_id"], $data["created_at"], $data["password_token_hash"], $data["password_token_expires_at"], $data["photo"]);
+                return $cyclist;
         }
     }
 }
