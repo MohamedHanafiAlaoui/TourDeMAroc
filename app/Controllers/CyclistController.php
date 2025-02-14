@@ -15,4 +15,10 @@ class CyclistController extends BaseController {
     {
         $this->render("cyclist/profile/index");
     }
+
+    public function ranking()
+    {
+        $topCyclists = Cyclist::getTopCyclists();
+        $this->render("/fan/ranking/index", compact("topCyclists"));
+    }
 }

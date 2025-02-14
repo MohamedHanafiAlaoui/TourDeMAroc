@@ -27,13 +27,13 @@
     $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/stages', [StagesController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/stages/{id}', [StagesController::class, 'show'], ["visitor", "fan", "cyclist"]);
-    $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->get('/ranking', [CyclistController::class, 'ranking'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
 
     //routes des likes
-    $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);
-    $router->get('/like-count/{id}', [LikeController::class, 'getLikeCount'], ["visitor", "fan", "cyclist"]);
+    // $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);
+    // $router->get('/like-count/{id}', [LikeController::class, 'getLikeCount'], ["visitor", "fan", "cyclist"]);
 
     $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor"]);
 

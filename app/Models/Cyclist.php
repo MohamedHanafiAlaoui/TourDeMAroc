@@ -1,10 +1,13 @@
 <?php
-class Cyclist extends User {
+class Cyclist extends User
+{
     private $nationality;
     private $birthdate;
     private $total_points;
     private $approved;
     private $id_team;
+    private $points_awarded;
+
 
     private $nameTeam;
 
@@ -27,7 +30,7 @@ class Cyclist extends User {
     {
         $this->approved = $approved;
     }
-    
+
     public function setIdTeme($id_team)
     {
         $this->id_team = $id_team;
@@ -57,7 +60,7 @@ class Cyclist extends User {
     {
         return $this->approved;
     }
-    
+
     public function getIdTeme()
     {
         return $this->id_team;
@@ -66,6 +69,11 @@ class Cyclist extends User {
     public function getNameTeam()
     {
         return $this->nameTeam;
+    }
+
+    public function getPointsAwarded()
+    {
+        return $this->points_awarded ?? 0;
     }
 
     public function save()
@@ -101,5 +109,25 @@ class Cyclist extends User {
             $cyclests[] = $cyclist;
         }
         return $cyclests;
+    }
+
+    public static function getTopCyclists($limit = null)
+    {
+        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.name AS team_name, 
+                   SUM(sp.points_awarded) AS total_points 
+            FROM cyclists c
+            JOIN stage_points sp ON c.id = sp.id_cyclist
+            JOIN teams t ON c.team_id = t.id
+            GROUP BY c.id, c.first_name, c.last_name, c.photo, t.name
+            ORDER BY total_points DESC";
+        self::$db->query($sql);
+        
+        if ($limit) {
+            $sql .= " LIMIT :limit";
+            self::$db->bind(':limit', $limit);
+        }
+
+        return self::$db->results();
+        
     }
 }
