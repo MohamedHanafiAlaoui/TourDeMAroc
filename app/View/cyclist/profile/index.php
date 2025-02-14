@@ -1,7 +1,7 @@
 <main class="max-w-7xl mx-auto px-4 py-20">
   <!-- Enhanced Profile Section -->
   <section class="bg-white shadow-xl rounded-2xl p-8 mb-12 transition-all duration-300 hover:shadow-2xl">
-    <form class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0">
+    <form id="DetailsForm" action="<?= url('/Profile/Information') ?>" method="POST" class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0">
       <!-- Profile Image with Enhanced Styling -->
       <div class="relative group">
         <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
@@ -20,13 +20,17 @@
         </h1>
         <div>
           <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
-
             <div id="TeamGrid" class="flex items-center">
               <i class="fas fa-users text-emerald-500 w-6"></i>
               <span class="ml-2 font-medium text-gray-800">Team:</span> 
               <label for="teamInput" class="ml-2  text-gray-600 "><?= $cyclist->Team()->getName() ?></label> 
               <div class="ml-2 grid-cols-2 items-center hidden">
-                <input id="teamInput" name="teamInput" type="text" value="<?= $cyclist->Team()->getName() ?>" placeholder="Team">
+                <select name="teamInput" class="px-2 min-w-60" id="teamInput">
+                  <option selected value=""><?= $cyclist->Team()->getName() ?></option>
+                  <?php foreach ($Teams as $key => $Team): ?>
+                    <option value="<?= $Team->getId() ?>"><?= $Team->getName() ?></option>
+                  <?php endforeach ?>
+                </select>
                 <label for="teamInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="fas fa-edit"></i></label>
               </div>
             </div>
@@ -61,15 +65,6 @@
               </div>
             </div>
 
-            <!-- <div class="flex items-center">
-              <i class="fas fa-phone text-emerald-500 w-6"></i>
-              <span class="ml-2 font-medium text-gray-800">Phone: </span>  
-              <label for="PhoneInpur" class="ml-2 text-gray-600 hidden"> +212 600000000</label>
-              <div class="ml-2 flex items-center">
-                <input id="PhoneInput" type="tel" placeholder="Phone">
-                <label for="PhoneInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="fas fa-edit"></i></label>
-              </div>
-            </div> -->
           </div>
           <div class="flex w-full items-end  mt-10 gap-5">
             <button id="modifyButton" type="button" class="flex items-center justify-center bg-emerald-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300"">
@@ -81,7 +76,7 @@
                 <i class="mr-2 fas fa-x"></i>
                 Cancel
               </button>
-              <button type="submit" class=" items-center justify-center bg-blue-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
+              <button id="accepteButton" type="button" class=" items-center justify-center bg-blue-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
                 <i class="mr-2 fas fa-check"></i>
                 Accpete
               </button>
@@ -144,6 +139,11 @@
         <i class="fas fa-plus-circle mr-3 text-emerald-500"></i>Add New Experience
       </h3>
       <form id="modalExperienceForm" class="space-y-3">
+        <div class="relative group">
+          <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Add photo</label>
+          <input type="file" id="experienceImage" name="experienceImage" accept="image/*">
+        </div>
         <!-- Input Group with Icon -->
         <div class="relative">
           <label class="block text-sm font-medium text-gray-700 mb-2">Race Name</label>
@@ -193,7 +193,7 @@
           <button type="button" id="closeExperienceModal" 
                   class="px-6 py-2.5 text-gray-600 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all 
                   duration-300">Cancel</button>
-          <button type="submit" 
+          <button id="accpeteButton" type="submit" 
                   class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition-all duration-300 
                   transform hover:scale-[1.02]">Save Experience</button>
         </div>
@@ -275,6 +275,9 @@
       }
     });
 
+    //button d'acceptation des information
+    AccepteInformation = document.querySelector("#ComfermeForm #accepteButton");
+
     function previewImage(event) {
         const file = event.target.files[0]; 
         const reader = new FileReader();  
@@ -289,6 +292,78 @@
         }
     }
 
+    function InputToggel(){
+      document.querySelector('#TeamGrid > div').classList.toggle('hidden');
+      document.querySelector('#NationalityGrid > div').classList.toggle('hidden');
+      document.querySelector('#BirthdayGrid > div').classList.toggle('hidden');
+      document.querySelector('#EmailGrid > div').classList.toggle('hidden');
+      document.querySelector('#TeamGrid > label[for="teamInput"]').classList.toggle('hidden');
+      document.querySelector('#NationalityGrid > label[for="NationalityInput"]').classList.toggle('hidden');
+      document.querySelector('#BirthdayGrid > label[for="BirthdayInput"]').classList.toggle('hidden');
+      document.querySelector('#EmailGrid > label[for="EmailInput"]').classList.toggle('hidden');
+      ComfermeForm.classList.toggle('hidden');
+      modifyButton.classList.toggle('hidden');
+    }
+
+    modifyButton.addEventListener('click',() => InputToggel());
+    cancelButton.addEventListener('click',() => InputToggel());
+
+
+    // const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    // const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    // const nameRegex = /^[A-Za-zÀ-ÿ\s'-]+$/;
+
+    // let birthdate = new Date(BirthdayInput.value);
+    // const today = new Date();
+    // let age = today.getFullYear() - birthdate.getFullYear();
+    // console.log();
+    
+
+    // function ValidationRegex() 
+    // {
+    //   let validation = false;
+    //   // if (!emailRegex.test(EmailInput.value)) {
+    //   //   EmailInput.classList.add('border-red-200','border-2');
+    //   //   validation = false;
+    //   // } else {
+    //   //   EmailInput.classList.remove('border-red-200','border-2');
+    //   //   validation = true;
+    //   // }
+
+    //   // if (!nameRegex.test(NationalityInput.value)) {
+    //   //   NationalityInput.classList.add('border-red-200','border-2');
+    //   //   validation = false;
+    //   // } else {
+    //   //   NationalityInput.classList.remove('border-red-200','border-2');
+    //   //   validation = true;
+    //   // }
+
+    //   // if (!nameRegex.test(teamInput.value)) {
+    //   //   teamInput.classList.add('border-red-200','border-2');
+    //   //   validation = false;
+    //   // } else {
+    //   //   teamInput.classList.remove('border-red-200','border-2');
+    //   //   validation = true;
+    //   // }
+
+    //   if (birthdate < 18 ) {
+    //     BirthdayInput.classList.add('border-red-200','border-2');
+    //     validation = false;
+    //   } else {
+    //     BirthdayInput.classList.remove('border-red-200','border-2');
+    //     validation = true;
+    //   }
+
+    //   return validation;
+    // }
+    
+
+    AccepteInformation.addEventListener('click', (event) => {
+      event.preventDefault();
+
+      DetailsForm.submit(); 
+    
+    });
 
   </script>
 </main>

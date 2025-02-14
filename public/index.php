@@ -30,7 +30,8 @@
     $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
-
+    
+    $router->get('/Profile/Information', [CyclistController::class, 'updte'], ["cyclist"]);
 
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
     $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);

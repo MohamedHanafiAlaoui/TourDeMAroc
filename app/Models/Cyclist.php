@@ -175,4 +175,25 @@ class Cyclist extends User {
             return null;
         }
     }
+
+    public function updateInfor()
+    {
+        $sql = "UPDATE cyclists 
+                SET email = :email, 
+                    birthdate = :birthdate,
+                    nationality = :nationality,
+                    photo = :photo,
+                    team_id = team_id,
+                WHERE id = :id";
+    
+        self::$db->query($sql);
+        self::$db->bind(':email', $this->email);
+        self::$db->bind(':birthdate', $this->birthdate);
+        self::$db->bind(':nationality', $this->nationality);
+        self::$db->bind(':photo', $this->photo);
+        self::$db->bind(':team_id', $this->team_id);
+        self::$db->bind(':id', $this->id);
+    
+        return self::$db->execute();
+    }
 }
