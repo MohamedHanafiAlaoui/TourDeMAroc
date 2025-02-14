@@ -11,12 +11,12 @@
   <div class="flex flex-col md:flex-row justify-center items-end space-y-8 md:space-y-0 md:space-x-8 mb-16">
     <?php
     // Ensure there are at least 3 cyclists
-    $Cyclists = array_pad($Cyclists, 3, new Cyclist());
+    $TopCyclists = array_pad($Cyclists, 3, new Cyclist());
 
     // Assign each cyclist their correct place
-    $firstPlace = $Cyclists[0];
-    $secondPlace = $Cyclists[1];
-    $thirdPlace = $Cyclists[2];
+    $firstPlace = $TopCyclists[0];
+    $secondPlace = $TopCyclists[1];
+    $thirdPlace = $TopCyclists[2];
     ?>
     <!-- 2nd Place -->
     <div class="flex flex-col items-center order-2 md:order-1 transform hover:scale-105 transition-transform duration-300">
@@ -107,9 +107,9 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-          <?php foreach ($Cyclists as $index => $cyclist): ?>
+          <?php $index=1; foreach ($Cyclists as $cyclist): ?>
             <tr class="hover:bg-gray-50 transition-colors">
-              <td class="px-6 py-4 whitespace-nowrap font-medium"><?= $index + 1 ?></td>
+              <td class="px-6 py-4 whitespace-nowrap font-medium"><?= $index ?></td>
               <td class="px-6 py-4 whitespace-nowrap flex items-center">
                 <img src="<?= $cyclist->getPhoto() ?>" alt="<?= $cyclist->getFirstName() ?>" class="w-12 h-12 rounded-full mr-3">
                 <?= $cyclist->getFullName()?>
@@ -118,7 +118,7 @@
               <td class="px-6 py-4 whitespace-nowrap font-medium"><?= $cyclist->getPointsAwarded() ?></td>
               <td class="px-6 py-4 whitespace-nowrap text-emerald-500"><?= $cyclist->getTeam() ?></td>
             </tr>
-          <?php endforeach; ?>
+          <?php $index++; endforeach; ?>
         </tbody>
 
       </table>

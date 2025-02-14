@@ -193,7 +193,7 @@ class Cyclist extends User
                        EXTRACT(MINUTE FROM sp.total_time) || 'm', ', '
                    ) AS total_time
             FROM cyclists c
-            LEFT JOIN stage_points sp ON c.id = sp.id_cyclist
+            JOIN stage_points sp ON c.id = sp.id_cyclist
             GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
             ORDER BY total_points DESC";
     
