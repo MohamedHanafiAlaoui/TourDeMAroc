@@ -73,10 +73,7 @@ class CyclistController extends BaseController
     
     public function ranking()
     {
-        $topCyclists = Cyclist::getTopCyclists(3);  
-
-        $allCyclists = Cyclist::getTopCyclists(); 
-
-        $this->render("/fan/ranking/index", compact("topCyclists", "allCyclists"));
+        $Cyclists = Cyclist::getTopCyclists(); 
+        $this->render("/fan/ranking/index", compact("Cyclists"));
     }
 }

@@ -7,6 +7,7 @@ class Cyclist extends User
     private $approved;
     private $team;
 
+    private $total_time;
 
     function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null, $password_token_hash = null, $password_token_expires_at = null, $photo = null,
                                 $nationality = null, $birthdate = null, $approved = null, $team = null
@@ -130,28 +131,6 @@ class Cyclist extends User
         return self::$db->execute();
     }
 
-    public static function TopCyclists($number)
-    {
-        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.id as team_id, t.name AS team_name 
-                FROM cyclists c LEFT JOIN teams t ON c.id= t.id
-                ORDER BY total_points DESC LIMIT :number";
-        self::$db->query($sql);
-        self::$db->bind(':number', $number);
-
-        $result = self::$db->results();
-
-        $cyclests = [];
-
-        foreach ($result as $key => $value) {
-            $cyclist = new self($value['id'], $value['first_name'], $value['last_name'], $value['photo']);
-            $cyclist->setIdTeme($value['team_id']);
-            $cyclist->setTeme($value['team_name'] ?? '-------');
-
-            $cyclests[] = $cyclist;
-        }
-        return $cyclests;
-    }
-
     // public static function getTopCyclists($limit = null)
     // {
     //     $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.name AS team_name, 
@@ -207,14 +186,14 @@ class Cyclist extends User
     
     public static function getTopCyclists($limit = null)
 {
-    $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.name AS team_name, 
+    $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, c.team AS team_name, 
                    SUM(sp.points_awarded) AS total_points,
                    STRING_AGG(
                        EXTRACT(HOUR FROM sp.total_time) || 'h ' || 
                        EXTRACT(MINUTE FROM sp.total_time) || 'm', ', '
                    ) AS total_time
             FROM cyclists c
-            JOIN stage_points sp ON c.id = sp.id_cyclist
+            LEFT JOIN stage_points sp ON c.id = sp.id_cyclist
             GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
             ORDER BY total_points DESC";
     
@@ -243,11 +222,7 @@ class Cyclist extends User
             null,
             null, 
             null, 
-            $row['photo'],
-            null, 
-            null, 
-            null,
-            null  
+            $row['photo'], 
         );
         $cyclist->setPointsAwarded($row['total_points']);
         $cyclist->setTeam($row['team_name']);
