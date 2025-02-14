@@ -1,22 +1,7 @@
 <div class="pt-20 max-w-7xl mx-auto px-4 py-10">
   <div class="bg-white rounded-2xl shadow-xl p-8">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-      <div>
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Stage 1: Casablanca → Rabat</h1>
-        <p class="text-xl text-gray-600">May 1, 2025 -> May 15, 2025</p>
-      </div>
-
-
-      <div class="mt-4 md:mt-0 inline-flex items-center gap-2">
-        <button id="likeButton" class="inline-flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors duration-200">
-          <i id="heartIcon" class="far fa-heart text-lg"></i>
-          <span id="likeCount" class="text-base">64</span>
-        </button>
-        <div class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-full inline-flex items-center gap-2">
-          <i class="fas fa-flag-checkered"></i>
-          <span class="font-medium">Stage Complete</span>
-        </div>
-      </div>
+      
 
 
         
@@ -33,7 +18,11 @@
                                           </p>
       </div>
 
-
+      <div class="mt-4 md:mt-0 inline-flex items-center gap-2">
+        <button id="likeButton" class="inline-flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors duration-200">
+          <i id="heartIcon" class="far fa-heart text-lg"></i>
+          <span id="likeCount" class="text-base">64</span>
+        </button>
         <?php
         
 
@@ -60,7 +49,8 @@
         }
 
         ?>
-        
+       
+      </div> 
  
       
     </div>
