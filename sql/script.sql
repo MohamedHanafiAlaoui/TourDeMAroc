@@ -102,13 +102,13 @@ CREATE TABLE stages (
 -- ===============================
 -- 7️⃣ Résultats des étapes (points)
 -- ===============================
-CREATE TABLE stage_points (
+CREATE TABLE ranking (
     id SERIAL PRIMARY KEY,
-    id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
+    cyclist_id INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
     stage_id INT NOT NULL REFERENCES stages(id) ON DELETE CASCADE,
     total_time INTERVAL NOT NULL,
     points_awarded INT DEFAULT 0,
-    UNIQUE (id_cyclist, stage_id)
+    UNIQUE (cyclist_id, stage_id)
 );
 
 -- ===============================
