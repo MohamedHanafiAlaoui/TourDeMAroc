@@ -8,7 +8,7 @@ class Cyclist extends User
     private $team;
 
     function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null, $password_token_hash = null, $password_token_expires_at = null, $photo = null,
-                                $nationality = null, $birthdate = null, $points_awarded = null, $approved = null, $team = null
+                                $nationality = null, $birthdate = null, $approved = null, $team = null
                             )
         {
             parent::__construct($id, $first_name, $last_name, $email, $password, $role_id, $created_at, $password_token_hash, $password_token_expires_at, $photo);
@@ -68,11 +68,6 @@ class Cyclist extends User
         return $this->team;
     }
 
-    public function getPointsAwarded()
-    {
-        return $this->points_awarded ?? 0;
-    }
-
     public function save()
     {
         $sql = "INSERT INTO cyclists (first_name, last_name, email, password, role_id) VALUES (:first_name, :last_name, :email, :password, :role_id)";
@@ -118,42 +113,13 @@ class Cyclist extends User
         return self::$db->execute();
     }    
 
-    public static function TopCyclists($LIMIT = null)
-    {
-        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, c.team AS team_name , SUM(st.points_awarded) As Total
-                FROM cyclists c LEFT JOIN stage_points st ON st.id_cyclist = c.id
-                GROUP BY c.id, c.first_name, c.last_name, c.photo, t.id, t.name 
-                ORDER BY Total DESC ";
-        self::$db->query($sql);
-
-        if ($LIMIT) {
-            $sql .= " LIMIT :LIMIT";
-            self::$db->bind(':LIMIT', $LIMIT);
-        }
-        
-
-        $result = self::$db->results();
-
-        $cyclests = [];
-
-        foreach ($result as $key => $value) {
-            $cyclist = new self($value['id'], $value['first_name'], $value['last_name'], $value['photo']);
-            $cyclist->setPointsAwarded($value['team']);
-            $cyclist->setTeam($value['team_name'] ?? '-------');
-
-            $cyclests[] = $cyclist;
-        }
-        return $cyclests;
-    }
-
     public static function getTopCyclists($limit = null)
     {
-        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, team AS team_name, 
+        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, c.team AS team_name, 
                    SUM(sp.points_awarded) AS total_points 
             FROM cyclists c
             JOIN stage_points sp ON c.id = sp.id_cyclist
-            JOIN teams t ON c.team_id = t.id
-            GROUP BY c.id, c.first_name, c.last_name, c.photo, t.name
+            GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
             ORDER BY total_points DESC";
      
      if ($limit) {
@@ -186,10 +152,10 @@ class Cyclist extends User
             $row['photo'],
             null, 
             null, 
-            $row['total_points'],
             null,
             null  
         );
+        $cyclist->setPointsAwarded($row['total_points']);
         $cyclist->setTeam($row['team_name']);
 
         $cyclists[] = $cyclist;
@@ -197,17 +163,6 @@ class Cyclist extends User
 
     return $cyclists;
         
-    }
-
-    public function team()
-    {
-        $sql = "SELECT * FROM teams t WHERE id = :id";
-        self::$db->query($sql);
-        self::$db->bind(':id', $this->team);
-        
-        $result = self::$db->single();
-
-        return new Team($result["id"], $result["name"]);
     }
 
     public static function findCyclist($id)
@@ -220,14 +175,14 @@ class Cyclist extends User
 
         if (self::$db->rowCount() > 0) {
             $nationality = $result['approved'] ? $result['nationality'] : '------';
-            $points_awarded = $result['approved'] ? $result['points_awarded'] : '------';
             $team = $result['approved'] ? $result['team'] : '------';
 
             $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
-                                    $nationality, $result['birthdate'], $points_awarded, $result['approved'], $team);
+                                    $nationality, $result['birthdate'], $result['approved'], $team);
             return $cyclist;
         } else {
             return null;
         }
     }
+
 }

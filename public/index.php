@@ -55,7 +55,6 @@
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
 
-    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor", "fan", "cyclist"]);
     $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);
 
     

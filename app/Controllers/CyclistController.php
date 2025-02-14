@@ -68,4 +68,14 @@ class CyclistController extends BaseController {
         
         redirect("profile");
     }
+
+    
+    public function ranking()
+    {
+        $topCyclists = Cyclist::getTopCyclists(3);
+
+        $allCyclists = Cyclist::getTopCyclists(); 
+   
+        $this->render("/fan/ranking/index", compact('topCyclists', 'allCyclists'));
+    }
 }

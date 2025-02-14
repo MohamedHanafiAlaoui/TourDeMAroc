@@ -4,7 +4,7 @@ class HomeController extends BaseController {
     public function index()
     {
         $nextStages = Stage::NextStages();
-        $TopCyclists = Cyclist::TopCyclists();
+        $TopCyclists = Cyclist::getTopCyclists(4);
         $this->render("fan/index", compact("nextStages", "TopCyclists"));
     }
 

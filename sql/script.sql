@@ -24,7 +24,7 @@ CREATE TABLE teams (
 );
 
 -- ===============================
--- 3️⃣ Table principale des utilisateurs
+-- 2️⃣ Table principale des utilisateurs
 -- ===============================
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -40,7 +40,7 @@ CREATE TABLE users (
 );
 
 -- ===============================
--- 4️⃣ Tables héritées (Cyclists, Admins, Fans)
+-- 3️⃣ Tables héritées (Cyclists, Admins, Fans)
 -- ===============================
 
 -- Table des fans (hérite de `users`) avec `notify` en BOOLEAN sans valeur par défaut
@@ -67,7 +67,7 @@ CREATE TABLE cyclists (
 ALTER TABLE cyclists ADD CONSTRAINT unique_cyclist_id UNIQUE (id);
 
 -- ===============================
--- 5️⃣ Tables des catégories et des régions
+-- 4️⃣ Tables des catégories et des régions
 -- ===============================
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
@@ -80,7 +80,7 @@ CREATE TABLE regions (
 );
 
 -- ===============================
--- 6️⃣ Table des étapes (stages)
+-- 5️⃣ Table des étapes (stages)
 -- ===============================
 CREATE TYPE difficulty AS ENUM('facile', 'medium', 'difficile');
 
@@ -100,7 +100,7 @@ CREATE TABLE stages (
 );
 
 -- ===============================
--- 7️⃣ Résultats des étapes (points)
+-- 6️⃣ Résultats des étapes (points)
 -- ===============================
 CREATE TABLE stage_points (
     id SERIAL PRIMARY KEY,
@@ -112,7 +112,7 @@ CREATE TABLE stage_points (
 );
 
 -- ===============================
--- 8️⃣ Gestion des favoris et interactions des fans
+-- 7️⃣ Gestion des favoris et interactions des fans
 -- ===============================
 
 -- Table des favoris des fans (référence maintenant `fans(id)`)
@@ -121,6 +121,11 @@ CREATE TABLE fan_favorites (
     id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
     PRIMARY KEY (id_fan, id_cyclist)
 );
+
+
+-- ===============================
+-- 8️⃣ Gestion des commentaires des fans
+-- ===============================
 
 -- Table des commentaires
 CREATE TABLE comments (
@@ -158,9 +163,13 @@ CREATE TABLE reports (
 -- ===============================
 CREATE TABLE historys(
     id SERIAL PRIMARY KEY,
-    version VARCHAR(250) NOT NULL,
-    id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
+    Add tour VARCHAR(250) NOT NULL,
     photo TEXT
+    Add start_date DATE,
+    Add end_date DATE,
+    add rank INT,
+    add description TEXT
+    id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
 );
 
 -- ===============================
