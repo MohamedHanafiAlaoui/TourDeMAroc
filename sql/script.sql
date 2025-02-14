@@ -34,7 +34,9 @@ CREATE TABLE users (
     password TEXT NOT NULL,
     photo TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    role_id INT REFERENCES roles(id) ON DELETE SET NULL
+    role_id INT REFERENCES roles(id) ON DELETE SET NULL,
+    password_token_hash VARCHAR(64),
+    password_token_expires_at TIMESTAMP
 );
 
 -- ===============================
