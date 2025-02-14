@@ -201,4 +201,8 @@ class StageController extends BaseController
         flash("error", array_first_not_null_value($errors));
         back();
     }
+    public function delete($id){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
+    }
 }

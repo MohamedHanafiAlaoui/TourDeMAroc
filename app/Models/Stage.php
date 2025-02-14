@@ -354,4 +354,10 @@
 
             return $result["likes_count"];
         }
+        public function delete($id){
+            $query = "DELETE from Stage where id = :id ";
+            self::$db->query($query);
+            self::$db->bind(':id', $id);
+            return self::$db->execute();
+        }
     }
