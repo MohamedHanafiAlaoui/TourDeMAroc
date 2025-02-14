@@ -18,7 +18,7 @@
             </svg>
             Add New Stage
         </h2>
-        <form id="addStageForm" class="space-y-4">
+        <form action="<?= url('stage/store') ?>" class="space-y-4" method="post" >
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Stage Name -->
                 <div class="group">
@@ -67,6 +67,22 @@
                         </div>
                     </div>
                 </div>
+                <!-- photo -->
+                <div class="group">
+                    <label for="photo" class="block text-sm font-medium text-gray-700 mb-1">photo</label>
+                    <div class="relative">
+                        <input type="text" id="photo" name="photo" required placeholder="Enter end photoURl"
+                               class="w-full rounded-md border-gray-300 shadow-md focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 pl-3 py-2 text-gray-900 transition-all duration-200 group-hover:border-emerald-200">
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span class="text-emerald-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 <!-- Distance -->
                 <div class="group">
                     <label for="distance" class="block text-sm font-medium text-gray-700 mb-1">Distance (km)</label>
@@ -102,13 +118,12 @@
                 <div class="group">
                     <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
                     <div class="relative">
-                        <select id="category" name="category" required
+                        <select id="category" name="category" 
                                 class="w-full rounded-md border-gray-300 shadow-md focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 pl-3 py-2 text-gray-900 transition-all duration-200">
                             <option value="">Select a category</option>
-                            <option value="mountain">Mountain ⛰️</option>
-                            <option value="plain">Plain 🏞️</option>
-                            <option value="terrain">Terrain 🌄</option>
-                            <option value="velodrome">Velodrome 🚴</option>
+                            <?php foreach ($data["categories"] as $categories) :?>
+                            <option value="<?=$categories->getId()?>"><?=$categories->getName()?></option>
+                            <?php endforeach;?>
                         </select>
                     </div>
                 </div>
@@ -116,13 +131,12 @@
                 <div class="group">
                     <label for="region" class="block text-sm font-medium text-gray-700 mb-1">Region</label>
                     <div class="relative">
-                        <select id="region" name="region" required
+                        <select id="region" name="region" 
                                 class="w-full rounded-md border-gray-300 shadow-md focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 pl-3 py-2 text-gray-900 transition-all duration-200">
                             <option value="">Select a region</option>
-                            <option value="atlas">Atlas ⛰️</option>
-                            <option value="sahara">Sahara 🏜️</option>
-                            <option value="coast">Coast 🌊</option>
-                            <option value="rif">Rif Mountains 🏔️</option>
+                            <?php foreach ($data["ragions"] as $categories) :?>
+                            <option value="<?=$categories->getId()?>"><?=$categories->getName()?></option>
+                            <?php endforeach;?>
                         </select>
                     </div>
                 </div>
@@ -194,6 +208,42 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200" id="stagesList">
                     <!-- Stages will be dynamically inserted here -->
+                    <?php foreach ($data["stages"] as $stage) : ?>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                        <button class="handle text-gray-400 hover:text-gray-600 mr-2 cursor-move">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                            </svg>
+                        </button>
+                        <span class="text-sm text-gray-900"><?=$stage->getId()?></span>
+                    </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900"><?=$stage->getName()?></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900"><?=$stage->getStLocation()?>to <?=$stage->getEnLocation()?></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900"><?=$stage->getDistance()?> km</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900"><?=$stage->getStDate()?></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryClass(stage.category)}">
+                        <?=$stage->getNameCategory()?>
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900"><?=$stage->getNameRegion()?></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button onclick="viewStage(<?=$stage->getId()?>)" class="text-indigo-600 hover:text-indigo-900 mr-2">View</button>
+                    <button onclick="deleteStage(<?=$stage->getId()?>)" class="text-red-600 hover:text-red-900">Delete</button>
+                </td>
+                    <?php endforeach;?>
                 </tbody>
             </table>
         </div>
