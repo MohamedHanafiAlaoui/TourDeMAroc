@@ -174,12 +174,12 @@ class User extends BaseModel
         if (self::$db->rowCount() > 0) {
             switch ($result["role_id"]) {
                 case self::$adminRoleId:
-                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
+                    return new Admin($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], null, null, $result["photo"]);
                 case self::$fanRoleId:
-                    $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
+                    $fan = new Fan($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], null, null, $result["photo"]);
                     return $fan;
                 case self::$cyclistRoleId:
-                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], null, null, null, $result["photo"]);
+                    $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], null, null, $result["photo"]);
                     return $cyclist;
             }
         } else {

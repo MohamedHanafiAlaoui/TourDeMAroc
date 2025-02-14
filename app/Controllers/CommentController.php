@@ -5,4 +5,6 @@ class CommentController extends BaseController {
     {
         $this->render("admin/pending-comments/index");
     }
+
+    
 }
