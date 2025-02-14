@@ -21,4 +21,16 @@ class CyclistController extends BaseController {
     {
         $this->render("admin/unverified-cyclists/index");
     }
+
+    public function ranking()
+    {
+        $topCyclists = Cyclist::getTopCyclists(3);
+
+    //     echo "<pre>";
+    // var_dump($topCyclists);
+    // echo "</pre>";
+    // exit();
+
+        $this->render("/fan/ranking/index", ['topCyclists' => $topCyclists]);
+    }
 }

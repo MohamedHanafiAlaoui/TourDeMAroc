@@ -1,10 +1,13 @@
 <?php
-class Cyclist extends User {
+class Cyclist extends User
+{
     private $nationality;
     private $birthdate;
     private $total_points;
     private $approved;
     private $team_id;
+    private $points_awarded;
+
 
     private $team_name;
 
@@ -55,6 +58,18 @@ class Cyclist extends User {
         return $this->nationality;
     }
 
+    public function getFirstName() {
+        return $this->first_name;
+    }
+    
+    public function getLastName() {
+        return $this->last_name;
+    }
+    
+    public function getPhoto() {
+        return $this->photo;
+    }
+    
     public function getTotalePoints()
     {
         return $this->total_points;
@@ -69,7 +84,7 @@ class Cyclist extends User {
     {
         return $this->approved;
     }
-    
+
     public function getIdTeme()
     {
         return $this->team_id;
@@ -78,6 +93,11 @@ class Cyclist extends User {
     public function getTeam()
     {
         return $this->team_name;
+    }
+
+    public function getPointsAwarded()
+    {
+        return $this->points_awarded ?? 0;
     }
 
     public function save()
@@ -137,6 +157,59 @@ class Cyclist extends User {
             $cyclests[] = $cyclist;
         }
         return $cyclests;
+    }
+
+    public static function getTopCyclists($limit = null)
+    {
+        $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.name AS team_name, 
+                   SUM(sp.points_awarded) AS total_points 
+            FROM cyclists c
+            JOIN stage_points sp ON c.id = sp.id_cyclist
+            JOIN teams t ON c.team_id = t.id
+            GROUP BY c.id, c.first_name, c.last_name, c.photo, t.name
+            ORDER BY total_points DESC";
+     
+     if ($limit) {
+        $sql .= " LIMIT :limit";
+    }
+
+    self::$db->query($sql);
+
+    if ($limit) {
+        self::$db->bind(':limit', $limit);
+    }
+
+    $result = self::$db->results();
+
+
+
+    $cyclists = [];
+
+    foreach ($result as $row) {
+        $cyclist = new self(
+            $row['id'],
+            $row['first_name'],
+            $row['last_name'],
+            null, 
+            null, 
+            null, 
+            null,
+            null, 
+            null, 
+            $row['photo'],
+            null, 
+            null, 
+            $row['total_points'],
+            null,
+            null  
+        );
+        $cyclist->setTeme($row['team_name']);
+
+        $cyclists[] = $cyclist;
+    }
+
+    return $cyclists;
+        
     }
 
     public function team()

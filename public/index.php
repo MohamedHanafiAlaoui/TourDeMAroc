@@ -28,7 +28,7 @@
     $router->get('/stages', [StageController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->post('/stages/notify/{id}', [StageController::class, 'notify'], ["fan", "cyclist"]);
     $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
-    $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->get('/ranking', [CyclistController::class, 'ranking'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
     
     $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
@@ -37,6 +37,9 @@
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
 
+    //routes des likes
+    // $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);
+    // $router->get('/like-count/{id}', [LikeController::class, 'getLikeCount'], ["visitor", "fan", "cyclist"]);
 
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
     $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);
