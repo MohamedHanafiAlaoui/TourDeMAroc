@@ -89,12 +89,12 @@
       </div>
 
       <!-- Notify Button -->
-      <?php if ($currentDate < $stageStartDate): ?>
-      <button id="notifyButton" class="flex items-center space-x-2 text-white bg-blue-500 hover:bg-blue-600 transition px-4 py-2 rounded-full">
-        <i class="fas fa-bell text-xl"></i>
-        <span>Notify Me</span>
-      </button>
-      <?php endif; ?>
+      <form action="<?= url('stages/notify/' . $stage->getId()) ?>" method="POST">
+        <button id="notifyButton" class="flex items-center space-x-2 text-white bg-blue-500 hover:bg-blue-600 transition px-4 py-2 rounded-full">
+          <i class="fas fa-bell text-xl"></i>
+          <span>Notify Me</span>
+        </button>
+      </form>
     </div>
   </div>
 </div>
