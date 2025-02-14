@@ -1,7 +1,7 @@
 <main class="max-w-7xl mx-auto px-4 py-20">
   <!-- Enhanced Profile Section -->
   <section class="bg-white shadow-xl rounded-2xl p-8 mb-12 transition-all duration-300 hover:shadow-2xl">
-    <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0">
+    <form class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0">
       <!-- Profile Image with Enhanced Styling -->
       <div class="relative group">
         <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
@@ -10,59 +10,98 @@
         <label for="profileImage" class="absolute bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg">
           <i class="fas fa-camera text-white text-lg"></i>
         </label>
-        <input type="file" id="profileImage" name="profileImage" accept="image/*" class="hidden" >
+        <input type="file" id="profileImage" name="profileImage" accept="image/*" class="hidden" onclick="previewImage(event)">
       </div>
 
       <!-- Profile Details with Improved Typography -->
-      <div class="md:ml-12 space-y-2">
+      <div class="md:ml-12 space-y-2 mb-8">
         <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
           <?= $cyclist->getFullName() ?>
         </h1>
         <div>
           <div class="grid grid-cols-2 gap-x-8 gap-y-2 mt-4">
 
-            <form class="flex items-center">
+            <div id="TeamGrid" class="flex items-center">
               <i class="fas fa-users text-emerald-500 w-6"></i>
               <span class="ml-2 font-medium text-gray-800">Team:</span> 
-              <label for="teamInput" class="ml-2 hidden  text-gray-600"><?= $cyclist->Team()->getName() ?></label> 
-              <input id="teamInput" type="text" class="ml-2" value="<?= $cyclist->Team()->getName() ?>" placeholder="Team">
-            </form>
+              <label for="teamInput" class="ml-2  text-gray-600 "><?= $cyclist->Team()->getName() ?></label> 
+              <div class="ml-2 grid-cols-2 items-center hidden">
+                <input id="teamInput" name="teamInput" type="text" value="<?= $cyclist->Team()->getName() ?>" placeholder="Team">
+                <label for="teamInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="fas fa-edit"></i></label>
+              </div>
+            </div>
 
-            <form class="flex items-center">
+            <div id="NationalityGrid" class="flex items-center">
               <i class="fas fa-flag text-emerald-500 w-6"></i>
-              <span class="ml-2 font-medium text-gray-800">Nationality: </span>  <label class="ml-2 text-gray-600"> <?= $cyclist->getNationality() ?></label>
-            </form>
+              <span class="ml-2 font-medium text-gray-800">Nationality: </span>  
+              <label for="NationalityInput" class="ml-2 text-gray-600"> <?= $cyclist->getNationality() ?></label>
+              <div class="ml-2 grid-cols-2 items-center hidden">
+                <input id="NationalityInput" name="NationalityInput" type="text" value="<?= $cyclist->getNationality() ?>" placeholder="Nationality">
+                <label for="NationalityInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="fas fa-edit"></i></label>
+              </div>
+            </div>
 
-            <form class="flex items-center">
+            <div id="BirthdayGrid" class="flex items-center">
               <i class="fas fa-birthday-cake text-emerald-500 w-6"></i>    
-              <span class="ml-2 font-medium text-gray-800">Birthday: </span>  <label class="ml-2 text-gray-600"> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></label>
-            </form>
+              <span class="ml-2 font-medium text-gray-800">Birthday: </span>  
+              <label for="BirthdayInput" class="ml-2 text-gray-600"> <?= $cyclist->getBirthdate() ? $date = (new DateTime( $cyclist->getBirthdate()))->format("F j, Y") : '----- --, ----'; ?></label>
+              <div class="ml-2 grid-cols-2 items-center hidden">
+                <input id="BirthdayInput" name="BirthdayInput" type="date" value="$date = (new DateTime( $cyclist->getBirthdate()))->format('F j, Y') : '00-00-0000'; ?>" placeholder="Birthday">
+                <label for="BirthdayInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="ml-4 fas fa-edit"></i></label>
+              </div>
+            </div>
 
-            <form class="flex items-center">
+            <div id="EmailGrid" class="flex items-center">
               <i class="fas fa-envelope text-emerald-500 w-6"></i>
-              <span class="ml-2 font-medium text-gray-800">Email: </span>  <label class="ml-2 text-gray-600"> <?= $cyclist->getEmail() ?></label>
-            </form>
+              <span class="ml-2 font-medium text-gray-800">Email: </span>  
+              <label for="EmailInput" class="ml-2 text-gray-600"> <?= $cyclist->getEmail() ?></label>
+              <div class="ml-2 grid-cols-2 items-center hidden" >
+                <input id="EmailInput" name="EmailInput" type="email" class="ml-2 min-w-64" value="<?= $cyclist->getEmail() ?>" placeholder="Email">
+                <label for="EmailInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="ml-4 fas fa-edit"></i></label>
+              </div>
+            </div>
 
-            <form class="flex items-center">
+            <!-- <div class="flex items-center">
               <i class="fas fa-phone text-emerald-500 w-6"></i>
-              <span class="ml-2 font-medium text-gray-800">Phone: </span>  <label class="ml-2 text-gray-600"> +212 600000000</label>
-            </form>
+              <span class="ml-2 font-medium text-gray-800">Phone: </span>  
+              <label for="PhoneInpur" class="ml-2 text-gray-600 hidden"> +212 600000000</label>
+              <div class="ml-2 flex items-center">
+                <input id="PhoneInput" type="tel" placeholder="Phone">
+                <label for="PhoneInput" class="text-gray-500 hover:text-green-400 cursor-pointer"><i class="fas fa-edit"></i></label>
+              </div>
+            </div> -->
+          </div>
+          <div class="flex w-full items-end  mt-10 gap-5">
+            <button id="modifyButton" type="button" class="flex items-center justify-center bg-emerald-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300"">
+              <i class="mr-2 fas fa-edit"></i>
+              Modify
+            </button>
+            <div id="ComfermeForm" class="grid-cols-2 gap-5 hidden">
+              <button id="cancelButton" type="button" class=" items-center justify-center bg-yellow-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-yleowl-600 transition duration-300">
+                <i class="mr-2 fas fa-x"></i>
+                Cancel
+              </button>
+              <button type="submit" class=" items-center justify-center bg-blue-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300">
+                <i class="mr-2 fas fa-check"></i>
+                Accpete
+              </button>
+            </div>
 
           </div>
-          <!-- Cool Logout Button -->
-          <form action="<?= url('logout') ?>" method="POST" class="mt-4">
-            <button class="flex items-center justify-center bg-emerald-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                <polyline points="16 17 21 12 16 7" />
-                <line x1="21" y1="12" x2="9" y2="12" />
-              </svg>
-              Logout
-            </button>
-          </form>
         </div>
       </div>
-    </div>
+    </form>
+    <!-- Cool Logout Button -->
+    <form action="<?= url('logout') ?>" method="POST" class="mt-4">
+      <button class="flex items-center justify-center bg-emerald-500 text-white px-4 py-1.5 rounded-lg shadow-lg hover:bg-emerald-600 transition duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Logout
+      </button>
+    </form>
   </section>
 
   <!-- Enhanced Experiences Section -->
@@ -249,5 +288,7 @@
             reader.readAsDataURL(file);  
         }
     }
+
+
   </script>
 </main>
