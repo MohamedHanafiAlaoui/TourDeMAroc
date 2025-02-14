@@ -36,6 +36,8 @@
     $router->post('/reports/store', [ReportController::class, 'store'], ["fan", "cyclist"]);
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
+    
+    $router->post('/profile/update', [CyclistController::class, 'update'], ["cyclist"]);
 
     //routes des likes
     // $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);
@@ -53,7 +55,6 @@
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
 
-    $router->get('/api/Teams', [TeamController::class, 'fetchTeam'], ["visitor", "fan", "cyclist"]);
     $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);
 
     
