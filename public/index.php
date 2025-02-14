@@ -26,9 +26,14 @@
     $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/stages', [StageController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->post('/stages/notify/{id}', [StageController::class, 'notify'], ["fan", "cyclist"]);
     $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/ranking', [RankingController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
+    
+    $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
+    $router->post('/reports/create', [ReportsController::class, 'create'], ["fan"]);
+    
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     
     $router->get('/Profile/Information', [CyclistController::class, 'updte'], ["cyclist"]);
@@ -63,5 +68,5 @@
 
     $router->dispatch($request);
 
-    //  create stage / create category / create region / verify cyclist / accept comment / 
     // report / like / commenter / favorite / notification
+    // admin: enter who entered each stage and in how much time.
