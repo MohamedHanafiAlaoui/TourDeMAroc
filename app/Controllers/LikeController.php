@@ -26,3 +26,4 @@ class LikeController extends BaseController {
         back();
     }
 }
+

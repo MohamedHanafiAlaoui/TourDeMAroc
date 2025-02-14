@@ -59,7 +59,6 @@ CREATE TABLE cyclists (
     team_id INT REFERENCES teams(id) ON DELETE SET NULL,
     nationality VARCHAR(250),
     birthdate DATE,
-    total_points INT DEFAULT 0,
     approved BOOLEAN DEFAULT FALSE
 ) INHERITS (users);
 
@@ -99,17 +98,14 @@ CREATE TABLE stages (
 );
 
 -- ===============================
--- 7️⃣ Résultats des étapes
+-- 7️⃣ Résultats des étapes (points)
 -- ===============================
-CREATE TABLE stage_results (
+CREATE TABLE stage_points (
     id SERIAL PRIMARY KEY,
     id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
     stage_id INT NOT NULL REFERENCES stages(id) ON DELETE CASCADE,
     total_time INTERVAL NOT NULL,
-    distance_km DECIMAL(6,2) NOT NULL,
-    average_speed DECIMAL(5,2),
     points_awarded INT DEFAULT 0,
-    ranking INT NOT NULL,
     UNIQUE (id_cyclist, stage_id)
 );
 
@@ -171,3 +167,12 @@ CREATE TABLE historys(
 
 -- Ajout des rôles
 INSERT INTO roles(name_user) VALUES ('admin'), ('cyclist'), ('fan');
+
+
+
+
+-- SELECT id_cyclist, stage_id, 
+--        EXTRACT(HOUR FROM total_time) || ' hours ' || 
+--        EXTRACT(MINUTE FROM total_time) || ' minutes' AS formatted_time, 
+--        points_awarded
+-- FROM stage_points;

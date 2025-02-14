@@ -34,6 +34,7 @@
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
 
+
     $router->get('/', [DashboardController::class, 'index'], ["admin"]);
     $router->get('/categories', [CategoryController::class, 'index'], ["admin"]);
     $router->post('/categories/create', [CategoryController::class, 'store'], ["admin"]);
