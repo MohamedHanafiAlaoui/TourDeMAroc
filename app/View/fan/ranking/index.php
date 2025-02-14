@@ -11,7 +11,7 @@
   <div class="flex flex-col md:flex-row justify-center items-end space-y-8 md:space-y-0 md:space-x-8 mb-16">
   <?php
     // Ensure there are at least 3 cyclists
-    $topCyclists = array_pad($topCyclists, 3, ['first_name' => 'N/A', 'last_name' => '', 'photo' => 'default.jpg', 'total_points' => 0]);
+    $topCyclists = array_pad($topCyclists, 3, new Cyclist());
 
     // Assign each cyclist their correct place
     $firstPlace = $topCyclists[0];
@@ -23,8 +23,8 @@
       <div class="relative bg-gradient-to-b from-gray-200 to-white rounded-t-2xl shadow-xl w-32 h-48 flex flex-col justify-end">
         <div class="absolute -top-14 left-1/2 transform -translate-x-1/2">
           <div class="relative w-28 h-28">
-            <img src="<?= $secondPlace['photo'] ?>" alt="<?= $secondPlace['first_name'] ?>" 
-                 class="rounded-full border-4 border-silver shadow-lg w-28 h-28">
+          <img src="<?= $secondPlace->getPhoto() ?>" alt="<?= $secondPlace->getFirstName() ?>" 
+          class="rounded-full border-4 border-silver shadow-lg w-28 h-28">
           </div>
         </div>
         <div class="text-center font-bold text-gray-800 py-3 bg-silver/20">
@@ -32,10 +32,10 @@
         </div>
       </div>
       <div class="mt-4 text-center">
-        <h3 class="text-xl font-bold text-gray-800"><?= $secondPlace['first_name'] . " " . $secondPlace['last_name'] ?></h3>
-        <div class="flex items-center justify-center mt-1 space-x-2">
-          <span class="text-sm text-gray-600">🏆 <?= $secondPlace['total_points'] ?> points</span>
-        </div>
+      <h3 class="text-xl font-bold text-gray-800"><?= $secondPlace->getFirstName() . " " . $secondPlace->getLastName() ?></h3>
+    <div class="flex items-center justify-center mt-1 space-x-2">
+      <span class="text-sm text-gray-600">🏆 <?= $secondPlace->getTotalePoints() ?> points</span>
+    </div>
       </div>
     </div>
 
@@ -44,8 +44,8 @@
       <div class="relative bg-gradient-to-b from-amber-200 to-white rounded-t-2xl shadow-2xl w-40 h-64 flex flex-col justify-end">
         <div class="absolute -top-20 left-1/2 transform -translate-x-1/2">
           <div class="relative w-32 h-32">
-            <img src="<?= $firstPlace['photo'] ?>" alt="<?= $firstPlace['first_name'] ?>" 
-                 class="rounded-full border-4 border-gold shadow-xl w-32 h-32">
+          <img src="<?= $firstPlace->getPhoto() ?>" alt="<?= $firstPlace->getFirstName() ?>" 
+          class="rounded-full border-4 border-gold shadow-xl w-32 h-32">
           </div>
         </div>
         <div class="text-center font-bold text-gray-800 py-4 bg-amber-100">
@@ -53,10 +53,10 @@
         </div>
       </div>
       <div class="mt-6 text-center">
-        <h3 class="text-2xl font-bold text-gray-800"><?= $firstPlace['first_name'] . " " . $firstPlace['last_name'] ?></h3>
-        <div class="flex items-center justify-center mt-2 space-x-2">
-          <span class="text-sm text-gray-600">🏆 <?= $firstPlace['total_points'] ?> points</span>
-        </div>
+      <h3 class="text-2xl font-bold text-gray-800"><?= $firstPlace->getFirstName() . " " . $firstPlace->getLastName() ?></h3>
+    <div class="flex items-center justify-center mt-2 space-x-2">
+      <span class="text-sm text-gray-600">🏆 <?= $firstPlace->getTotalePoints() ?> points</span>
+    </div>
       </div>
     </div>
 
@@ -65,8 +65,8 @@
       <div class="relative bg-gradient-to-b from-bronze-200 to-white rounded-t-2xl shadow-xl w-32 h-40 flex flex-col justify-end">
         <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
           <div class="relative w-28 h-28">
-            <img src="<?= $thirdPlace['photo'] ?>" alt="<?= $thirdPlace['first_name'] ?>" 
-                 class="rounded-full border-4 border-bronze shadow-lg w-28 h-28">
+          <img src="<?= $thirdPlace->getPhoto() ?>" alt="<?= $thirdPlace->getFirstName() ?>" 
+          class="rounded-full border-4 border-bronze shadow-lg w-28 h-28">
           </div>
         </div>
         <div class="text-center font-bold text-gray-800 py-3 bg-bronze/20">
@@ -74,10 +74,10 @@
         </div>
       </div>
       <div class="mt-4 text-center">
-        <h3 class="text-xl font-bold text-gray-800"><?= $thirdPlace['first_name'] . " " . $thirdPlace['last_name'] ?></h3>
-        <div class="flex items-center justify-center mt-1 space-x-2">
-          <span class="text-sm text-gray-600">🏆 <?= $thirdPlace['total_points'] ?> points</span>
-        </div>
+      <h3 class="text-xl font-bold text-gray-800"><?= $thirdPlace->getFirstName() . " " . $thirdPlace->getLastName() ?></h3>
+    <div class="flex items-center justify-center mt-1 space-x-2">
+      <span class="text-sm text-gray-600">🏆 <?= $thirdPlace->getTotalePoints() ?> points</span>
+    </div>
       </div>
     </div>
   </div>

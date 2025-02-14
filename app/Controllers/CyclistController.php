@@ -24,7 +24,13 @@ class CyclistController extends BaseController {
 
     public function ranking()
     {
-        $topCyclists = Cyclist::getTopCyclists();
-        $this->render("/fan/ranking/index", compact("topCyclists"));
+        $topCyclists = Cyclist::getTopCyclists(3);
+
+    //     echo "<pre>";
+    // var_dump($topCyclists);
+    // echo "</pre>";
+    // exit();
+
+        $this->render("/fan/ranking/index", ['topCyclists' => $topCyclists]);
     }
 }

@@ -5,7 +5,7 @@ class Cyclist extends User
     private $birthdate;
     private $total_points;
     private $approved;
-    private $id_team;
+    private $team_id;
     private $points_awarded;
 
 
@@ -58,6 +58,18 @@ class Cyclist extends User
         return $this->nationality;
     }
 
+    public function getFirstName() {
+        return $this->first_name;
+    }
+    
+    public function getLastName() {
+        return $this->last_name;
+    }
+    
+    public function getPhoto() {
+        return $this->photo;
+    }
+    
     public function getTotalePoints()
     {
         return $this->total_points;
@@ -156,17 +168,50 @@ class Cyclist extends User
             JOIN teams t ON c.team_id = t.id
             GROUP BY c.id, c.first_name, c.last_name, c.photo, t.name
             ORDER BY total_points DESC";
-        self::$db->query($sql);
-        
-        if ($limit) {
-            $sql .= " LIMIT :limit";
-            self::$db->bind(':limit', $limit);
-        }
+     
+     if ($limit) {
+        $sql .= " LIMIT :limit";
+    }
 
-        return self::$db->results();
+    self::$db->query($sql);
+
+    if ($limit) {
+        self::$db->bind(':limit', $limit);
+    }
+
+    $result = self::$db->results();
+
+
+
+    $cyclists = [];
+
+    foreach ($result as $row) {
+        $cyclist = new self(
+            $row['id'],
+            $row['first_name'],
+            $row['last_name'],
+            null, 
+            null, 
+            null, 
+            null,
+            null, 
+            null, 
+            $row['photo'],
+            null, 
+            null, 
+            $row['total_points'],
+            null,
+            null  
+        );
+        $cyclist->setTeme($row['team_name']);
+
+        $cyclists[] = $cyclist;
+    }
+
+    return $cyclists;
         
     }
-}
+
     public function team()
     {
         $sql = "SELECT * FROM teams t WHERE id = :id";
