@@ -46,4 +46,5 @@ class CommentController extends BaseController {
             back();
         }
     }
+
 }
