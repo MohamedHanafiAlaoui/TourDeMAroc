@@ -31,6 +31,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE fans (
+	notify BOOLEAN DEFAULT FALSE
 ) INHERITS (users);
 
 ALTER TABLE fans ADD CONSTRAINT unique_fan_id UNIQUE (id);
