@@ -132,7 +132,13 @@ class Experience extends BaseModel
         return $status;
     }
 
-
+    public function delete()
+    {
+        $query = "DELETE FROM experience WHERE id = :id";
+        self::$db->query($query);
+        self::$db->bind(':id', $this->id);
+        return self::$db->execute();
+    }
 
 
 
