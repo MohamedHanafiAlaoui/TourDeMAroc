@@ -18,12 +18,19 @@ class StageController extends BaseController
     public function show($id)
     {
         $stage = Stage::find($id);
+        if (!$stage) {
+            flash("error", "Stage not found.");
+            back();
+        }
         $likes = $stage->likesCount();
-        $isLiked = !!(Like::find(user()->getId(), $stage->getId()));
 
+        $isLiked = false;
+        if (isLoggedIn()) {
+            $isLiked = !!(Like::find(user()->getId(), $stage->getId()));
+        }
         $comments = $stage->comments();
-        
-        $this->render("fan/stages/show",compact("stage", "likes", "isLiked", "comments"));
+
+        $this->render("fan/stages/show", compact("stage", "likes", "isLiked", "comments"));
     }
 
     public function notify($id)
