@@ -89,4 +89,18 @@ class CyclistController extends BaseController
         $Cyclists = Cyclist::getTopCyclists(); 
         $this->render("/fan/ranking/index", compact("Cyclists", "TopCyclists"));
     }
+    public function approve(){
+        $id = $_POST['id'];
+        $mail = $_POST['email'];
+        $cyclist = Cyclist::find($id);
+        if ($cyclist) {
+            $Admin = new Admin();
+            $Admin->approveCyclest($id);
+            $sendmail = new sendMail();
+            $sendmail->send($mail,"name", "Your account has been approved","fsdfsdfds",);
+            flash("success", "cylist was approved successfuly.");
+            back();
+        }
+
+    }
 }

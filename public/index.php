@@ -55,6 +55,7 @@
     $router->get('/regions', [RegionController::class, 'index'], ["admin"]);
     $router->get('/stages', [StageController::class, 'index'], ["admin"]);
     $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
+    $router->post('/cyclists/verify', [CyclistController::class, 'approve'], ["admin"]);
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
     $router->post('/stage/store', [StageController::class, 'store'], ["admin"]);

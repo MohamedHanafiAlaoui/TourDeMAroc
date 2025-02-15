@@ -73,18 +73,16 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     <div class="flex space-x-2">
-                                        <form action="<?= URLROOT . 'cyclists/verify/' . $cyclist->getId() ?>" method="POST">
+                                        <form action="<?= url('cyclists/verify') ?>" method="POST">
+                                            <input type="hidden" name="id" value="<?= $cyclist->getId() ?>">
+                                            <input type="email" hidden name="email" value="<?= $cyclist->getEmail() ?>">
+
                                             <button
                                                 class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
                                                 <i class="fas fa-check"></i>
                                                 <span>Verify</span>
                                             </button>
                                         </form>
-                                        <button onclick="viewDetails(<?= $cyclist->getId() ?>)"
-                                            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
-                                            <i class="fas fa-eye"></i>
-                                            <span>View</span>
-                                        </button>
                                     </div>
                                 </td>
                             </tr>
