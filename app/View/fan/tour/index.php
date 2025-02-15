@@ -60,9 +60,11 @@
             <div class="bg-emerald-50 px-6 py-4">
               <div class="flex justify-between items-center">
                 <span class="text-sm text-emerald-600 font-medium">Details</span>
-                <button class="text-emerald-500 hover:text-emerald-600 transition">
-                  <i class="fas fa-chevron-right"></i>
-                </button>
+                <a href="<?= url('stages/'.$stage->getId()) ?>">
+                  <button class="text-emerald-500 hover:text-emerald-600 transition">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </a>
               </div>
             </div>
           </div>
@@ -93,49 +95,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // // // Tour Stages Data (10 stages)
-      // // const stages = [
-      // //   { start: "Casablanca", end: "Rabat", distance: 90, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Rabat", end: "Fez", distance: 200, type: "Urban", icon: "fa-city" },
-      // //   { start: "Fez", end: "Meknes", distance: 65, type: "Nature", icon: "fa-tree" },
-      // //   { start: "Meknes", end: "Marrakech", distance: 350, type: "Mountain", icon: "fa-mountain" },
-      // //   { start: "Marrakech", end: "Agadir", distance: 250, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Agadir", end: "Essaouira", distance: 180, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Essaouira", end: "Safi", distance: 140, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Safi", end: "El Jadida", distance: 160, type: "Coastal", icon: "fa-water" },
-      // //   { start: "El Jadida", end: "Casablanca", distance: 100, type: "Urban", icon: "fa-city" },
-      // //   { start: "Casablanca", end: "Mohammedia", distance: 30, type: "Urban", icon: "fa-city" }
-      // // ];
-
-      // // Render Stages
-      // const stagesContainer = document.getElementById("stages-container");
-      // stages.forEach((stage, index) => {
-      //   const stageElement = document.createElement("div");
-      //   stageElement.className = "bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300";
-      //   stageElement.innerHTML = `
-      //     <div class="p-6">
-      //       <div class="flex items-center justify-between mb-4">
-      //         <span class="text-2xl font-bold text-emerald-500">Stage ${index + 1}</span>
-      //         <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
-      //           ${stage.distance} km
-      //         </span>
-      //       </div>
-      //       <h3 class="text-xl font-semibold text-gray-800 mb-2">${stage.start} → ${stage.end}</h3>
-      //       <p class="text-gray-600 flex items-center">
-      //         <i class="fas ${stage.icon} mr-2 text-emerald-500"></i> ${stage.type}
-      //       </p>
-      //     </div>
-      //     <div class="bg-emerald-50 px-6 py-4">
-      //       <div class="flex justify-between items-center">
-      //         <span class="text-sm text-emerald-600 font-medium">Details</span>
-      //         <button class="text-emerald-500 hover:text-emerald-600 transition">
-      //           <i class="fas fa-chevron-right"></i>
-      //         </button>
-      //       </div>
-      //     </div>
-      //   `;
-      //   stagesContainer.appendChild(stageElement);
-      // });
 
       // initial le bare de recherche
       let searchInput = document.getElementById("team-search");

@@ -73,6 +73,7 @@ class StageController extends BaseController
             $formerStages = array_map(function ($row) use ($stages) {
                 return [
                     'id' => $row->getId(),
+                    'photo' => $row->getPhoto(),
                     'Stage_name' => $row->getName(),
                     'start_location' => $row->getStLocation(),
                     'end_location' => $row->getEnLocation(),

@@ -228,10 +228,11 @@ class Cyclist extends User
         $result = self::$db->single();
 
         if (self::$db->rowCount() > 0) {
-            $nationality = $result['approved'] ? $result['nationality'] : '------';
-            $team = $result['approved'] ? $result['team'] : '------';
+            $nationality = $result['approved'] ? $result['nationality'] : null;
+            $team = $result['approved'] ? $result['team'] : null;
+            $photo = $result['approved'] ? $result['photo'] : '';
 
-            $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
+            $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $photo,
                                     $nationality, $result['birthdate'], $result['approved'], $team);
             return $cyclist;
         } else {

@@ -98,6 +98,11 @@
         {
             $this->nameRegion = $nameRegion;
         }
+
+        public function setPhoto($nameRegion)
+        {
+            $this->nameRegion = $nameRegion;
+        }
         
 
         public function getId()
@@ -163,6 +168,11 @@
         public function getNameRegion()
         {
             return $this->nameRegion;
+        }
+
+        public function getPhoto()
+        {
+            return URLASSETS . "images/photos/" . $this->nameRegion;
         }
 
         public static function All()
