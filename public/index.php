@@ -38,6 +38,7 @@
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     
     $router->post('/profile/update', [CyclistController::class, 'update'], ["cyclist"]);
+    $router->post('/profile/experience', [CyclistController::class, 'saveExperience'], ["cyclist"]);
 
     //routes des likes
     // $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);

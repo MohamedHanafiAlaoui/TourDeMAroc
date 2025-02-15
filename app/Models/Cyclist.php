@@ -180,7 +180,6 @@ class Cyclist extends User
                 JOIN ranking ra ON c.id = ra.cyclist_id
                 GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
                 ORDER BY total_points DESC";
-
     
     if ($limit) {
         $sql .= " LIMIT :limit";
@@ -238,5 +237,7 @@ class Cyclist extends User
             return null;
         }
     }
+
+    
 
 }

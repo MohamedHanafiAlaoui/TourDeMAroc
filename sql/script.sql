@@ -124,11 +124,15 @@ CREATE TABLE reports (
     is_archived BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE historys(
+CREATE TABLE experience(
     id SERIAL PRIMARY KEY,
-    version VARCHAR(250) NOT NULL,
-    id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
-    photo TEXT
+    tour VARCHAR(250) NOT NULL,
+    photo TEXT,
+    start_date DATE,
+    end_date DATE,
+    rank INT,
+    description TEXT,
+    cyclist_id INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE
 );
 
 
