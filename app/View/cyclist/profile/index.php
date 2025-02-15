@@ -132,9 +132,11 @@
               <p class="text-gray-600"> <?= $experience->getDescription() ?></p>
             </div>
           </div>
-          <button class="removeExperienceBtn self-start text-gray-400 hover:text-emerald-600 transition-colors duration-300">
-            <i class="fas fa-trash-alt text-xl"></i>
-          </button>
+          <a href="<?= url("profile/delete/" . $experience->getId()) ?>" class="self-start">
+            <button class="removeExperienceBtn text-gray-400 hover:text-emerald-600 transition-colors duration-300">
+              <i class="fas fa-trash-alt text-xl"></i>
+            </button>
+          </a>
         </div>
       <?php endforeach; ?>
     </div>
@@ -148,7 +150,7 @@
       <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
         <i class="fas fa-plus-circle mr-3 text-emerald-500"></i>Add New Experience
       </h3>
-      <form id="modalExperienceForm" action="profile/experience" method="POST" enctype="multipart/form-data" class="space-y-3">
+      <form id="modalExperienceForm" action="<?= url('profile/experience') ?>" method="POST" enctype="multipart/form-data" class="space-y-3">
         <div class="relative group">
           <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
           <label for="historyImage" class="absolute text-white bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg" >
