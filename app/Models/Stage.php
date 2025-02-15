@@ -99,6 +99,11 @@
             $this->nameRegion = $nameRegion;
         }
 
+      
+        public function setPhoto($photo)
+        {
+            $this->photo = $photo;
+        }
         public function setOrder($order)
         {
             $this->order = $order;
@@ -170,6 +175,11 @@
             return $this->nameRegion;
         }
 
+      
+        public function getPhoto()
+        {
+            return URLASSETS . "images/photos/" . $this->photo;
+        }
         public function getOrder()
         {
             return $this->order;

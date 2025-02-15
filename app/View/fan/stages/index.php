@@ -138,7 +138,7 @@ function toString(stages) {
 
         stageCard.innerHTML = 
             `<img
-              src="https://dqh479dn9vg99.cloudfront.net/wp-content/uploads/sites/9/2018/02/07100521/tour_of_oman.jpg"
+              src="http://localhost/tourDeMAroc/assets/images/photos/${stage['photo']}"
               alt="Stage Map"
               class="w-full h-48 object-cover"
             />

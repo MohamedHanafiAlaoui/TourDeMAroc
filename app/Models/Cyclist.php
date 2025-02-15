@@ -266,8 +266,12 @@ class Cyclist extends User
 
     public static function mappingCyclist($result)
     {
-        return new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
-        $result['nationality'], $result['birthdate'], $result['approved'], $result["team"]);
+        $nationality = $result['approved'] ? $result['nationality'] : null;
+        $team = $result['approved'] ? $result['team'] : null;
+        $photo = $result['approved'] ? $result['photo'] : '';
+
+        return new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $photo,
+        $nationality, $result['birthdate'], $result['approved'], $team);
     }
 
 }
