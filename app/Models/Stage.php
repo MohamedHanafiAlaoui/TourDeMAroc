@@ -177,7 +177,7 @@
 
         public function getPhoto()
         {
-            return URLASSETS . "images/photos/" . $this->photo;
+            return URLASSETS . "images/photos/" . ($this->photo ?? "defaultStage.png");
         }
             
         public function getOrder()

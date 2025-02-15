@@ -138,7 +138,7 @@ function toString(stages) {
 
         stageCard.innerHTML = 
             `<img
-              src="http://localhost/tourDeMAroc/assets/images/photos/${stage['photo']}"
+              src="${stage['photo']}"
               alt="Stage Map"
               class="w-full h-48 object-cover"
             />
