@@ -13,6 +13,7 @@ class TimingController extends BaseController {
     public function store()
     {
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+        var_dump($_POST);
 
         $data = [
             'cyclist_id' => trim($_POST['cyclist_id']),
@@ -44,18 +45,7 @@ class TimingController extends BaseController {
         } elseif (!Stage::find($data['stage_id'])) {
             $errors['stage_id_err'] = 'Stage not found.';
         }
-
-        // Validate if already completed
-        if (Ranking::findByCyclistAndStage($data['cyclist_id'], $data['stage_id'])) {
-            $errors['cyclist_id_err'] = 'Cyclist already completed this stage.';
-        }
-
-        // Validate if it skip a stage
-        if (!Ranking::isPreviousStageCompleted($data['cyclist_id'], $data['stage_id'])) {
-            $errors['cyclist_id_err'] = 'Cyclist must complete the previous stage first.';
-        }
-
-
+        
         // Validate Hours
         if (empty($data['hours'])) {
             $errors['hours_err'] = 'Please enter hours.';
@@ -76,15 +66,36 @@ class TimingController extends BaseController {
         } elseif (!is_numeric($data['seconds'])) {
             $errors['seconds_err'] = 'Hours must be a number.';
         }
-
+        if (!empty(array_filter($errors))) {
+            // Load view with errors
+            flash("error", array_first_not_null_value($errors));
+            back();
+        }
+        
         // Make sure errors are empty (There's no errors)
+        
+        // Validate if already completed
+        if (Ranking::findByCyclistAndStage($data['cyclist_id'], $data['stage_id'])) {
+            $errors['cyclist_id_err'] = 'Cyclist already completed this stage.';
+        }
+        
+        // Validate if it skip a stage
+        if (!Ranking::isPreviousStageCompleted($data['cyclist_id'], $data['stage_id'])) {
+            $errors['cyclist_id_err'] = 'Cyclist must complete the previous stage first.';
+        }
+
+        if (!empty(array_filter($errors))) {
+            // Load view with errors
+            flash("error", array_first_not_null_value($errors));
+            back();
+        }
         if(empty(array_filter($errors))){
             
             $total_time = sprintf('%02d:%02d:%02d', $data['hours'], $data['minutes'], $data['seconds']);
-
+    
             // Create new Ranking
             $ranking = new Ranking(null, $data["cyclist_id"], $data["stage_id"], $total_time, null);
-
+    
             if($ranking->save() && Ranking::refreshStagePoints($data['stage_id'])){
                 // Register success
                 flash('success', 'Stage completion created successfully.');
@@ -92,11 +103,6 @@ class TimingController extends BaseController {
             }else{
                 die('Something went wrong');
             }
-        }
-        else{
-            // Load view with errors
-            flash("error", array_first_not_null_value($errors));
-            back();
         }
     }
 }
