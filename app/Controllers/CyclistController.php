@@ -11,7 +11,15 @@ class CyclistController extends BaseController
 
     public function show($id)
     {
-        $this->render("fan/cyclists/show");
+        $cyclist = Cyclist::findCyclist($id);
+
+        if (!$cyclist) {
+            flash("error", "Cyclist not found.");
+            redirect("cyclists");
+        }
+        $experiences = Experience::All($id);
+
+        $this->render("fan/cyclists/show", compact("cyclist", "experiences"));
     }
 
     public function profile()

@@ -63,7 +63,8 @@ class Cyclist extends User
 
     public function getBirthdate()
     {
-        return $this->birthdate;
+        $date = new DateTime($this->birthdate);
+        return $date->format('F j, Y');
     }
 
     public function getApproved()
