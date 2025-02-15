@@ -35,29 +35,28 @@ class Admin extends User {
     }
     public static function platformStatiscs() {
         // Total approved cyclists
-        $query = "SELECT count(*) as totalCyclest FROM cyclists WHERE approved = TRUE";
+        $query = "SELECT count(*) FROM cyclists WHERE approved = TRUE";
         self::$db->query($query);
-        $totaleApprovedCyclests = self::$db->single()["totalCyclest"] ?? 0;
+        $totaleApprovedCyclests = self::$db->single()["count"] ?? 0;
     
         // Total number of users
-        $query = "SELECT count(*) as totalUsers FROM users";
+        $query = "SELECT count(*) FROM users";
         self::$db->query($query);
-        $totalUsers = self::$db->single()["totalUsers"] ?? 0;
+        $totalUsers = self::$db->single()["count"] ?? 0;
     
         // Team with the most number of approved cyclists
-        $query = "SELECT t.name FROM teams t 
-                  JOIN cyclists c ON c.team_id = t.id 
+        $query = "SELECT c.team FROM cyclists c
                   WHERE c.approved = TRUE 
-                  GROUP BY t.name 
+                  GROUP BY c.team 
                   ORDER BY count(*) DESC 
                   LIMIT 1";
         self::$db->query($query);
-        $teamWithMostPlayers = self::$db->single()["name"] ?? false;
+        $teamWithMostPlayers = self::$db->single()["team"] ?? false;
     
         // Unresolved reports
-        $query = "SELECT count(*) as totalUnresolved FROM reports WHERE is_archived = FALSE";
+        $query = "SELECT count(*) FROM reports WHERE is_archived = FALSE";
         self::$db->query($query);
-        $unresolvedReports = self::$db->single()["totalUnresolved"] ?? 0;
+        $unresolvedReports = self::$db->single()["count"] ?? 0;
     
         return [
             "totalApprovedCyclests" => $totaleApprovedCyclests,
