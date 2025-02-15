@@ -29,6 +29,11 @@ class Cyclist extends User
         $this->points_awarded = $points_awarded;
     }
 
+    public function setTotalTime($total_time)
+    {
+        $this->total_time = $total_time;
+    }
+
     public function setBirthdate($birthdate)
     {
         $this->birthdate = $birthdate;
@@ -70,19 +75,13 @@ class Cyclist extends User
         return $this->team;
     }
 
-
-
-
-    public function setTotalTime($total_time)
-    {
-        $this->total_time = $total_time;
-    }
-
-
     public function getTotalTime()
     {
-        return $this->total_time;
+        $date = DateTime::createFromFormat('H:i:s', preg_replace('/^\d+ day[s]? /', '', $this->total_time));
+    
+        return (preg_match('/^(\d+) day[s]?/', $this->total_time, $d) ? "{$d[1]}d " : "") . $date->format('G\h i\m');
     }
+    
 
 
 
@@ -185,17 +184,20 @@ class Cyclist extends User
 
     
     public static function getTopCyclists($limit = null)
-{
-    $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, c.team AS team_name, 
-                   SUM(ra.points_awarded) AS total_points,
-                   STRING_AGG(
-                       EXTRACT(HOUR FROM ra.total_time) || 'h ' || 
-                       EXTRACT(MINUTE FROM ra.total_time) || 'm', ', '
-                   ) AS total_time
-            FROM cyclists c
-            JOIN ranking ra ON c.id = ra.cyclist_id
-            GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
-            ORDER BY total_points DESC";
+    {
+        $sql = "SELECT 
+                    c.id, 
+                    c.first_name, 
+                    c.last_name, 
+                    c.photo, 
+                    c.team AS team_name, 
+                    SUM(ra.points_awarded) AS total_points,
+                    justify_interval(SUM(ra.total_time)) AS total_time
+                FROM cyclists c
+                JOIN ranking ra ON c.id = ra.cyclist_id
+                GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
+                ORDER BY total_points DESC";
+
     
     if ($limit) {
         $sql .= " LIMIT :limit";
@@ -225,6 +227,7 @@ class Cyclist extends User
             $row['photo'], 
         );
         $cyclist->setPointsAwarded($row['total_points']);
+        $cyclist->setTotalTime($row['total_time']);
         $cyclist->setTeam($row['team_name']);
 
         $cyclists[] = $cyclist;
