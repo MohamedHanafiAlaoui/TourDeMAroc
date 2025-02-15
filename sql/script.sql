@@ -71,6 +71,7 @@ CREATE TYPE difficulty AS ENUM('facile', 'medium', 'difficile');
 CREATE TABLE stages (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+	stage_order INT NOT NULL,
     start_location VARCHAR(255) NOT NULL,
     end_location VARCHAR(255) NOT NULL,
     distance_km DECIMAL(6,2) NOT NULL,
@@ -89,6 +90,7 @@ CREATE TABLE ranking (
     stage_id INT NOT NULL REFERENCES stages(id) ON DELETE CASCADE,
     total_time INTERVAL NOT NULL,
     points_awarded INT DEFAULT 0,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (cyclist_id, stage_id)
 );
 
@@ -165,7 +167,7 @@ INSERT INTO teams (name, country) VALUES
 -- Insert cyclists (inherits from users)
 INSERT INTO cyclists (first_name, last_name, email, password, team, nationality, birthdate, approved, role_id)
 VALUES
-('Mehdi', 'Benali', 'mehdi.benali@example.com', 'hash1', 'Atlas Cycling', 'Morocco', '1995-03-12', TRUE, 2),
+('Mehdi', 'Benali', 'mehdi.benali@example.com', '$2y$10$m2d/ZiHwWpCNuFg4lS7mJ.nFmTLz8dSfT0wqB7R0/HjJMyQ9zNP5u', 'Atlas Cycling', 'Morocco', '1995-03-12', TRUE, 2),
 ('Léa', 'Dubois', 'lea.dubois@example.com', 'hash2', 'Alpine Racers', 'France', '1998-07-24',  TRUE, 2),
 ('Carlos', 'Garcia', 'carlos.garcia@example.com', 'hash3', 'Iberian Speed', 'Spain', '1993-11-05', TRUE, 2),
 ('Youssef', 'Khalid', 'youssef.khalid@example.com', 'hash4', 'Desert Riders', 'Morocco', '1996-02-18', TRUE, 2),
@@ -215,7 +217,7 @@ VALUES
 
 -- Insert 5 admins
 INSERT INTO admins (first_name, last_name, email, password, role_id) VALUES
-('Admin', 'One', 'admin1@example.com', 'adminhash1', 1),
+('Admin', 'One', 'admin1@example.com', '$2y$10$m2d/ZiHwWpCNuFg4lS7mJ.nFmTLz8dSfT0wqB7R0/HjJMyQ9zNP5u', 1),
 ('Admin', 'Two', 'admin2@example.com', 'adminhash2', 1),
 ('Admin', 'Three', 'admin3@example.com', 'adminhash3', 1),
 ('Admin', 'Four', 'admin4@example.com', 'adminhash4', 1),
@@ -223,7 +225,7 @@ INSERT INTO admins (first_name, last_name, email, password, role_id) VALUES
 
 -- Insert 200 fans
 INSERT INTO fans (first_name, last_name, email, password, notify, role_id) VALUES
-('Fan1', 'Larsson', 'fan1@example.com', 'fanhash1', TRUE, 3),
+('Fan1', 'Larsson', 'fan1@example.com', '$2y$10$m2d/ZiHwWpCNuFg4lS7mJ.nFmTLz8dSfT0wqB7R0/HjJMyQ9zNP5u', TRUE, 3),
 ('Fan2', 'Andersen', 'fan2@example.com', 'fanhash2', FALSE, 3),
 ('Fan3', 'Petersen', 'fan3@example.com', 'fanhash3', TRUE, 3),
 ('Fan4', 'Jensen', 'fan4@example.com', 'fanhash4', FALSE, 3),
@@ -442,16 +444,16 @@ VALUES
 ('Rabat-Salé-Kénitra'),
 ('Oriental');
 
-INSERT INTO stages (name, start_location, end_location, distance_km, start_date, end_date, category_id, region_id, difficulty_level, photo, description)
+INSERT INTO stages (name, stage_order, start_location, end_location, distance_km, start_date, end_date, category_id, region_id, difficulty_level, photo, description)
 VALUES
-('Stage 1: Marrakech to Ouarzazate', 'Marrakech', 'Ouarzazate', 350.00, '2024-03-01', '2024-03-03', 2, 1, 'difficile', 'photo_stage1.jpg', 'Mountain stage through the High Atlas.'),
-('Stage 2: Ouarzazate to Zagora', 'Ouarzazate', 'Zagora', 280.00, '2024-03-04', '2024-03-06', 2, 5, 'medium', 'photo_stage2.jpg', 'Desert stage with some challenging dunes.'),
-('Stage 3: Zagora to Erfoud', 'Zagora', 'Erfoud', 320.00, '2024-03-07', '2024-03-09', 2, 5, 'facile', 'photo_stage3.jpg', 'Flat stage across plains.'),
-('Stage 4: Erfoud to Merzouga', 'Erfoud', 'Merzouga', 180.00, '2024-03-10', '2024-03-12', 2, 5, 'medium', 'photo_stage4.jpg', 'Desert stage with the Erg Chebbi dunes.' ),
-('Stage 5: Merzouga to Midelt', 'Merzouga', 'Midelt', 400.00, '2024-03-13', '2024-03-15', 2, 5, 'difficile', 'photo_stage5.jpg', 'Mountain stage with tough climbs.'),
-('Stage 6: Midelt to Fes', 'Midelt', 'Fes', 250.00, '2024-03-16', '2024-03-18', 2, 2, 'medium', 'photo_stage6.jpg', 'Rolling hills and plains.'),
-('Stage 7: Fes to Chefchaouen', 'Fes', 'Chefchaouen', 200.00, '2024-03-19', '2024-03-21', 2, 2, 'difficile', 'photo_stage7.jpg', 'Mountain stage in the Rif Mountains.'),
-('Stage 8: Chefchaouen to Tangier', 'Chefchaouen', 'Tangier', 120.00, '2024-03-22', '2024-03-24', 2, 3, 'facile', 'photo_stage8.jpg', 'Coastal stage with scenic views.');
+('Stage 1: Marrakech to Ouarzazate', 1, 'Marrakech', 'Ouarzazate', 350.00, '2024-03-01', '2024-03-03', 2, 1, 'difficile', 'photo_stage1.jpg', 'Mountain stage through the High Atlas.'),
+('Stage 2: Ouarzazate to Zagora', 2, 'Ouarzazate', 'Zagora', 280.00, '2024-03-04', '2024-03-06', 2, 5, 'medium', 'photo_stage2.jpg', 'Desert stage with some challenging dunes.'),
+('Stage 3: Zagora to Erfoud', 3, 'Zagora', 'Erfoud', 320.00, '2024-03-07', '2024-03-09', 2, 5, 'facile', 'photo_stage3.jpg', 'Flat stage across plains.'),
+('Stage 4: Erfoud to Merzouga', 4, 'Erfoud', 'Merzouga', 180.00, '2024-03-10', '2024-03-12', 2, 5, 'medium', 'photo_stage4.jpg', 'Desert stage with the Erg Chebbi dunes.' ),
+('Stage 5: Merzouga to Midelt', 5, 'Merzouga', 'Midelt', 400.00, '2024-03-13', '2024-03-15', 2, 5, 'difficile', 'photo_stage5.jpg', 'Mountain stage with tough climbs.'),
+('Stage 6: Midelt to Fes', 6, 'Midelt', 'Fes', 250.00, '2024-03-16', '2024-03-18', 2, 2, 'medium', 'photo_stage6.jpg', 'Rolling hills and plains.'),
+('Stage 7: Fes to Chefchaouen', 7, 'Fes', 'Chefchaouen', 200.00, '2024-03-19', '2024-03-21', 2, 2, 'difficile', 'photo_stage7.jpg', 'Mountain stage in the Rif Mountains.'),
+('Stage 8: Chefchaouen to Tangier', 8, 'Chefchaouen', 'Tangier', 120.00, '2024-03-22', '2024-03-24', 2, 3, 'facile', 'photo_stage8.jpg', 'Coastal stage with scenic views.');
 
 -- Insert rankings for all cyclists across all stages (400 entries)
 INSERT INTO ranking (cyclist_id, stage_id, total_time, points_awarded) VALUES
@@ -1428,3 +1430,17 @@ INSERT INTO reports (id_fan, stage_id, description) VALUES
 (101, 4, 'Lack of first aid support.'),
 (76, 5, 'Route significantly longer than stated.'),
 (247,8, 'Player "Majed" enter in the fourth stage before 3 seconds from the registered time.');
+
+
+INSERT INTO experience (tour, photo, start_date, end_date, rank, description, cyclist_id)
+VALUES
+('Tour de France 2023', 'tdf2023.jpg', '2023-07-01', '2023-07-23', 5, 'Strong performance throughout the tour.', 6),
+('Vuelta a España 2022', 'vae2022.jpg', '2022-08-19', '2022-09-11', 2, 'Won two stages and finished second overall.', 6),
+('Giro d''Italia 2023', 'gi2023.jpg', '2023-05-06', '2023-05-28', 12, 'Consistent performance in the mountains.', 7),
+('Tour of Morocco 2022', 'tom2022.jpg', '2022-04-01', '2022-04-10', 1, 'Dominated the race from start to finish.', 7),
+('Paris-Nice 2023', 'pn2023.jpg', '2023-03-05', '2023-03-12', 8, 'Solid performance in the spring classic.', 8),
+('Critérium du Dauphiné 2022', 'cd2022.jpg', '2022-06-05', '2022-06-12', 3, 'Finished on the podium in a tough race.', 9),
+('Tour de Suisse 2023', 'tds2023.jpg', '2023-06-11', '2023-06-18', 15, 'Good experience in a challenging race.', 6),
+('Tour of Flanders 2023', 'tof2023.jpg', '2023-04-02', '2023-04-02', 23, 'Competed in the prestigious one-day race.', 7),
+('Milan-San Remo 2022', 'msr2022.jpg', '2022-03-19', '2022-03-19', 45, 'Gained experience in a major classic.', 10),
+('Liège-Bastogne-Liège 2023', 'lbl2023.jpg', '2023-04-23', '2023-04-23', 18, 'Finished in the top 20 of the challenging race.', 10);
