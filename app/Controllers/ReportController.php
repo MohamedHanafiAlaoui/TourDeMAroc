@@ -1,11 +1,13 @@
 <?php
-class ReportController extends BaseController {
+class ReportController extends BaseController
+{
 
     public function index()
     {
-        $this->render("admin/reports/index");
+        $allReports = Report::all();
+        $data = ["allReports" => $allReports];
+        $this->render("admin/reports/index", $data);
     }
-
     public function store()
     {
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -30,20 +32,30 @@ class ReportController extends BaseController {
         }
 
         // Make sure errors are empty (There's no errors)
-        if(empty($errors['stage_err']) && empty($errors['message_err']) ){
+        if (empty($errors['stage_err']) && empty($errors['message_err'])) {
             $report = new Report(null, user()->getId(), $stage->getId(), $data["message"]);
 
             if ($report->save()) {
                 flash("success", "Your report has been submited successfully.");
-            }else{
+            } else {
                 flash("error", "Something went wrong.");
             }
             back();
-        }
-        else{
+        } else {
             // Load view with errors
             flash("error", array_first_not_null_value($errors));
             back();
         }
     }
+    public function delete()
+    {
+        $report = Report::find($_POST['id']);
+        if ($report->delete()) {
+            flash("success", "Report has been deleted successfully.");
+        } else {
+            flash("error", "Something went wrong.");
+        }
+        back();
+    }
 }
+

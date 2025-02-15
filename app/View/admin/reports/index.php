@@ -25,7 +25,49 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200" id="reportsList">
-                    <!-- Reports will be dynamically inserted here -->
+                    <?php foreach ($data["allReports"] as $report): ?>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="h-10 w-10 flex-shrink-0">
+                                        <img class="h-10 w-10 rounded-full object-cover" src="https://placehold.co/40x40"
+                                            alt="Fan">
+                                    </div>
+                                    <div class="ml-4">
+                                        <div class="text-sm font-medium text-gray-900"><?=$report["reporter"]->getFirstName()?></div>
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><?=$report["stage"]->getName()?></div>
+                                <div class="text-xs text-gray-500"><?=$report["stage"]->getDescription()?></div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="text-sm text-gray-900 max-w-xs truncate"><?=$report["report"]->getMessage()?></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900"><?=$report["report"]->getCreatedAt()?></div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                <div class="flex space-x-2">
+                                    <button 
+                                        class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
+                                        <i class="fas fa-check"></i>
+                                        <span>Resolve</span>
+                                    </button>
+                                    <form action="" method="post">
+                                        <input type="hidden" name="reportId" value="<?=$report["report"]->getId()?>">
+                                        <button
+                                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
+                                            <i class="fas fa-trash"></i>
+                                            <span>Delete</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -40,13 +82,16 @@
             <!-- Report details will be populated here -->
         </div>
         <div class="mt-6 flex justify-end space-x-2">
-            <button onclick="closeReportModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200">
+            <button onclick="closeReportModal()"
+                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200">
                 Close
             </button>
-            <button onclick="markAsResolved()" class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors duration-200">
+            <button onclick="markAsResolved()"
+                class="px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors duration-200">
                 Mark as Resolved
             </button>
-            <button onclick="deleteReport()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200">
+            <button onclick="deleteReport()"
+                class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-200">
                 Delete Report
             </button>
         </div>
@@ -63,46 +108,46 @@
 
     function renderReports() {
         const reportsList = document.getElementById('reportsList');
-        reportsList.innerHTML = '';
+        // reportsList.innerHTML = '';
 
-        reports.forEach(report => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                        <div class="h-10 w-10 flex-shrink-0">
-                            <img class="h-10 w-10 rounded-full object-cover" src="https://placehold.co/40x40" alt="Fan">
-                        </div>
-                        <div class="ml-4">
-                            <div class="text-sm font-medium text-gray-900">${report.fanName}</div>
-                        </div>
-                    </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">${report.stageName}</div>
-                    <div class="text-xs text-gray-500">Stage ${report.stageNumber}</div>
-                </td>
-                <td class="px-6 py-4">
-                    <div class="text-sm text-gray-900 max-w-xs truncate">${report.message}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">${report.date}</div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                    <div class="flex space-x-2">
-                        <button onclick="markAsResolved(${report.id})" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
-                            <i class="fas fa-check"></i>
-                            <span>Resolve</span>
-                        </button>
-                        <button onclick="deleteReport(${report.id})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
-                            <i class="fas fa-trash"></i>
-                            <span>Delete</span>
-                        </button>
-                    </div>
-                </td>
-            `;
-            reportsList.appendChild(row);
-        });
+    //     reports.forEach(report => {
+    //         const row = document.createElement('tr');
+    //         row.innerHTML = `
+    //             <td class="px-6 py-4 whitespace-nowrap">
+    //                 <div class="flex items-center">
+    //                     <div class="h-10 w-10 flex-shrink-0">
+    //                         <img class="h-10 w-10 rounded-full object-cover" src="https://placehold.co/40x40" alt="Fan">
+    //                     </div>
+    //                     <div class="ml-4">
+    //                         <div class="text-sm font-medium text-gray-900">${report.fanName}</div>
+    //                     </div>
+    //                 </div>
+    //             </td>
+    //             <td class="px-6 py-4 whitespace-nowrap">
+    //                 <div class="text-sm text-gray-900">${report.stageName}</div>
+    //                 <div class="text-xs text-gray-500">Stage ${report.stageNumber}</div>
+    //             </td>
+    //             <td class="px-6 py-4">
+    //                 <div class="text-sm text-gray-900 max-w-xs truncate">${report.message}</div>
+    //             </td>
+    //             <td class="px-6 py-4 whitespace-nowrap">
+    //                 <div class="text-sm text-gray-900">${report.date}</div>
+    //             </td>
+    //             <td class="px-6 py-4 whitespace-nowrap text-sm">
+    //                 <div class="flex space-x-2">
+    //                     <button onclick="markAsResolved(${report.id})" class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
+    //                         <i class="fas fa-check"></i>
+    //                         <span>Resolve</span>
+    //                     </button>
+    //                     <button onclick="deleteReport(${report.id})" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
+    //                         <i class="fas fa-trash"></i>
+    //                         <span>Delete</span>
+    //                     </button>
+    //                 </div>
+    //             </td>
+    //         `;
+    //         reportsList.appendChild(row);
+    //     });
     }
 
     function closeReportModal() {
@@ -124,7 +169,7 @@
         }
     }
 
-    document.getElementById('reportDetailsModal').addEventListener('click', function(e) {
+    document.getElementById('reportDetailsModal').addEventListener('click', function (e) {
         if (e.target === this) {
             closeReportModal();
         }

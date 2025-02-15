@@ -34,6 +34,7 @@
     $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
     $router->post('/comments/store', [CommentController::class, 'store'], ["fan", "cyclist"]);
     $router->post('/reports/store', [ReportController::class, 'store'], ["fan", "cyclist"]);
+    $router->post('/reports/delete', [ReportController::class, 'delete'], ["admin"]);
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     
