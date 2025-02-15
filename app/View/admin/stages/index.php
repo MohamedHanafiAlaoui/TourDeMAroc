@@ -240,8 +240,8 @@
                     <div class="text-sm text-gray-900"><?=$stage->getNameRegion()?></div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button onclick="viewStage(<?=$stage->getId()?>)" class="text-indigo-600 hover:text-indigo-900 mr-2 block">View</button>
-                    <form action="" method="post" class="block">
+                    <button onclick="viewStage(<?=$stage->getId()?>)" class="text-indigo-600 hover:text-indigo-900 mr-2">View</button>
+                    <form action="<?=url("stage/delete")?>" method="post">
                         <input type="hidden" name="id" value="<?=$stage->getId()?>">
                         <button class="text-red-600 hover:text-red-900">Delete</button>
                     </form>
