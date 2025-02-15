@@ -58,15 +58,11 @@
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
     $router->post('/stage/store', [StageController::class, 'store'], ["admin"]);
-<<<<<<< HEAD
     $router->post('/stage/delete', [StageController::class, 'delete'], ["admin"]);
-=======
     $router->get('/timing', [TimingController::class, 'index'], ["admin"]);
     $router->post('/timing/store', [TimingController::class, 'store'], ["admin"]);
->>>>>>> main
 
     $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);
-
     
     
     $router->get('/login', [AuthController::class, 'login'], ["visitor"]);
