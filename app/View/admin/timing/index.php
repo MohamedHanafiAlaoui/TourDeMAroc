@@ -6,24 +6,18 @@
     <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
         <h4 class="text-xl font-semibold mb-4">Stage Completion Entry</h4>
         
-        <form>
+        <form action="<?= url('timing/store') ?>" method="POST">
             <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <!-- Cyclist Selection -->
                 <div>
                     <label for="cyclist-select" class="block text-sm font-medium text-gray-700 mb-2">Select Cyclist</label>
                     <div class="relative">
-                        <select id="cyclist-select" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                        <select id="cyclist-select" name="cyclist_id" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                             <option value="">-- Select Cyclist --</option>
-                            <option value="cyclist1">John Doe (Team Morocco)</option>
-                            <option value="cyclist2">Jane Smith (Team France)</option>
-                            <option value="cyclist3">Ahmed Hassan (Team Egypt)</option>
-                            <option value="cyclist4">Maria Rodriguez (Team Spain)</option>
+                            <?php foreach($cyclists as $cyclist): ?>
+                                <option value="<?= $cyclist->getId() ?>"><?= $cyclist->getFullName() ?> (<?= $cyclist->getTeam() ?>)</option>
+                            <?php endforeach; ?>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
                     </div>
                 </div>
                 
@@ -31,20 +25,12 @@
                 <div>
                     <label for="stage-select" class="block text-sm font-medium text-gray-700 mb-2">Select Stage</label>
                     <div class="relative">
-                        <select id="stage-select" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                        <select id="stage-select" name="stage_id" class="block w-full bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                             <option value="">-- Select Stage --</option>
-                            <option value="stage1">Stage 1: Tangier to Tetouan (120 km)</option>
-                            <option value="stage2">Stage 2: Tetouan to Chefchaouen (150 km)</option>
-                            <option value="stage3">Stage 3: Chefchaouen to Fez (180 km)</option>
-                            <option value="stage4">Stage 4: Fez to Meknes (110 km)</option>
-                            <option value="stage5">Stage 5: Meknes to Rabat (170 km)</option>
-                            <option value="stage6">Stage 6: Marrakech to Agadir (250 km)</option>
+                            <?php foreach($stages as $stage): ?>
+                                <option value="<?= $stage->getId() ?>">Stage <?= $stage->getOrder() ?>: <?= $stage->getStLocation() ?> to <?= $stage->getEnLocation() ?> (<?= number_format($stage->getDistance()) ?> km)</option>
+                            <?php endforeach; ?>
                         </select>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -55,19 +41,19 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <div class="flex-1 min-w-[100px]">
                         <label for="hours" class="block text-xs text-gray-500 mb-1">Hours</label>
-                        <input type="number" id="hours" min="0" max="24"
+                        <input type="number" name="hours" id="hours" min="0" max="24"
                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
                                placeholder="00" />
                     </div>
                     <div class="flex-1 min-w-[100px]">
                         <label for="minutes" class="block text-xs text-gray-500 mb-1">Minutes</label>
-                        <input type="number" id="minutes" min="0" max="59"
+                        <input type="number" name="minutes" id="minutes" min="0" max="59"
                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
                                placeholder="00" />
                     </div>
                     <div class="flex-1 min-w-[100px]">
                         <label for="seconds" class="block text-xs text-gray-500 mb-1">Seconds</label>
-                        <input type="number" id="seconds" min="0" max="59"
+                        <input type="number" name="seconds" id="seconds" min="0" max="59"
                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
                                placeholder="00" />
                     </div>
@@ -104,38 +90,45 @@
                                 Time
                             </th>
                             <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Points
+                            </th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Entered By
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Entry 1 -->
+                        <?php foreach ($rankings as $rank): ?>
                         <tr>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 w-10 h-10">
-                                        <img class="w-full h-full rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Doe" />
+                                        <img class="w-full h-full rounded-full" src="<?= $rank->getCyclist()->getPhoto() ?>" alt="Cyclist" />
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-gray-900 whitespace-no-wrap">John Doe</p>
-                                        <p class="text-gray-500 text-xs">Team Morocco</p>
+                                        <p class="text-gray-900 whitespace-no-wrap"><?= $rank->getCyclist()->getFullName() ?></p>
+                                        <p class="text-gray-500 text-xs"><?= $rank->getCyclist()->getTeam() ?></p>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <p class="text-gray-900 whitespace-no-wrap">Stage 6: Marrakech to Agadir</p>
-                                <p class="text-gray-500 text-xs">250 km</p>
+                                <p class="text-gray-900 whitespace-no-wrap">Stage <?= $rank->getStage()->getOrder() ?>: <?= $rank->getStage()->getStLocation() ?> to <?= $rank->getStage()->getEnLocation() ?></p>
+                                <p class="text-gray-500 text-xs"><?= $rank->getStage()->getDistance() ?> km</p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                <p class="text-gray-900 whitespace-no-wrap">04:15:22</p>
+                                <p class="text-gray-900 whitespace-no-wrap"><?= $rank->getTotalTime() ?></p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap"><?= $rank->getPointsAwarded() ?></p>
                             </td>
                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <p class="text-gray-900 whitespace-no-wrap">Admin (You)</p>
-                                <p class="text-gray-500 text-xs">15 Feb, 2025 14:30</p>
+                                <p class="text-gray-500 text-xs">
+                                    <?= date('F j, Y, g:i A', strtotime($rank->getCreatedAt())) ?>
+                                </p>
                             </td>
                         </tr>
-                        
-                        <!-- Additional entries can follow the same structure -->
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

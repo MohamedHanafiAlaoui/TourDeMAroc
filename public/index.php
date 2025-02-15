@@ -58,6 +58,7 @@
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
     $router->post('/stage/store', [StageController::class, 'store'], ["admin"]);
     $router->get('/timing', [TimingController::class, 'index'], ["admin"]);
+    $router->post('/timing/store', [TimingController::class, 'store'], ["admin"]);
 
     $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);
 

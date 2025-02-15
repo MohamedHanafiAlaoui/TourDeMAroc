@@ -13,6 +13,7 @@
         private $difficulty_level;
         private $id_category;
         private $Description;
+        private $order;
 
         private $nameCategory;
         private $nameRegion;
@@ -88,7 +89,6 @@
             $this->Description = $Description;
         }
           
-
         public function setNameCategory($nameCategory)
         {
             $this->nameCategory = $nameCategory;
@@ -97,6 +97,11 @@
         public function setNameRegion($nameRegion)
         {
             $this->nameRegion = $nameRegion;
+        }
+
+        public function setOrder($order)
+        {
+            $this->order = $order;
         }
         
 
@@ -122,7 +127,7 @@
         
         public function getDistance()
         {
-            return $this->distance_km;
+            return number_format($this->distance_km);
         }
         
         public function getStDate()
@@ -165,12 +170,18 @@
             return $this->nameRegion;
         }
 
+        public function getOrder()
+        {
+            return $this->order;
+        }
+
         public static function All()
         {
             $sql = "SELECT S.*, C.name AS category_name, R.name AS region_name
                         FROM stages S
                         JOIN categories C ON S.category_id = C.id
-                        JOIN regions R ON S.region_id = R.id;";
+                        JOIN regions R ON S.region_id = R.id
+                        ORDER BY S.stage_order";
 
             self::$db->query($sql);
             $result = self::$db->results();
@@ -180,10 +191,12 @@
                 $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
                 $class->setNameCategory($value["category_name"]);
                 $class->setNameRegion($value["region_name"]);
+                $class->setOrder($value["stage_order"]);
                 $stages[] = $class;
             }
             return $stages;
         }
+
         public function save(){
             $query = "INSERT INTO stages (name, start_location, end_location, distance_km, start_date, end_date, category_id, region_id, difficulty_level, photo, description)
              VALUES (:name, :Start_location, :end_location, :distance_km, :start_date, :end_date, :category_id, :region_id, :difficulty_level, :photo, :description)";
