@@ -951,10 +951,6 @@ video {
   height: auto;
 }
 
-.h-52 {
-  height: 13rem;
-}
-
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1062,10 +1058,6 @@ video {
 
 .w-auto {
   width: auto;
-}
-
-.w-44 {
-  width: 11rem;
 }
 
 .min-w-64 {
@@ -1250,10 +1242,6 @@ video {
 
 .items-center {
   align-items: center;
-}
-
-.justify-start {
-  justify-content: flex-start;
 }
 
 .justify-end {
