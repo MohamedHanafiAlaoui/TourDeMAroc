@@ -101,10 +101,9 @@ class FanFavorite extends BaseModel {
        c.first_name AS cyclist_first_name, 
        c.last_name AS cyclist_last_name,
         c.photo AS cyclist_photo,
-       t.name AS team_name
+        c.team AS cyclist_team
         FROM fan_favorites f  
-        LEFT JOIN cyclists c ON f.id_cyclist = c.id 
-        LEFT JOIN teams t ON t.id = c.team_id where f.id_fan=:id";
+        LEFT JOIN cyclists c ON f.id_cyclist = c.id where f.id_fan=:id";
 
         self::$db->query($sql);
         self::$db->bind(':id', $id);
@@ -117,7 +116,7 @@ class FanFavorite extends BaseModel {
             $class->setfirst_name($value['cyclist_first_name']);
             $class->setfirst_name($value['cyclist_last_name']);
             $class->setphoto($value['cyclist_photo']);
-            $class->setname($value[' team_name']);
+            $class->setname($value['cyclist_team']);
             $Favorites=$class;
 
         }

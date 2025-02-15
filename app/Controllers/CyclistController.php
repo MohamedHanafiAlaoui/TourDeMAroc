@@ -11,7 +11,15 @@ class CyclistController extends BaseController
 
     public function show($id)
     {
-        $this->render("fan/cyclists/show");
+        $cyclist = Cyclist::findCyclist($id);
+
+        if (!$cyclist) {
+            flash("error", "Cyclist not found.");
+            redirect("cyclists");
+        }
+        $experiences = Experience::All($id);
+
+        $this->render("fan/cyclists/show", compact("cyclist", "experiences"));
     }
 
     public function profile()
@@ -53,10 +61,9 @@ class CyclistController extends BaseController
                 } else {
                     $errors['thumbnail_err'] = 'Invalid image format. Allowed formats are JPG, PNG, and GIF.';
                 }
-
                 $cyclist->setPhoto($ProfilPhoto);
             }
-
+            
             if ($Birthdate != null) {
                 $cyclist->setBirthdate($Birthdate);
             }

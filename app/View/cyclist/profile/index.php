@@ -170,18 +170,18 @@
         </div>
 
         <!-- Date Input with Icon -->
-        <div class="relative">
+        <div class="relative ">
           <label class="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
-          <div class="w-full flex gap-5">
+          <div class="w-full flex gap-2">
             <div class="relative">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-              <input type="date" name="raceStartDate" placeholder="May 1 - May 15, 2025" 
+              <input type="date" name="raceStartDate"
                     class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 
                     ring-emerald-200 transition-all duration-300 placeholder-gray-400">
             </div>
             <div class="relative">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-              <input type="date" name="raceEndDate" placeholder="May 1 - May 15, 2025" 
+              <input type="date" name="raceEndDate"
                     class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 
                     ring-emerald-200 transition-all duration-300 placeholder-gray-400">
             </div>

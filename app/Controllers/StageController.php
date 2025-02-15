@@ -1,13 +1,16 @@
 <?php
-class StageController extends BaseController {
+class StageController extends BaseController
+{
 
     public function index()
     {
         $NumberPagination = Stage::Pagination(3);
         $categorys = Category::All();
+        $stages = Stage::All();
+        $regions = Region::All();
         if (isLoggedIn() && user()->isAdmin()) {
-            $this->render("admin/stages/index", ["categories" => $categorys]);
-        }else{
+            $this->render("admin/stages/index", ["categories" => $categorys, "ragions" => $regions, "stages" => $stages]);
+        } else {
             $this->render("fan/stages/index", compact("categorys", "NumberPagination"));
         }
     }
@@ -36,12 +39,12 @@ class StageController extends BaseController {
 
         try {
             $mail->send(user()->getEmail(), user()->getFullName(), "Stage Details", $this->notifyStageMail(user(), $stage));
-            
+
             flash("success", "We sent you an email about the stage.");
 
         } catch (\Throwable $th) {
             flash("error", "Something went wrong.");
-        }finally{
+        } finally {
             back();
         }
     }
@@ -54,12 +57,12 @@ class StageController extends BaseController {
         $NbPage = $_GET['NumberPage'] ?? 0;
 
         $stages = Stage::fetchStage($search, $type, $distance);
-        
-        $rows = []; 
+
+        $rows = [];
         if ($stages) {
             $i = 0;
             $b = 0;
-            foreach($stages as $stage) {
+            foreach ($stages as $stage) {
                 $rows[$i][] = $stage;
                 $b++;
                 if ($b >= 3) {
@@ -67,7 +70,7 @@ class StageController extends BaseController {
                     $i++;
                 }
             }
-            $formerStages = array_map(function($row) use ($stages){
+            $formerStages = array_map(function ($row) use ($stages) {
                 return [
                     'id' => $row->getId(),
                     'Stage_name' => $row->getName(),
@@ -77,9 +80,9 @@ class StageController extends BaseController {
                     'start_date' => $row->getStDate(),
                     'end_date' => $row->getEnDate(),
                     'nameCategory' => $row->getNameCategory(),
-                    'page_stage' => ceil(count($stages)/3)
+                    'page_stage' => ceil(count($stages) / 3)
                 ];
-            },$rows[$NbPage]);
+            }, $rows[$NbPage]);
             echo json_encode($formerStages);
         } else {
             echo json_encode([]);
@@ -89,7 +92,7 @@ class StageController extends BaseController {
     private function notifyStageMail($user, $stage)
     {
         $link = url("stages/" . $stage->getId());
-    
+
         $html = <<<END
             <!DOCTYPE html>
                 <html>
@@ -179,8 +182,29 @@ class StageController extends BaseController {
                 </body>
             </html>
         END;
-    
+
         return $html;
     }
-    
+    public function store()
+    {
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $errors = [
+            'stage_name_err' => ''
+        ];
+        if (in_array("", $_POST, true)) {
+            $errors['categories_name_err'] = 'you must fill all the values .';
+        }
+        if (empty($errors['categories_name_err'])) {
+            $stage = new Stage("",$_POST["stageName"],$_POST["startCity"],$_POST["endCity"],$_POST["distance"],$_POST["startDate"],$_POST["endDate"],$_POST["region"],"medium",$_POST["category"],$_POST["photo"],$_POST["description"]);
+            $stage->save();
+            flash("success", "stage created successfully.");
+            back();
+        }
+        flash("error", array_first_not_null_value($errors));
+        back();
+    }
+    public function delete(){
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    }
 }
