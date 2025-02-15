@@ -5,7 +5,7 @@
 
     <!-- Verification Table -->
     <section class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <?php if (empty($unverifiedCyclists)): ?>
+        <?php if (empty($data["cyclists"])): ?>
             <div class="p-6">
                 <div class="text-center">
                     <div class="flex justify-center mb-6">
@@ -20,72 +20,78 @@
                 </div>
             </div>
         <?php else: ?>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-emerald-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
-                            Cyclist
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
-                            Team
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
-                            Registration Date
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
-                            Status
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <?php foreach ($unverifiedCyclists as $cyclist): ?>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="h-10 w-10 flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full object-cover" src="<?= $cyclist->getProfileImage() ?? 'https://placehold.co/40x40' ?>" alt="Cyclist">
-                                </div>
-                                <div class="ml-4">
-                                    <div class="text-sm font-medium text-gray-900"><?= $cyclist->getFullName() ?></div>
-                                    <div class="text-sm text-gray-500"><?= $cyclist->getEmail() ?></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900"><?= $cyclist->getTeam() ?? 'Not Specified' ?></div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900"><?= (new DateTime($cyclist->getCreatedAt()))->format('F d, Y') ?></div>
-                            <div class="text-sm text-gray-500"><?= getTimeAgoFromDate($cyclist->getCreatedAt()) ?></div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                Pending Review
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <div class="flex space-x-2">
-                                <form action="<?= URLROOT . 'cyclists/verify/' . $cyclist->getId() ?>" method="POST">
-                                    <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
-                                        <i class="fas fa-check"></i>
-                                        <span>Verify</span>
-                                    </button>
-                                </form>
-                                <button onclick="viewDetails(<?= $cyclist->getId() ?>)" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
-                                    <i class="fas fa-eye"></i>
-                                    <span>View</span>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-emerald-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                                Cyclist
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                                Team
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                                Registration Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-emerald-700 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <?php foreach ($data["cyclists"] as $cyclist): ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 flex-shrink-0">
+                                            <img class="h-10 w-10 rounded-full object-cover"
+                                                src="<?= $cyclist->getPhotoName() ?? 'https://placehold.co/40x40' ?>"
+                                                alt="Cyclist">
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900"><?= $cyclist->getFullName() ?></div>
+                                            <div class="text-sm text-gray-500"><?= $cyclist->getEmail() ?></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900"><?= $cyclist->getTeam() ?? 'Not Specified' ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">
+                                        <?= (new DateTime($cyclist->getCreatedAt()))->format('F d, Y') ?></div>
+                                    <div class="text-sm text-gray-500"><?= getTimeAgoFromDate($cyclist->getCreatedAt()) ?></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                        Pending Review
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                    <div class="flex space-x-2">
+                                        <form action="<?= URLROOT . 'cyclists/verify/' . $cyclist->getId() ?>" method="POST">
+                                            <button
+                                                class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
+                                                <i class="fas fa-check"></i>
+                                                <span>Verify</span>
+                                            </button>
+                                        </form>
+                                        <button onclick="viewDetails(<?= $cyclist->getId() ?>)"
+                                            class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
+                                            <i class="fas fa-eye"></i>
+                                            <span>View</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php endif; ?>
     </section>
 </div>
@@ -98,7 +104,8 @@
             <!-- Cyclist details will be populated here -->
         </div>
         <div class="mt-6 flex justify-end">
-            <button onclick="closeDetailsModal()" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200">
+            <button onclick="closeDetailsModal()"
+                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200">
                 Close
             </button>
         </div>
@@ -125,7 +132,7 @@
         document.getElementById('cyclistDetailsModal').classList.add('hidden');
     }
 
-    document.getElementById('cyclistDetailsModal').addEventListener('click', function(e) {
+    document.getElementById('cyclistDetailsModal').addEventListener('click', function (e) {
         if (e.target === this) {
             closeDetailsModal();
         }

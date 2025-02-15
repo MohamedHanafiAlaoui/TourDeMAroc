@@ -31,7 +31,9 @@ class CyclistController extends BaseController
 
     public function unverifiedCyclists()
     {
-        $this->render("admin/unverified-cyclists/index");
+        $cyclists = Cyclist::unverifiedCyclists();
+        $data= ["cyclists"=>$cyclists];
+        $this->render("admin/unverified-cyclists/index",$data);
     }
     
     public function update()

@@ -269,5 +269,17 @@ class Cyclist extends User
         return new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
         $result['nationality'], $result['birthdate'], $result['approved'], $result["team"]);
     }
+    public static function unverifiedCyclists(){
+        $cyclists=[];
+        $sql = "SELECT * FROM cyclists WHERE approved = FALSE";
+        self::$db->query($sql);
+        $results = self::$db->results();
+        foreach ($results as $result) {
+            $cyclist = new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
+            $result['nationality'], $result['birthdate'], $result['approved'], $result["team"]);
+            $cyclists[] = $cyclist;
+        }
+        return $cyclists;
+    }
 
 }
