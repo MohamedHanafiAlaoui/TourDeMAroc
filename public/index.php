@@ -38,7 +38,8 @@
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     
     $router->post('/profile/update', [CyclistController::class, 'update'], ["cyclist"]);
-    $router->post('/profile/experience', [CyclistController::class, 'saveExperience'], ["cyclist"]);
+    $router->post('/profile/experience', [ExperienceController::class, 'save'], ["cyclist"]);
+    $router->get('/profile/delete/{id}', [ExperienceController::class, 'delete'], ["cyclist"]);
 
     //routes des likes
     // $router->post('/like', [LikeController::class, 'toggleLike'], ["fan"]);
@@ -55,6 +56,7 @@
     $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
+    $router->post('/stage/store', [StageController::class, 'store'], ["admin"]);
     $router->get('/timing', [TimingController::class, 'index'], ["admin"]);
 
     $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);

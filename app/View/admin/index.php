@@ -8,7 +8,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-gray-500">Total Approved Cyclists</p>
-                    <p class="text-2xl font-semibold text-gray-700"><?=$data["totalApprovedCyclests"]?></p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data["PlatfromStatistics"]["totalApprovedCyclests"]?></p>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-gray-500">Total Users</p>
-                    <p class="text-2xl font-semibold text-gray-700"><?=$data["totalUsers"]?></p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data['PlatfromStatistics']["totalUsers"]?></p>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-gray-500">Current Leader</p>
-                    <p class="text-2xl font-semibold text-gray-700"><?=$data["teamWithMostPlayers"]?></p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data["PlatfromStatistics"]["teamWithMostPlayers"]?></p>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="ml-4">
                     <p class="text-gray-500">Unresolved Reports</p>
-                    <p class="text-2xl font-semibold text-gray-700"><?=$data["unresolvedReports"]?></p>
+                    <p class="text-2xl font-semibold text-gray-700"><?=$data["PlatfromStatistics"]["unresolvedReports"]?></p>
                 </div>
             </div>
         </div>
@@ -49,16 +49,18 @@
 
     <!-- Current Stage -->
     <div class="mt-8">
-        <h4 class="text-gray-600 text-lg font-medium mb-4">Current Stage</h4>
+        <?php if($data["curentStage"]) : ?>
+        <h4 class="text-gray-600 text-lg font-medium mb-4"><?=$data["curentStage"]->getName()?></h4>
         <div class="bg-white shadow-lg rounded-lg p-6">
-            <h5 class="text-xl font-semibold text-gray-700 mb-2">Stage 6: Marrakech to Agadir</h5>
-            <p class="text-gray-600 mb-4">A challenging mountain stage through the Atlas Mountains.</p>
+            <h5 class="text-xl font-semibold text-gray-700 mb-2">Stage <?=$data["curentStage"]->getId()?>: <?=$data["curentStage"]->getStLocation()?> to <?=$data["curentStage"]->getName()?></h5>
+            <p class="text-gray-600 mb-4"><?=$data["curentStage"]->getDescription()?></p>
             <div class="flex justify-between items-center">
-                <span class="text-sm text-gray-500"><i class="fas fa-map-marker-alt mr-2"></i>250 km</span>
+                <span class="text-sm text-gray-500"><i class="fas fa-map-marker-alt mr-2"></i><?=$data["curentStage"]->getDistance()?></span>
                 <span class="text-sm text-gray-500"><i class="fas fa-mountain mr-2"></i>3500m elevation gain</span>
                 <span class="text-sm text-emerald-500 font-semibold">In Progress</span>
             </div>
         </div>
+        <?php endif;?>
     </div>
 
     <!-- Top Cyclists -->
@@ -75,7 +77,7 @@
                             Team
                         </th>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                            Total Time
+                            Total ponits
                         </th>
                         <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                             Stage Wins
@@ -83,6 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php foreach ($data["TopCyclists"] as $cyclist) : ?>
                     <tr>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <div class="flex items-center">
@@ -90,41 +93,21 @@
                                     <img class="w-full h-full rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg" alt="" />
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-gray-900 whitespace-no-wrap">John Doe</p>
+                                    <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getFirstName()?> <?=$stage->getLastName()?></p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Team Morocco</p>
+                            <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getNameTeam()?></p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">32h 10m 15s</p>
+                            <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getTotalePoints()?></p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">2</p>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 w-10 h-10">
-                                    <img class="w-full h-full rounded-full" src="https://randomuser.me/api/portraits/women/2.jpg" alt="" />
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-gray-900 whitespace-no-wrap">Jane Smith</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">Team France</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">32h 15m 30s</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">1</p>
-                        </td>
-                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -134,22 +117,16 @@
     <div class="mt-8">
         <h4 class="text-gray-600 text-lg font-medium mb-4">Upcoming Stages</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <?php foreach ($data["nextStages"] as $stage) : ?>
             <div class="bg-white shadow-lg rounded-lg p-4">
-                <h5 class="text-lg font-semibold text-gray-700 mb-2">Stage 7: Agadir to Essaouira</h5>
-                <p class="text-gray-600 mb-2">A scenic coastal route along the Atlantic.</p>
+                <h5 class="text-lg font-semibold text-gray-700 mb-2">Stage <?=$stage->getId()?>: <?=$stage->getStLocation()?> to <?=$stage->getName()?></h5>
+                <p class="text-gray-600 mb-2"><?=$stage->getDescription()?></p>
                 <div class="flex justify-between items-center text-sm text-gray-500">
-                    <span><i class="fas fa-calendar mr-2"></i>May 7, 2025</span>
-                    <span><i class="fas fa-road mr-2"></i>180 km</span>
+                    <span><i class="fas fa-calendar mr-2"></i><?=$stage->getStDate()?></span>
+                    <span><i class="fas fa-road mr-2"></i><?=$stage->getDistance()?></span>
                 </div>
             </div>
-            <div class="bg-white shadow-lg rounded-lg p-4">
-                <h5 class="text-lg font-semibold text-gray-700 mb-2">Stage 8: Essaouira to Safi</h5>
-                <p class="text-gray-600 mb-2">A challenging stage with strong coastal winds.</p>
-                <div class="flex justify-between items-center text-sm text-gray-500">
-                    <span><i class="fas fa-calendar mr-2"></i>May 9, 2025</span>
-                    <span><i class="fas fa-road mr-2"></i>140 km</span>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

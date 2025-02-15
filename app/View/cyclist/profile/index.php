@@ -111,19 +111,34 @@
     <!-- Enhanced Experiences List -->
     <div id="experiencesList" class="space-y-4">
       <!-- Example Experience Card -->
-      <div class="experience-card group bg-gray-50 hover:bg-white rounded-xl p-6 shadow-md flex justify-between items-center 
-        transition-all duration-300 border-l-4 border-emerald-500 hover:border-emerald-600">
-        <div class="space-y-2">
-          <h3 class="text-xl font-bold text-gray-800 flex items-center">
-            <i class="fas fa-flag-checkered text-emerald-500 mr-2"></i>Tour de Maroc 2025
-          </h3>
-          <p class="text-gray-600"><i class="fas fa-calendar-day mr-2 text-emerald-500"></i>May 1 - May 15, 2025</p>
-          <p class="text-gray-600"><i class="fas fa-medal mr-2 text-emerald-500"></i>1st Place</p>
+      <?php foreach ($experiences as $key => $experience): ?>
+        <div class="experience-card group bg-gray-50 hover:bg-white rounded-xl p-6 shadow-md flex justify-between items-center 
+          transition-all duration-300 border-l-4 border-emerald-500 hover:border-emerald-600">
+          <div class="flex gap-4">
+            <img src="<?= $experience->getPhoto() ?>" alt="Experience Image" 
+                class="w-48 h-56 rounded-xl border-2 border-emerald-500/30 object-cover transform transition-transform duration-300">
+            <div class="space-y-4 max-w-xl py-2">
+              <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                <i class="fas fa-flag-checkered text-emerald-500 mr-2"></i><?= $experience->getTour() ?>
+              </h3>
+              <p class="text-gray-600"><i class="fas fa-calendar-day mr-2 text-emerald-500"></i>
+                <?php
+                  $startDate = (new DateTime($experience->getStartDate()))->format("F j, Y");
+                  $endDate = (new DateTime($experience->getEndDate()))->format("F j, Y");
+                  echo  "$startDate → $endDate";
+
+                ?></p>
+              <p class="text-gray-600"><i class="fas fa-medal mr-2 text-emerald-500"></i><?= $experience->getRank() . ' Place' ?></p>
+              <p class="text-gray-600"> <?= $experience->getDescription() ?></p>
+            </div>
+          </div>
+          <a href="<?= url("profile/delete/" . $experience->getId()) ?>" class="self-start">
+            <button class="removeExperienceBtn text-gray-400 hover:text-emerald-600 transition-colors duration-300">
+              <i class="fas fa-trash-alt text-xl"></i>
+            </button>
+          </a>
         </div>
-        <button class="removeExperienceBtn text-gray-400 hover:text-emerald-600 transition-colors duration-300">
-          <i class="fas fa-trash-alt text-lg"></i>
-        </button>
-      </div>
+      <?php endforeach; ?>
     </div>
   </section>
 
@@ -135,7 +150,7 @@
       <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
         <i class="fas fa-plus-circle mr-3 text-emerald-500"></i>Add New Experience
       </h3>
-      <form id="modalExperienceForm" action="profile/experience" method="POST" enctype="multipart/form-data" class="space-y-3">
+      <form id="modalExperienceForm" action="<?= url('profile/experience') ?>" method="POST" enctype="multipart/form-data" class="space-y-3">
         <div class="relative group">
           <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
           <label for="historyImage" class="absolute text-white bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg" >
@@ -155,18 +170,18 @@
         </div>
 
         <!-- Date Input with Icon -->
-        <div class="relative">
+        <div class="relative ">
           <label class="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
-          <div class="w-full flex gap-5">
+          <div class="w-full flex gap-2">
             <div class="relative">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-              <input type="date" name="raceStartDate" placeholder="May 1 - May 15, 2025" 
+              <input type="date" name="raceStartDate"
                     class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 
                     ring-emerald-200 transition-all duration-300 placeholder-gray-400">
             </div>
             <div class="relative">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-              <input type="date" name="raceEndDate" placeholder="May 1 - May 15, 2025" 
+              <input type="date" name="raceEndDate"
                     class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 
                     ring-emerald-200 transition-all duration-300 placeholder-gray-400">
             </div>
