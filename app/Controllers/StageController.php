@@ -205,6 +205,8 @@ class StageController extends BaseController
     }
     public function delete(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $id = $_POST["id"];
+        var_dump($id);
 
     }
 }
