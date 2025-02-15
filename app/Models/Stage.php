@@ -360,6 +360,28 @@
 
             return $result["likes_count"];
         }
+
+        public function comments()
+        {
+            $sql = "SELECT c.id as comment_id, c.created_at as comment_created_at, c.*, f.*
+                    FROM comments c
+                    JOIN fans f ON f.id = c.id_fan
+                    WHERE c.stage_id = :stage_id
+                    ORDER BY c.created_at DESC";
+
+            self::$db->query($sql);
+            self::$db->bind(':stage_id', $this->id_stage);
+
+            $results = self::$db->results();
+
+            $comments = [];
+
+            foreach ($results as $result) {
+                $comments[] = new Comment($result["comment_id"], $result["id_fan"], $result["stage_id"], $result["content"], $result["comment_created_at"], User::mapping($result));
+            }
+
+            return $comments;
+        }
         public function delete($id){
             $query = "DELETE from Stage where id = :id ";
             self::$db->query($query);

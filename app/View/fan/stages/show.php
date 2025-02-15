@@ -12,6 +12,7 @@
         </p>
       </div>
 
+
       <div class="mt-4 md:mt-0 flex items-center space-x-4">
         <form action="<?= url("like") ?>" method="POST" class="flex items-center space-x-2">
           <button type="submit" class="flex gap-2">
@@ -45,7 +46,6 @@
                 </div>';
         }
         ?>
-      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -108,7 +108,7 @@
         <i class="fas fa-times"></i>
       </button>
     </div>
-    <form action="<?= url('reports/create') ?>" method="POST">
+    <form action="<?= url('reports/store') ?>" method="POST">
       <div class="mb-4">
         <label for="reportReason" class="block text-sm font-medium text-gray-700 mb-1">Reason</label>
         <textarea id="reportReason" name="message" rows="4" 
@@ -136,11 +136,12 @@
     
     <!-- Add Comment Form -->
     <div class="p-6 border-b border-gray-200">
-      <form id="commentForm">
+      <form action="<?= url('comments/store') ?>" method="POST">
         <div class="flex items-start space-x-4">
-          <img src="https://via.placeholder.com/40" alt="Your Avatar" class="w-10 h-10 rounded-full">
+          <img src="<?= user()->getPhoto() ?>" alt="Your Avatar" class="w-10 h-10 rounded-full">
           <div class="flex-grow">
-            <textarea id="commentText" 
+            <input type="hidden" name="stage_id" value="<?= $stage->getId() ?>">
+            <textarea id="commentText" name="comment"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
               placeholder="Write a comment..." rows="3"></textarea>
             <div class="mt-2 flex justify-end">
@@ -155,47 +156,25 @@
     
     <!-- Comments List -->
     <div class="divide-y divide-gray-200" id="commentsList">
-      <!-- Example Comment -->
-      <div class="p-6">
-        <div class="flex items-start space-x-4">
-          <img src="https://via.placeholder.com/40" alt="User Avatar" class="w-10 h-10 rounded-full">
-          <div class="flex-grow">
-            <div class="flex items-center space-x-2">
-              <h4 class="font-semibold">Ahmed Hassan</h4>
-              <span class="text-sm text-gray-500">2 days ago</span>
-            </div>
-            <p class="mt-1 text-gray-700">Great stage with beautiful scenery! I particularly enjoyed the sprint point in Bouznika.</p>
-            <div class="mt-2 flex items-center space-x-4 text-sm">
-              <button class="text-gray-500 hover:text-emerald-500 transition flex items-center space-x-1 commentLikeButton">
-                <i class="far fa-thumbs-up"></i>
-                <span>14</span>
-              </button>
-              <button class="text-gray-500 hover:text-emerald-500 transition">Reply</button>
-            </div>
-          </div>
-        </div>
-      </div>
       
-      <!-- Another Example Comment -->
-      <div class="p-6">
-        <div class="flex items-start space-x-4">
-          <img src="https://via.placeholder.com/40" alt="User Avatar" class="w-10 h-10 rounded-full">
-          <div class="flex-grow">
-            <div class="flex items-center space-x-2">
-              <h4 class="font-semibold">Sarah El Mansouri</h4>
-              <span class="text-sm text-gray-500">4 days ago</span>
-            </div>
-            <p class="mt-1 text-gray-700">The uphill finish was quite challenging! Looking forward to seeing how riders handle it.</p>
-            <div class="mt-2 flex items-center space-x-4 text-sm">
-              <button class="text-gray-500 hover:text-emerald-500 transition flex items-center space-x-1 commentLikeButton">
-                <i class="far fa-thumbs-up"></i>
-                <span>8</span>
-              </button>
-              <button class="text-gray-500 hover:text-emerald-500 transition">Reply</button>
+      <?php foreach($comments as $comment): ?>
+        <div class="p-6">
+          <div class="flex items-start space-x-4">
+            <img src="<?= $comment->getAuthor()->getPhoto() ?>" alt="User Avatar" class="w-10 h-10 rounded-full">
+            <div class="flex-grow">
+              <div class="flex items-center space-x-2">
+                <h4 class="font-semibold"><?= $comment->getAuthor()->getFullName() ?></h4>
+                <span class="text-sm text-gray-500"><?= getTimeAgoFromDate($comment->getCreatedAt()) ?></span>
+              </div>
+              <p class="mt-1 text-gray-700"><?= $comment->getContent() ?></p>
+              <div class="mt-2 flex items-center space-x-4 text-sm">
+                <button class="text-gray-500 hover:text-emerald-500 transition">Reply</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      <?php endforeach; ?>
+      
     </div>
   </div>
 </div>
@@ -318,11 +297,6 @@
       rankingBody.appendChild(row);
     });
     
-    // Like Button Functionality
-    const likeButton = document.getElementById('likeButton');
-    const heartIcon = document.getElementById('heartIcon');
-    const likeCount = document.getElementById('likeCount');
-    
     // Report Modal Functionality
     const reportButton = document.getElementById('reportButton');
     const reportModal = document.getElementById('reportModal');
@@ -336,70 +310,6 @@
     closeReportModal.addEventListener('click', function() {
       reportModal.classList.remove('flex');
       reportModal.classList.add('hidden');
-    });
-    
-    // Comment Form Functionality
-    const commentForm = document.getElementById('commentForm');
-    const commentsList = document.getElementById('commentsList');
-    
-    commentForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const commentText = document.getElementById('commentText').value;
-      
-      if (commentText.trim()) {
-        // Create new comment element
-        const newComment = document.createElement('div');
-        newComment.className = 'p-6';
-        newComment.innerHTML = `
-          <div class="flex items-start space-x-4">
-            <img src="https://via.placeholder.com/40" alt="Your Avatar" class="w-10 h-10 rounded-full">
-            <div class="flex-grow">
-              <div class="flex items-center space-x-2">
-                <h4 class="font-semibold">You</h4>
-                <span class="text-sm text-gray-500">Just now</span>
-              </div>
-              <p class="mt-1 text-gray-700">${commentText}</p>
-              <div class="mt-2 flex items-center space-x-4 text-sm">
-                <button class="text-gray-500 hover:text-emerald-500 transition flex items-center space-x-1 commentLikeButton">
-                  <i class="far fa-thumbs-up"></i>
-                  <span>0</span>
-                </button>
-                <button class="text-gray-500 hover:text-emerald-500 transition">Reply</button>
-              </div>
-            </div>
-          </div>
-        `;
-        
-        // Insert the new comment at the top of the list
-        commentsList.insertBefore(newComment, commentsList.firstChild);
-        commentForm.reset();
-        
-        // Add event listener to the new comment's like button
-        newComment.querySelector('.commentLikeButton').addEventListener('click', handleCommentLike);
-      } else {
-        alert('Please write a comment before posting.');
-      }
-    });
-    
-    // Helper function for comment likes
-    function handleCommentLike() {
-      const likeIcon = this.querySelector('i');
-      const likeCount = this.querySelector('span');
-      
-      if (likeIcon.classList.contains('far')) {
-        likeIcon.classList.remove('far');
-        likeIcon.classList.add('fas');
-        likeCount.textContent = parseInt(likeCount.textContent) + 1;
-      } else {
-        likeIcon.classList.remove('fas');
-        likeIcon.classList.add('far');
-        likeCount.textContent = parseInt(likeCount.textContent) - 1;
-      }
-    }
-    
-    // Initialize like buttons for existing comments
-    document.querySelectorAll('.commentLikeButton').forEach(button => {
-      button.addEventListener('click', handleCommentLike);
     });
   });
 </script>
