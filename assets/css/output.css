@@ -1667,10 +1667,6 @@ video {
           background-clip: text;
 }
 
-.fill-current {
-  fill: currentColor;
-}
-
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;

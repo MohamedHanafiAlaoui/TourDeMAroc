@@ -134,25 +134,27 @@
       </h2>
     </div>
     
-    <!-- Add Comment Form -->
-    <div class="p-6 border-b border-gray-200">
-      <form action="<?= url('comments/store') ?>" method="POST">
-        <div class="flex items-start space-x-4">
-          <img src="<?= user()->getPhoto() ?>" alt="Your Avatar" class="w-10 h-10 rounded-full">
-          <div class="flex-grow">
-            <input type="hidden" name="stage_id" value="<?= $stage->getId() ?>">
-            <textarea id="commentText" name="comment"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              placeholder="Write a comment..." rows="3"></textarea>
-            <div class="mt-2 flex justify-end">
-              <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">
-                Post Comment
-              </button>
+    <?php if(isLoggedIn()): ?>
+      <!-- Add Comment Form -->
+      <div class="p-6 border-b border-gray-200">
+        <form action="<?= url('comments/store') ?>" method="POST">
+          <div class="flex items-start space-x-4">
+            <img src="<?= user()->getPhoto() ?>" alt="Your Avatar" class="w-10 h-10 rounded-full">
+            <div class="flex-grow">
+              <input type="hidden" name="stage_id" value="<?= $stage->getId() ?>">
+              <textarea id="commentText" name="comment"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                placeholder="Write a comment..." rows="3"></textarea>
+              <div class="mt-2 flex justify-end">
+                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">
+                  Post Comment
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    <?php endif; ?>
     
     <!-- Comments List -->
     <div class="divide-y divide-gray-200" id="commentsList">
