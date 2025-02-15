@@ -166,6 +166,36 @@ class Cyclist extends User
 
         return $cyclists; 
     }
+
+    public static function approvedCyclists()
+    {
+        $sql = "SELECT * FROM cyclists WHERE approved = TRUE";
+        self::$db->query($sql);
+        $result = self::$db->results();
+
+        $cyclists = [];
+
+        foreach ($result as $row) {
+            $cyclists[] = new self(
+                $row['id'],
+                $row['first_name'],
+                $row['last_name'],
+                $row['email'],
+                $row['password'],
+                $row['role_id'],
+                $row['created_at'],
+                $row['password_token_hash'],
+                $row['password_token_expires_at'],
+                $row['photo'],
+                $row['nationality'],
+                $row['birthdate'],
+                $row['approved'],
+                $row['team']
+            );
+        }
+
+        return $cyclists; 
+    }
     
     public static function getTopCyclists($limit = null)
     {
@@ -228,17 +258,16 @@ class Cyclist extends User
         $result = self::$db->single();
 
         if (self::$db->rowCount() > 0) {
-            $nationality = $result['approved'] ? $result['nationality'] : '------';
-            $team = $result['approved'] ? $result['team'] : '------';
-
-            $cyclist = new Cyclist($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
-                                    $nationality, $result['birthdate'], $result['approved'], $team);
-            return $cyclist;
+            return self::mappingCyclist($result);
         } else {
             return null;
         }
     }
 
-    
+    public static function mappingCyclist($result)
+    {
+        return new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
+        $result['nationality'], $result['birthdate'], $result['approved'], $result["team"]);
+    }
 
 }
