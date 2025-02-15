@@ -383,9 +383,9 @@
             return $comments;
         }
         public function delete($id){
-            $query = "DELETE from Stage where id = :id ";
+            $query = "DELETE from stages where id = :id ";
             self::$db->query($query);
-            self::$db->bind(':id', $id);
+            self::$db->bind(":id", $id);
             return self::$db->execute();
         }
     }

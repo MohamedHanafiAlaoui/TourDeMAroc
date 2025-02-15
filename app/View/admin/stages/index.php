@@ -209,6 +209,7 @@
                 <tbody class="bg-white divide-y divide-gray-200" id="stagesList">
                     <!-- Stages will be dynamically inserted here -->
                     <?php foreach ($data["stages"] as $stage) : ?>
+                        <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center">
                         <button class="handle text-gray-400 hover:text-gray-600 mr-2 cursor-move">
@@ -246,6 +247,7 @@
                         <button class="text-red-600 hover:text-red-900">Delete</button>
                     </form>
                 </td>
+                </tr>
                     <?php endforeach;?>
                 </tbody>
             </table>

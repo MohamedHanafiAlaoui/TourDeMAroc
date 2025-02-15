@@ -45,14 +45,15 @@ class Admin extends User {
         $totalUsers = self::$db->single()["totalUsers"] ?? 0;
     
         // Team with the most number of approved cyclists
-        $query = "SELECT t.name FROM teams t 
-                  JOIN cyclists c ON c.team_id = t.id 
-                  WHERE c.approved = TRUE 
-                  GROUP BY t.name 
-                  ORDER BY count(*) DESC 
-                  LIMIT 1";
-        self::$db->query($query);
-        $teamWithMostPlayers = self::$db->single()["name"] ?? false;
+        // $query = "SELECT t.name FROM teams t 
+        //           JOIN cyclists c ON c.team_id = t.id 
+        //           WHERE c.approved = TRUE 
+        //           GROUP BY t.name 
+        //           ORDER BY count(*) DESC 
+        //           LIMIT 1";
+        // self::$db->query($query);
+        // $teamWithMostPlayers = self::$db->single()["name"] ?? false;
+        // this part was removed
     
         // Unresolved reports
         $query = "SELECT count(*) as totalUnresolved FROM reports WHERE is_archived = FALSE";
@@ -62,7 +63,7 @@ class Admin extends User {
         return [
             "totalApprovedCyclests" => $totaleApprovedCyclests,
             "totalUsers" => $totalUsers,
-            "teamWithMostPlayers" => $teamWithMostPlayers,
+            // "teamWithMostPlayers" => $teamWithMostPlayers,
             "unresolvedReports" => $unresolvedReports
         ];
     }
