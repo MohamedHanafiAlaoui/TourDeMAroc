@@ -111,19 +111,32 @@
     <!-- Enhanced Experiences List -->
     <div id="experiencesList" class="space-y-4">
       <!-- Example Experience Card -->
-      <div class="experience-card group bg-gray-50 hover:bg-white rounded-xl p-6 shadow-md flex justify-between items-center 
-        transition-all duration-300 border-l-4 border-emerald-500 hover:border-emerald-600">
-        <div class="space-y-2">
-          <h3 class="text-xl font-bold text-gray-800 flex items-center">
-            <i class="fas fa-flag-checkered text-emerald-500 mr-2"></i>Tour de Maroc 2025
-          </h3>
-          <p class="text-gray-600"><i class="fas fa-calendar-day mr-2 text-emerald-500"></i>May 1 - May 15, 2025</p>
-          <p class="text-gray-600"><i class="fas fa-medal mr-2 text-emerald-500"></i>1st Place</p>
+      <?php foreach ($experiences as $key => $experience): ?>
+        <div class="experience-card group bg-gray-50 hover:bg-white rounded-xl p-6 shadow-md flex justify-between items-center 
+          transition-all duration-300 border-l-4 border-emerald-500 hover:border-emerald-600">
+          <div class="flex gap-4">
+            <img src="<?= $experience->getPhoto() ?>" alt="Experience Image" 
+                class="w-48 h-56 rounded-xl border-2 border-emerald-500/30 object-cover transform transition-transform duration-300">
+            <div class="space-y-4 max-w-xl py-2">
+              <h3 class="text-xl font-bold text-gray-800 flex items-center">
+                <i class="fas fa-flag-checkered text-emerald-500 mr-2"></i><?= $experience->getTour() ?>
+              </h3>
+              <p class="text-gray-600"><i class="fas fa-calendar-day mr-2 text-emerald-500"></i>
+                <?php
+                  $startDate = (new DateTime($experience->getStartDate()))->format("F j, Y");
+                  $endDate = (new DateTime($experience->getEndDate()))->format("F j, Y");
+                  echo  "$startDate → $endDate";
+
+                ?></p>
+              <p class="text-gray-600"><i class="fas fa-medal mr-2 text-emerald-500"></i><?= $experience->getRank() . ' Place' ?></p>
+              <p class="text-gray-600"> <?= $experience->getDescription() ?></p>
+            </div>
+          </div>
+          <button class="removeExperienceBtn self-start text-gray-400 hover:text-emerald-600 transition-colors duration-300">
+            <i class="fas fa-trash-alt text-xl"></i>
+          </button>
         </div>
-        <button class="removeExperienceBtn text-gray-400 hover:text-emerald-600 transition-colors duration-300">
-          <i class="fas fa-trash-alt text-lg"></i>
-        </button>
-      </div>
+      <?php endforeach; ?>
     </div>
   </section>
 

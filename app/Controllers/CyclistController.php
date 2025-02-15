@@ -104,7 +104,7 @@ class CyclistController extends BaseController
                 }
 
             }
-            $Experience = new Experience(null, $ExperiencePath, $data['raceName'], $data['raceStartDate'], $data['raceEndDate'], $data['raceRank'], $data['raceInfo'], user()->getId());
+            $Experience = new Experience(null, $ExperiencePhoto, $data['raceName'], $data['raceStartDate'], $data['raceEndDate'], $data['raceRank'], $data['raceInfo'], user()->getId());
             if ($Experience->save()) {
                 redirect('profile');
             }
