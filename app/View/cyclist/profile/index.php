@@ -5,7 +5,7 @@
       <!-- Profile Image with Enhanced Styling -->
       <div class="relative group">
         <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
-        <img id="profileImagePreview" src="https://img.aso.fr/core_app/img-cycling-tdf-png/1/56074/0:0,400:400-300-0-70/8b05c" alt="Profile Image" 
+        <img id="profileImagePreview" src="<?= user()->getPhoto(); ?>" alt="Profile Image" 
              class="w-48 h-48 rounded-full border-4 border-emerald-500/30 object-cover transform transition-transform duration-300 hover:scale-105">
         <label for="profileImage" class="absolute bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg hidden" >
           <i class="fas fa-camera text-white text-lg"></i>

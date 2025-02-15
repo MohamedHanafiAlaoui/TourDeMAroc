@@ -32,7 +32,7 @@ class CyclistController extends BaseController
             $Email = $_POST['EmailInput'];
 
             $ProfilPhoto = '';
-            if ($_FILES['profileImage']['error'] == UPLOAD_ERR_OK) {
+            if ($_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
                 $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
                 if (in_array($_FILES['profileImage']['type'], $allowedTypes)) {
                     $uploadDir = IMAGESROOT . 'photos/';
@@ -50,10 +50,9 @@ class CyclistController extends BaseController
                 } else {
                     $errors['thumbnail_err'] = 'Invalid image format. Allowed formats are JPG, PNG, and GIF.';
                 }
-
                 $cyclist->setPhoto($ProfilPhoto);
             }
-
+            
             if ($Birthdate != null) {
                 $cyclist->setBirthdate($Birthdate);
             }
