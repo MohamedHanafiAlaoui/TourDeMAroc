@@ -14,7 +14,4 @@ class HomeController extends BaseController {
         $this->render("fan/tour/index", compact("Stages"));
     }
 
-    
-
-    
 }

@@ -23,12 +23,18 @@
                     <div class="flex items-center">
                         <span class="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-green-600 text-transparent bg-clip-text">Tour de Maroc</span>
                     </div>
+                    <?php
+                        function isActive($path)
+                        {
+                            return (URLROOT . $path) == baseUrl() ? 'text-emerald-600 font-semibold' : 'text-gray-600 hover:text-emerald-600';
+                        }
+                    ?>
                     <div class="hidden md:flex space-x-8">
-                        <a href="<?= url() ?>" class="text-emerald-500 font-semibold">Home</a>
-                        <a href="<?= url('tour') ?>" class="text-gray-600 hover:text-emerald-500 transition">Tour</a>
-                        <a href="<?= url('stages') ?>" class="text-gray-600 hover:text-emerald-500 transition">Stages</a>
-                        <a href="<?= url('cyclists') ?>" class="text-gray-600 hover:text-emerald-500 transition">Cyclists</a>
-                        <a href="<?= url('ranking') ?>" class="text-gray-600 hover:text-emerald-500 transition">Rankings</a>
+                        <a href="<?= url() ?>" class="<?= isActive("") ?>">Home</a>
+                        <a href="<?= url('tour') ?>" class="<?= isActive("tour") ?> transition">Tour</a>
+                        <a href="<?= url('stages') ?>" class="<?= isActive("stages") ?> transition">Stages</a>
+                        <a href="<?= url('cyclists') ?>" class="<?= isActive("cyclists") ?> transition">Cyclists</a>
+                        <a href="<?= url('ranking') ?>" class="<?= isActive("ranking") ?> transition">Rankings</a>
                     </div>
                 </div>
                 <?php if (isLoggedIn()): ?>
