@@ -19,7 +19,7 @@
                     <a href="<?= url("forget-password") ?>" class="text-sm text-emerald-500 hover:underline mt-2 block">Forgot password?</a>
                 </div>
                 <!-- Submit Button -->
-                <button type="submit" class="w-full py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">Create account</button>
+                <button type="submit" class="w-full py-3 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition">Login</button>
 
                 <!-- Already have an account? -->
                 <p class="text-center text-sm text-gray-600">Don't have an account? <a href="<?= url('signup') ?>" class="text-emerald-500 hover:underline">Signup</a></p>

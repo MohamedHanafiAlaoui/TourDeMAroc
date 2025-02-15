@@ -54,13 +54,17 @@
                     </a>
                 </div>
 
-                <!-- Course Management Section -->
                 <div class="space-y-1 pt-2">
                     <p class="px-4 text-xs font-semibold text-gray-400 uppercase">Stages</p>
-                    <a href="<?= URLROOT . 'stages' ?>" class="<?= isActive("stages") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                    <a href="<?= URLROOT . 'timing' ?>" class="<?= isActive("timing") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                         <i class="fas fa-flag-checkered"></i>
-                        <span>Manage Stages</span>
+                        <span>Stages Completion</span>
                     </a>
+                    <a href="<?= URLROOT . 'stages' ?>" class="<?= isActive("stages") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <i class="fas fa-route"></i> <!-- Changed icon -->
+                        <span>Create Stages</span>
+                    </a>
+
                     <a href="<?= URLROOT . 'reports' ?>" class="<?= isActive("reports") ?> flex items-center gap-3 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg">
                         <i class="fa-solid fa-newspaper"></i>
                         <span>Reports</span>

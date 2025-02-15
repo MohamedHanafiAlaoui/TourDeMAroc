@@ -35,14 +35,14 @@ class Admin extends User {
     }
     public static function platformStatiscs() {
         // Total approved cyclists
-        $query = "SELECT count(*) as totalCyclest FROM cyclists WHERE approved = TRUE";
+        $query = "SELECT count(*) FROM cyclists WHERE approved = TRUE";
         self::$db->query($query);
-        $totaleApprovedCyclests = self::$db->single()["totalCyclest"] ?? 0;
+        $totaleApprovedCyclests = self::$db->single()["count"] ?? 0;
     
         // Total number of users
-        $query = "SELECT count(*) as totalUsers FROM users";
+        $query = "SELECT count(*) FROM users";
         self::$db->query($query);
-        $totalUsers = self::$db->single()["totalUsers"] ?? 0;
+        $totalUsers = self::$db->single()["count"] ?? 0;
     
         // Team with the most number of approved cyclists
         // $query = "SELECT t.name FROM teams t 
@@ -56,9 +56,9 @@ class Admin extends User {
         // this part was removed
     
         // Unresolved reports
-        $query = "SELECT count(*) as totalUnresolved FROM reports WHERE is_archived = FALSE";
+        $query = "SELECT count(*) FROM reports WHERE is_archived = FALSE";
         self::$db->query($query);
-        $unresolvedReports = self::$db->single()["totalUnresolved"] ?? 0;
+        $unresolvedReports = self::$db->single()["count"] ?? 0;
     
         return [
             "totalApprovedCyclests" => $totaleApprovedCyclests,
