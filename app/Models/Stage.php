@@ -17,7 +17,7 @@
         private $nameCategory;
         private $nameRegion;
         private $photo;
-        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null,$photo=null)
+        public function __construct($id_stage = null, $name = null, $start_location = null, $end_location = null, $distance_km = null, $start_date = null, $end_date = null, $id_region = null, $difficulty_level = null, $id_category = null,$photo=null , $Description=null)
         {
             $this->id_stage = $id_stage;
             $this->name = $name;
@@ -30,6 +30,7 @@
             $this->difficulty_level = $difficulty_level;
             $this->id_category = $id_category;
             $this->photo = $photo;
+            $this->Description = $Description;
         }
 
         public function setId($id_stage)
@@ -166,16 +167,40 @@
 
         public static function All()
         {
-            $sql = "SELECT * FROM stages";
+            $sql = "SELECT S.*, C.name AS category_name, R.name AS region_name
+                        FROM stages S
+                        JOIN categories C ON S.category_id = C.id
+                        JOIN regions R ON S.region_id = R.id;";
 
             self::$db->query($sql);
             $result = self::$db->results();
 
             $stages = [];
             foreach ($result as $value) {
-                $stages[] = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
+                $class = new self($value['id'], $value['name'], $value['start_location'], $value['end_location'], $value['distance_km'], $value['start_date'], $value['end_date'], $value['region_id'], $value['difficulty_level'], $value['category_id']);
+                $class->setNameCategory($value["category_name"]);
+                $class->setNameRegion($value["region_name"]);
+                $stages[] = $class;
             }
             return $stages;
+        }
+        public function save(){
+            $query = "INSERT INTO stages (name, start_location, end_location, distance_km, start_date, end_date, category_id, region_id, difficulty_level, photo, description)
+             VALUES (:name, :Start_location, :end_location, :distance_km, :start_date, :end_date, :category_id, :region_id, :difficulty_level, :photo, :description)";
+            self::$db->query($query);
+            self::$db->bind(':name', $this->name);
+            self::$db->bind(':Start_location', $this->start_location);
+            self::$db->bind(':end_location', $this->end_location);
+            self::$db->bind(':distance_km', $this->distance_km);
+            self::$db->bind(':start_date', $this->start_date);
+            self::$db->bind(':end_date', $this->end_date);
+            self::$db->bind(':category_id', $this->id_category);
+            self::$db->bind(':region_id', $this->id_region);
+            self::$db->bind(':difficulty_level', $this->difficulty_level);
+            self::$db->bind(':description', $this->Description);
+            self::$db->bind(':photo', $this->photo);
+            return self::$db->execute();
+            
         }
 
         public static function NextStages()
@@ -309,6 +334,18 @@
             $result = self::$db->results();
             return ceil($result[0]['count'] / $NbPage);
         }
+        public static function curentStage(){
+            $query = "SELECT * FROM stages S WHERE CURRENT_DATE BETWEEN S.start_date AND S.end_date LIMIT 1";
+            self::$db->query($query);
+            $result = self::$db->single();
+            if ($result) {
+                $stage = new Stage($result["id"], $result["name"], $result["start_location"] , $result["end_location"] , $$result["distance_km"] , $result["start_date"] , $result["end_date"], $result["id_region"], $result["difficulty_level"] , $result["id_category"],$result["photo"],$result["description"]);
+                return $stage;
+            }
+            else{
+                return null;
+            }
+        }
 
         public function likesCount()
         {
@@ -344,5 +381,11 @@
             }
 
             return $comments;
+        }
+        public function delete($id){
+            $query = "DELETE from Stage where id = :id ";
+            self::$db->query($query);
+            self::$db->bind(':id', $id);
+            return self::$db->execute();
         }
     }

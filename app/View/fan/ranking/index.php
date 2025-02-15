@@ -23,7 +23,7 @@
       <div class="relative bg-gradient-to-b from-gray-200 to-white rounded-t-2xl shadow-xl w-32 h-48 flex flex-col justify-end">
         <div class="absolute -top-14 left-1/2 transform -translate-x-1/2">
           <div class="relative w-28 h-28">
-            <img src="<?= URLASSETS.'images/'. $secondPlace->getPhoto() ?>" alt="<?= $secondPlace->getFirstName() ?>"
+            <img src="<?=  $secondPlace->getPhoto() ?>" alt="<?= $secondPlace->getFirstName() ?>"
               class="rounded-full border-4 border-silver shadow-lg w-28 h-28">
           </div>
         </div>
@@ -44,7 +44,7 @@
       <div class="relative bg-gradient-to-b from-amber-200 to-white rounded-t-2xl shadow-2xl w-40 h-64 flex flex-col justify-end">
         <div class="absolute -top-20 left-1/2 transform -translate-x-1/2">
           <div class="relative w-32 h-32">
-            <img src="<?=URLASSETS.'images/'. $firstPlace->getPhoto() ?>" alt="<?= $firstPlace->getFirstName() ?>"
+            <img src="<?= $firstPlace->getPhoto() ?>" alt="<?= $firstPlace->getFirstName() ?>"
               class="rounded-full border-4 border-gold shadow-xl w-32 h-32">
           </div>
         </div>
@@ -55,7 +55,7 @@
       <div class="mt-6 text-center">
         <h3 class="text-2xl font-bold text-gray-800"><?= $firstPlace->getFirstName() . " " . $firstPlace->getLastName() ?></h3>
         <div class="flex items-center justify-center mt-2 space-x-2">
-          <span class="text-sm text-gray-600">🏆 <?=  $secondPlace->getPointsAwarded() ?> points</span>
+          <span class="text-sm text-gray-600">🏆 <?=  $firstPlace->getPointsAwarded() ?> points</span>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@
       <div class="relative bg-gradient-to-b from-bronze-200 to-white rounded-t-2xl shadow-xl w-32 h-40 flex flex-col justify-end">
         <div class="absolute -top-12 left-1/2 transform -translate-x-1/2">
           <div class="relative w-28 h-28">
-            <img src="<?=URLASSETS.'images/'. $thirdPlace->getPhoto() ?>" alt="<?= $thirdPlace->getFirstName() ?>"
+            <img src="<?= $thirdPlace->getPhoto() ?>" alt="<?= $thirdPlace->getFirstName() ?>"
               class="rounded-full border-4 border-bronze shadow-lg w-28 h-28">
           </div>
         </div>
@@ -76,7 +76,7 @@
       <div class="mt-4 text-center">
         <h3 class="text-xl font-bold text-gray-800"><?= $thirdPlace->getFirstName() . " " . $thirdPlace->getLastName() ?></h3>
         <div class="flex items-center justify-center mt-1 space-x-2">
-          <span class="text-sm text-gray-600">🏆 <?= $secondPlace->getPointsAwarded() ?> points</span>
+          <span class="text-sm text-gray-600">🏆 <?= $thirdPlace->getPointsAwarded() ?> points</span>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@
       <!-- Profile Image with Enhanced Styling -->
       <div class="relative group">
         <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
-        <img id="profileImagePreview" src="<?= user()->getPhoto(); ?>" alt="Profile Image" 
+        <img id="profileImagePreview" src="<?= user()->getPhoto()?>" alt="Profile Image" 
              class="w-48 h-48 rounded-full border-4 border-emerald-500/30 object-cover transform transition-transform duration-300 hover:scale-105">
         <label for="profileImage" class="absolute bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg hidden" >
           <i class="fas fa-camera text-white text-lg"></i>
@@ -140,13 +140,13 @@
       <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
         <i class="fas fa-plus-circle mr-3 text-emerald-500"></i>Add New Experience
       </h3>
-      <form id="modalExperienceForm"  class="space-y-3">
+      <form id="modalExperienceForm" action="profile/experience" method="POST" enctype="multipart/form-data" class="space-y-3">
         <div class="relative group">
           <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
-          <label for="profileImage" class="absolute bottom-3 right-3 text-white bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg" >
-            <i class="fas fa-camera text-lg"></i> Add photo
+          <label for="historyImage" class="absolute text-white bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg" >
+            <i class="fas fa-camera text-lg"></i> Add Photo
           </label>
-          <input type="file" id="historyImage" name="historyImage" accept="image/*" class="hidden">
+          <input type="file" id="historyImage" name="exeriencepImage" accept="image/*" class="hidden">
         </div>
         <!-- Input Group with Icon -->
         <div class="relative">
@@ -242,40 +242,7 @@
     // Event Listeners for Closing
     document.getElementById('closeExperienceModal').addEventListener('click', closeModal);
     document.getElementById('modalCloseButton').addEventListener('click', closeModal);
-
-    // Form Submission with Animation
-    document.getElementById('modalExperienceForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const experience = Object.fromEntries(formData);
       
-      const newCard = document.createElement('div');
-      newCard.className = 'experience-card group bg-gray-50 hover:bg-white rounded-xl p-6 shadow-md flex justify-between items-center transition-all duration-300 border-l-4 border-emerald-500 hover:border-emerald-600';
-      newCard.innerHTML = `
-        <div class="space-y-2">
-          <h3 class="text-xl font-bold text-gray-800 flex items-center">
-            <i class="fas fa-flag-checkered text-emerald-500 mr-2"></i>${experience.raceName}
-          </h3>
-          <p class="text-gray-600"><i class="fas fa-calendar-day mr-2 text-emerald-500"></i>${experience.raceDate}</p>
-          <p class="text-gray-600"><i class="fas fa-medal mr-2 text-emerald-500"></i>${experience.raceRank}</p>
-          ${experience.raceInfo ? `<p class="text-gray-600"><i class="fas fa-info-circle mr-2 text-emerald-500"></i>${experience.raceInfo}</p>` : ''}
-        </div>
-        <button class="removeExperienceBtn text-gray-400 hover:text-emerald-600 transition-colors duration-300">
-          <i class="fas fa-trash-alt text-lg"></i>
-        </button>
-      `;
-      
-      // Add animation when inserting new card
-      newCard.style.opacity = '0';
-      newCard.style.transform = 'translateY(20px)';
-      document.getElementById('experiencesList').prepend(newCard);
-      setTimeout(() => {
-        newCard.style.opacity = '1';
-        newCard.style.transform = 'translateY(0)';
-      }, 50);
-      
-      closeModal();
-    });
 
     // Smooth removal animation
     document.getElementById('experiencesList').addEventListener('click', (e) => {
