@@ -161,15 +161,15 @@ CREATE TABLE reports (
 -- ===============================
 -- 🔟 Historique des performances des cyclistes
 -- ===============================
-CREATE TABLE historys(
+CREATE TABLE experience(
     id SERIAL PRIMARY KEY,
-    Add tour VARCHAR(250) NOT NULL,
-    photo TEXT
-    Add start_date DATE,
-    Add end_date DATE,
-    add rank INT,
-    add description TEXT
-    id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
+    tour VARCHAR(250) NOT NULL,
+    photo TEXT,
+    start_date DATE,
+    end_date DATE,
+    rank INT,
+    description TEXT,
+    cyclist_id INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE
 );
 
 -- ===============================

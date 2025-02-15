@@ -5,7 +5,7 @@
       <!-- Profile Image with Enhanced Styling -->
       <div class="relative group">
         <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
-        <img id="profileImagePreview" src="https://img.aso.fr/core_app/img-cycling-tdf-png/1/56074/0:0,400:400-300-0-70/8b05c" alt="Profile Image" 
+        <img id="profileImagePreview" src="<?= user()->getPhoto()?>" alt="Profile Image" 
              class="w-48 h-48 rounded-full border-4 border-emerald-500/30 object-cover transform transition-transform duration-300 hover:scale-105">
         <label for="profileImage" class="absolute bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg hidden" >
           <i class="fas fa-camera text-white text-lg"></i>
@@ -135,11 +135,13 @@
       <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
         <i class="fas fa-plus-circle mr-3 text-emerald-500"></i>Add New Experience
       </h3>
-      <form id="modalExperienceForm" class="space-y-3">
+      <form id="modalExperienceForm" action="profile/experience" method="POST" enctype="multipart/form-data" class="space-y-3">
         <div class="relative group">
           <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Add photo</label>
-          <input type="file" id="profileImage" name="exeriencepImage" accept="image/*" >
+          <label for="historyImage" class="absolute text-white bottom-3 right-3 bg-emerald-500 p-3 rounded-full cursor-pointer hover:bg-emerald-600 shadow-lg" >
+            <i class="fas fa-camera text-lg"></i> Add Photo
+          </label>
+          <input type="file" id="historyImage" name="exeriencepImage" accept="image/*" class="hidden">
         </div>
         <!-- Input Group with Icon -->
         <div class="relative">
@@ -155,11 +157,19 @@
         <!-- Date Input with Icon -->
         <div class="relative">
           <label class="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
-          <div class="relative">
-            <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-            <input type="text" name="raceDate" placeholder="May 1 - May 15, 2025" 
-                   class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 
-                   ring-emerald-200 transition-all duration-300 placeholder-gray-400">
+          <div class="w-full flex gap-5">
+            <div class="relative">
+              <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input type="date" name="raceStartDate" placeholder="May 1 - May 15, 2025" 
+                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 
+                    ring-emerald-200 transition-all duration-300 placeholder-gray-400">
+            </div>
+            <div class="relative">
+              <i class="fas fa-calendar-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input type="date" name="raceEndDate" placeholder="May 1 - May 15, 2025" 
+                    class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-emerald-500 focus:ring-2 
+                    ring-emerald-200 transition-all duration-300 placeholder-gray-400">
+            </div>
           </div>
         </div>
 
@@ -227,40 +237,7 @@
     // Event Listeners for Closing
     document.getElementById('closeExperienceModal').addEventListener('click', closeModal);
     document.getElementById('modalCloseButton').addEventListener('click', closeModal);
-
-    // Form Submission with Animation
-    document.getElementById('modalExperienceForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const experience = Object.fromEntries(formData);
       
-      const newCard = document.createElement('div');
-      newCard.className = 'experience-card group bg-gray-50 hover:bg-white rounded-xl p-6 shadow-md flex justify-between items-center transition-all duration-300 border-l-4 border-emerald-500 hover:border-emerald-600';
-      newCard.innerHTML = `
-        <div class="space-y-2">
-          <h3 class="text-xl font-bold text-gray-800 flex items-center">
-            <i class="fas fa-flag-checkered text-emerald-500 mr-2"></i>${experience.raceName}
-          </h3>
-          <p class="text-gray-600"><i class="fas fa-calendar-day mr-2 text-emerald-500"></i>${experience.raceDate}</p>
-          <p class="text-gray-600"><i class="fas fa-medal mr-2 text-emerald-500"></i>${experience.raceRank}</p>
-          ${experience.raceInfo ? `<p class="text-gray-600"><i class="fas fa-info-circle mr-2 text-emerald-500"></i>${experience.raceInfo}</p>` : ''}
-        </div>
-        <button class="removeExperienceBtn text-gray-400 hover:text-emerald-600 transition-colors duration-300">
-          <i class="fas fa-trash-alt text-lg"></i>
-        </button>
-      `;
-      
-      // Add animation when inserting new card
-      newCard.style.opacity = '0';
-      newCard.style.transform = 'translateY(20px)';
-      document.getElementById('experiencesList').prepend(newCard);
-      setTimeout(() => {
-        newCard.style.opacity = '1';
-        newCard.style.transform = 'translateY(0)';
-      }, 50);
-      
-      closeModal();
-    });
 
     // Smooth removal animation
     document.getElementById('experiencesList').addEventListener('click', (e) => {
