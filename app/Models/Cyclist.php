@@ -12,13 +12,14 @@ class Cyclist extends User
     function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $role_id = null, $created_at = null, $password_token_hash = null, $password_token_expires_at = null, $photo = null,
                                 $nationality = null, $birthdate = null, $approved = null, $team = null
                             )
-        {
-            parent::__construct($id, $first_name, $last_name, $email, $password, $role_id, $created_at, $password_token_hash, $password_token_expires_at, $photo);
-            $this->nationality = $nationality;
-            $this->birthdate = $birthdate;
-            $this->approved = $approved;
-            $this->team = $team;
-        }
+    {
+        parent::__construct($id, $first_name, $last_name, $email, $password, $role_id, $created_at, $password_token_hash, $password_token_expires_at, $photo);
+        $this->nationality = $nationality;
+        $this->birthdate = $birthdate;
+        $this->approved = $approved;
+        $this->team = $team;
+    }
+    
     public function setNationality($nationality)
     {
         $this->nationality = $nationality;
@@ -75,15 +76,20 @@ class Cyclist extends User
         return $this->team;
     }
 
+    public function getAge()
+    {
+        $dob = new DateTime($this->birthdate);
+        $now = new DateTime();
+        $difference = $now->diff($dob);
+        return $difference->y;
+    }
+
     public function getTotalTime()
     {
         $date = DateTime::createFromFormat('H:i:s', preg_replace('/^\d+ day[s]? /', '', $this->total_time));
     
         return (preg_match('/^(\d+) day[s]?/', $this->total_time, $d) ? "{$d[1]}d " : "") . $date->format('G\h i\m');
     }
-    
-
-
 
     public function save()
     {
@@ -130,58 +136,35 @@ class Cyclist extends User
         return self::$db->execute();
     }
 
-    // public static function getTopCyclists($limit = null)
-    // {
-    //     $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, t.name AS team_name, 
-    //                SUM(sp.points_awarded) AS total_points 
-    //         FROM cyclists c
-    //         JOIN stage_points sp ON c.id = sp.id_cyclist
-    //         JOIN teams t ON c.team_id = t.id
-    //         GROUP BY c.id, c.first_name, c.last_name, c.photo, t.name
-    //         ORDER BY total_points DESC";
+    public static function all()
+    {
+        $sql = "SELECT * FROM cyclists";
+        self::$db->query($sql);
+        $result = self::$db->results();
 
-    //     if ($limit) {
-    //         $sql .= " LIMIT :limit";
-    //     }
+        $cyclists = [];
 
-    //     self::$db->query($sql);
+        foreach ($result as $row) {
+            $cyclists[] = new self(
+                $row['id'],
+                $row['first_name'],
+                $row['last_name'],
+                $row['email'],
+                $row['password'],
+                $row['role_id'],
+                $row['created_at'],
+                $row['password_token_hash'],
+                $row['password_token_expires_at'],
+                $row['photo'],
+                $row['nationality'],
+                $row['birthdate'],
+                $row['approved'],
+                $row['team']
+            );
+        }
 
-    //     if ($limit) {
-    //         self::$db->bind(':limit', $limit);
-    //     }
-
-    //     $result = self::$db->results();
-
-
-
-    //     $cyclists = [];
-
-    //     foreach ($result as $row) {
-    //         $cyclist = new self(
-    //             $row['id'],
-    //             $row['first_name'],
-    //             $row['last_name'],
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             $row['photo'],
-    //             null,
-    //             null,
-    //             $row['total_points'],
-    //             null,
-    //             null
-    //         );
-    //         $cyclist->setTeme($row['team_name']);
-
-    //         $cyclists[] = $cyclist;
-    //     }
-
-    //     return $cyclists;
-    // }
-
+        return $cyclists; 
+    }
     
     public static function getTopCyclists($limit = null)
     {

@@ -4,7 +4,9 @@ class CyclistController extends BaseController
 
     public function index()
     {
-        $this->render("fan/cyclists/index");
+        $cyclists = Cyclist::all();
+        
+        $this->render("fan/cyclists/index", compact("cyclists"));
     }
 
     public function show($id)
