@@ -1,9 +1,9 @@
 <?php
-class CommentController extends BaseController {
+class ReportController extends BaseController {
 
-    public function pendingComments()
+    public function index()
     {
-        $this->render("admin/pending-comments/index");
+        $this->render("admin/reports/index");
     }
 
     public function store()
@@ -12,12 +12,12 @@ class CommentController extends BaseController {
 
         $data = [
             'stage_id' => trim($_POST['stage_id']),
-            'comment' => trim($_POST['comment']),
+            'message' => trim($_POST['message']),
         ];
 
         $errors = [
             'stage_err' => '',
-            'comment_err' => '',
+            'message_err' => '',
         ];
 
         $stage = Stage::find($data['stage_id']);
@@ -25,16 +25,16 @@ class CommentController extends BaseController {
             $errors['stage_err'] = 'Stage not found.';
         }
         // validate password
-        if (empty($data['comment'])) {
-            $errors['comment_err'] = 'Please enter the reason comment.';
+        if (empty($data['message'])) {
+            $errors['message_err'] = 'Please enter the reason message.';
         }
 
         // Make sure errors are empty (There's no errors)
-        if(empty($errors['stage_err']) && empty($errors['comment_err']) ){
-            $comment = new Comment(null, user()->getId(), $stage->getId(), $data["comment"]);
+        if(empty($errors['stage_err']) && empty($errors['message_err']) ){
+            $report = new Report(null, user()->getId(), $stage->getId(), $data["message"]);
 
-            if ($comment->save()) {
-                flash("success", "Submited, wait for the adminstrator to publish your comment.");
+            if ($report->save()) {
+                flash("success", "Your report has been submited successfully.");
             }else{
                 flash("error", "Something went wrong.");
             }
@@ -46,5 +46,4 @@ class CommentController extends BaseController {
             back();
         }
     }
-
 }

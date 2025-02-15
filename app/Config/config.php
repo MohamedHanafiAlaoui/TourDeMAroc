@@ -7,3 +7,4 @@
     define('DB_PASS', "root");
     define('DB_NAME', "tour-de-maroc");
     define('DB_HOST', "localhost");
+    define('IMAGESROOT', __DIR__ . "\../../assets/images/");
