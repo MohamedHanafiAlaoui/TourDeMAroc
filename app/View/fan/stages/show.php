@@ -12,6 +12,7 @@
         </p>
       </div>
 
+
       <div class="mt-4 md:mt-0 flex items-center space-x-4">
         <form action="<?= url("like") ?>" method="POST" class="flex items-center space-x-2">
           <button type="submit" class="flex gap-2">
@@ -45,7 +46,6 @@
                 </div>';
         }
         ?>
-      </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
