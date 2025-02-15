@@ -146,7 +146,7 @@ function toString(stages) {
               <h3 class="font-bold text-xl mb-2">Stage 1: ${stage['start_location']} → ${stage['end_location']}</h3>
               <p class="text-gray-600 mb-1"><strong>Distance:</strong> ${stage['distance_km']} km</p>
               <p class="text-gray-600 mb-4"><strong>Type:</strong> ${stage['nameCategory']}</p>
-              <a href="#?id=${stage['id']}"
+              <a href="<?= url("stages") ?>/${stage['id']}"
                 class="inline-block bg-emerald-500 text-white py-2 px-4 rounded hover:bg-emerald-600 transition duration-300"
               >View Details</a>
             </div>
