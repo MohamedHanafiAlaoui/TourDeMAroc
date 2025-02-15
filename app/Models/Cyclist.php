@@ -187,13 +187,13 @@ class Cyclist extends User
     public static function getTopCyclists($limit = null)
 {
     $sql = "SELECT c.id, c.first_name, c.last_name, c.photo, c.team AS team_name, 
-                   SUM(sp.points_awarded) AS total_points,
+                   SUM(ra.points_awarded) AS total_points,
                    STRING_AGG(
-                       EXTRACT(HOUR FROM sp.total_time) || 'h ' || 
-                       EXTRACT(MINUTE FROM sp.total_time) || 'm', ', '
+                       EXTRACT(HOUR FROM ra.total_time) || 'h ' || 
+                       EXTRACT(MINUTE FROM ra.total_time) || 'm', ', '
                    ) AS total_time
             FROM cyclists c
-            JOIN stage_points sp ON c.id = sp.id_cyclist
+            JOIN ranking ra ON c.id = ra.cyclist_id
             GROUP BY c.id, c.first_name, c.last_name, c.photo, c.team
             ORDER BY total_points DESC";
     
