@@ -3,8 +3,9 @@ class CyclistController extends BaseController
 {
 
     public function index()
-    {
-        $cyclists = Cyclist::all();
+    {   
+        $search = $_POST['search'] ?? null;
+        $cyclists = Cyclist::search($search);
         
         $this->render("fan/cyclists/index", compact("cyclists"));
     }
