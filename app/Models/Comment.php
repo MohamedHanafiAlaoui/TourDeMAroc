@@ -23,7 +23,7 @@
 
         public function getId()
         {
-            return $this->stage_id;
+            return $this->id;
         }
 
         public function getStageId()
@@ -98,7 +98,10 @@
             $result = self::$db->single();
 
             if ($result) {
-                return new self($result["id"], $result["id_fan"], $result["stage_id"], $result["content"], $result["created_at"]);
+                $user = fan::find($result["id_fan"]);
+                $stage = stage::find($result["stage_id"]);
+                $comment = new self($result["id"], $result["id_fan"], $result["stage_id"], $result["content"], $result["created_at"],$user,$stage);
+                return $comment;
             }
             return null; // Return null if like not found
         }

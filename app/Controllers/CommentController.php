@@ -63,9 +63,10 @@ class CommentController extends BaseController
     public function delete()
     {
         $id = $_POST["id"];
+        var_dump($id);
         $comment = Comment::find($id);
         if ($comment->delete()) {
-            flash("success", "Comment deleted");
+            flash("success", "Comment deleted ");
             back();
         } else {
             flash("error", "Something went wrong");

@@ -70,8 +70,8 @@ $titlePage = "Pending Comments" ;
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex space-x-2">
-                                <form action="<?= URLROOT . 'comments/publish'  ?>" method="POST">
-                                    <input type="hidden" name="id" value="<?=$comment->getId()?>">
+                                <form action="<?= url('comments/publish')  ?>" method="POST">
+                                    <input type="number" hidden name="id" value="<?=$comment->getId()?>">
                                     <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
                                         <i class="fas fa-check"></i>
                                         <span>Publish</span>
