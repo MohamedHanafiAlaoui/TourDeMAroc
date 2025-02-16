@@ -3,7 +3,9 @@ class CommentController extends BaseController {
 
     public function pendingComments()
     {
-        $this->render("admin/pending-comments/index");
+        $comments = Comment::pendingcomment();
+        $data= ["comments"=>$comments];
+        $this->render("admin/pending-comments/index",$data);
     }
 
     public function store()

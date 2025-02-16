@@ -7,7 +7,7 @@ $titlePage = "Pending Comments" ;
 
     <!-- Comments Table -->
     <section class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <?php if (empty($pendingComments)): ?>
+        <?php if (!empty($date["comments"])): ?>
             <div class="p-6">
                 <div class="text-center">
                     <div class="flex justify-center mb-6">
@@ -44,12 +44,12 @@ $titlePage = "Pending Comments" ;
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    <?php foreach ($pendingComments as $comment): ?>
+                    <?php foreach ($data["comments"] as $comment): ?>
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
                                 <div class="h-10 w-10 flex-shrink-0">
-                                    <img class="h-10 w-10 rounded-full object-cover" src="<?= $comment->getAuthor()->getProfileImage() ?? 'https://placehold.co/40x40' ?>" alt="Author">
+                                    <img class="h-10 w-10 rounded-full object-cover" src="<?= $comment->getAuthor()->getPhoto() ?? 'https://placehold.co/40x40' ?>" alt="Author">
                                 </div>
                                 <div class="ml-4">
                                     <div class="text-sm font-medium text-gray-900"><?= $comment->getAuthor()->getFullName() ?></div>
@@ -59,7 +59,7 @@ $titlePage = "Pending Comments" ;
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900"><?= $comment->getStage()->getName() ?></div>
-                            <div class="text-xs text-gray-500">Stage <?= $comment->getStage()->getNumber() ?></div>
+                            <div class="text-xs text-gray-500">Stage <?= $comment->getStage()->getOrder() ?></div>
                         </td>
                         <td class="px-6 py-4">
                             <div class="text-sm text-gray-900 max-w-xs truncate"><?= htmlspecialchars($comment->getContent()) ?></div>
@@ -76,10 +76,6 @@ $titlePage = "Pending Comments" ;
                                         <span>Publish</span>
                                     </button>
                                 </form>
-                                <button onclick="viewComment(<?= $comment->getId() ?>)" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
-                                    <i class="fas fa-eye"></i>
-                                    <span>View</span>
-                                </button>
                                 <form action="<?= URLROOT . 'comments/delete/' . $comment->getId() ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?');">
                                     <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
                                         <i class="fas fa-trash"></i>

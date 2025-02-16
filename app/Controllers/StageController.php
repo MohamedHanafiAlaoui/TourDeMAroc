@@ -195,7 +195,8 @@ class StageController extends BaseController
             $errors['categories_name_err'] = 'you must fill all the values .';
         }
         if (empty($errors['categories_name_err'])) {
-            $stage = new Stage("",$_POST["stageName"],$_POST["startCity"],$_POST["endCity"],$_POST["distance"],$_POST["startDate"],$_POST["endDate"],$_POST["region"],"medium",$_POST["category"],$_POST["photo"],$_POST["description"]);
+            $stageCount = Stage::CountSatges();
+            $stage = new Stage("",$_POST["stageName"],$_POST["startCity"],$_POST["endCity"],$_POST["distance"],$_POST["startDate"],$_POST["endDate"],$_POST["region"],"medium",$_POST["category"],$_POST["photo"],$_POST["description"],$stageCount+1);
             $stage->save();
             flash("success", "stage created successfully.");
             back();
