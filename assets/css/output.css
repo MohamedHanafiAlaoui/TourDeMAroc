@@ -1024,6 +1024,14 @@ video {
   width: auto;
 }
 
+.w-52 {
+  width: 13rem;
+}
+
+.w-auto {
+  width: auto;
+}
+
 .min-w-64 {
   min-width: 16rem;
 }

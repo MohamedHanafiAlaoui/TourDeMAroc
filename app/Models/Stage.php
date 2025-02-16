@@ -99,11 +99,11 @@
             $this->nameRegion = $nameRegion;
         }
 
+      
         public function setPhoto($photo)
         {
             $this->photo = $photo;
         }
-
         public function setOrder($order)
         {
             $this->order = $order;
