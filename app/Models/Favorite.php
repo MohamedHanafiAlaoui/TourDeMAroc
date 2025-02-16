@@ -1,5 +1,5 @@
 <?php
-class FanFavorite extends BaseModel {
+class Favorite extends BaseModel {
 
     private $id_fan;
 
@@ -121,6 +121,16 @@ class FanFavorite extends BaseModel {
 
         }
         return $Favorites;
+    }
+
+    public static function find($id_fan, $id_cyclist)
+    {
+        $sql ="SELECT * FROM fan_favorites where id_fan=:id_fan AND id_cyclist = :id_cyclist";
+        self::$db->query($sql);
+        self::$db->bind(':id_fan', $id_fan);
+        self::$db->bind(':id_cyclist', $id_cyclist);
+
+        return self::$db->single();
     }
 
 
