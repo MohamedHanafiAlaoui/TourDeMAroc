@@ -70,13 +70,15 @@ $titlePage = "Pending Comments" ;
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex space-x-2">
-                                <form action="<?= URLROOT . 'comments/publish/' . $comment->getId() ?>" method="POST">
+                                <form action="<?= URLROOT . 'comments/publish'  ?>" method="POST">
+                                    <input type="hidden" name="id" value="<?=$comment->getId()?>">
                                     <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
                                         <i class="fas fa-check"></i>
                                         <span>Publish</span>
                                     </button>
                                 </form>
-                                <form action="<?= URLROOT . 'comments/delete/' . $comment->getId() ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this comment?');">
+                                <form action="<?= URLROOT . 'comments/delete'?>" method="POST">
+                                    <input type="hidden" name="id" value="<?=$comment->getId()?>">
                                     <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition-colors duration-200 flex items-center space-x-1">
                                         <i class="fas fa-trash"></i>
                                         <span>Delete</span>

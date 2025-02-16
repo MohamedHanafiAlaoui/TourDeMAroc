@@ -115,6 +115,20 @@
             $count =$result;
             return $count["comment_count"];   
         }
+        public function publish(){
+            $sql = "UPDATE comments SET validated = true WHERE id = :id";
+            self::$db->query($sql);
+            self::$db->bind(':id', $this->id);
+            self::$db->execute();
+            return true;
+        }
+        public function delete(){
+            $sql = "DELETE from comments WHERE id = :id";
+            self::$db->query($sql);
+            self::$db->bind(':id', $this->id);
+            self::$db->execute();
+            return true;
+        }
         public static function pendingcomment(){
             $sql = "SELECT * FROM comments WHERE validated = FALSE";
             self::$db->query($sql);

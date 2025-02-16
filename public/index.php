@@ -57,6 +57,8 @@
     $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
     $router->post('/cyclists/verify', [CyclistController::class, 'approve'], ["admin"]);
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
+    $router->post('/comments/publish', [CommentController::class, 'publish'], ["admin"]);
+    $router->post('/comments/delete', [CommentController::class, 'delete'], ["admin"]);
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
     $router->post('/stage/store', [StageController::class, 'store'], ["admin"]);
     $router->post('/stage/delete', [StageController::class, 'delete'], ["admin"]);
