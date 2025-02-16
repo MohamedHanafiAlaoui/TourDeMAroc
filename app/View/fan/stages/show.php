@@ -202,117 +202,60 @@
         </thead>
         <tbody id="ranking-body" class="divide-y divide-gray-200">
           <!-- Results populated by JavaScript -->
+          <?php 
+
+          
+          for ($i=0; $i < count($ranking) ; $i++) {  ?>
+            <tr>
+              <td class="px-6 py-4 font-medium">
+                <span class="medal-<?=$i+1?>"><?=$i+1?></span>
+              </td>
+              <td class="px-6 py-4 flex items-center">
+                <!-- Use actual player image URL from your object -->
+                <img src="" 
+                     alt="" 
+                     class="w-12 h-12 rounded-full mr-3">
+                <?= $ranking[$i]->getfirst_name() ?> 
+                <?= $ranking[$i]->getlast_name() ?>
+              </td>
+              <td class="px-6 py-4">
+                <span class="flex items-center gap-2">
+                  <?= $ranking[$i]->getteam() ?>
+                </span>
+              </td>
+              <?php if ($i==0) { ?>
+              <td class="px-6 py-4"><?= $ranking[$i]->getTotalTime() ?></td>
+               
+             <?php }else{?>
+              <td class="px-6 py-4"><?php
+                $time1 = $ranking[$i]->getTotalTime();
+                $time2 =$ranking[0]->getTotalTime();
+                $t1 = strtotime($time1);
+                $t2 = strtotime($time2);
+                echo '+'.gmdate('i:s', abs($t1 - $t2));
+
+                ?></td>
+
+              <?php } ?>
+
+              <td class="px-6 py-4 font-medium"><?= $ranking[$i]->getPointsAwarded() ?></td>
+          
+            </tr>
+
+          <?php 
+       
+          };
+          ?>
+
+
         </tbody>
       </table>
     </div>
   </div>
 </div>
+      
 
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Rankings Data
-    const rankings = [{
-        rank: 1,
-        name: "John Doe",
-        team: "Morocco",
-        time: "2h15m30s",
-        points: 50,
-        nationality: "ma",
-        trend: "up"
-      },
-      {
-        rank: 2,
-        name: "Alice Smith",
-        team: "France",
-        time: "+0m15s",
-        points: 40,
-        nationality: "fr",
-        trend: "down"
-      },
-      {
-        rank: 3,
-        name: "Carlos Rodriguez",
-        team: "USA",
-        time: "+0m32s",
-        points: 30,
-        nationality: "us",
-        trend: "up"
-      },
-      {
-        rank: 4,
-        name: "Emma Wilson",
-        team: "Morocco",
-        time: "+0m45s",
-        points: 20,
-        nationality: "ma",
-        trend: "neutral"
-      },
-      {
-        rank: 5,
-        name: "Liam Brown",
-        team: "Canada",
-        time: "+1m00s",
-        points: 10,
-        nationality: "ca",
-        trend: "down"
-      }
-    ];
 
-    // Populate Rankings Table
-    const rankingBody = document.getElementById("ranking-body");
-    rankings.forEach(player => {
-      const row = document.createElement("tr");
-      row.className = "hover:bg-gray-50 transition-colors";
-
-      let trendIcon = "";
-      switch (player.trend) {
-        case "up":
-          trendIcon = `<i class="fas fa-arrow-up text-emerald-500"></i>`;
-          break;
-        case "down":
-          trendIcon = `<i class="fas fa-arrow-down text-red-500"></i>`;
-          break;
-        default:
-          trendIcon = `<i class="fas fa-minus text-gray-400"></i>`;
-      }
-
-      row.innerHTML = `
-        <td class="px-6 py-4 font-medium">
-          ${player.rank <= 3 ? `<span class="medal-${player.rank}">${player.rank}</span>` : player.rank}
-        </td>
-        <td class="px-6 py-4 flex items-center">
-          <img src="https://img.aso.fr/core_app/img-cycling-tdf-png/1/56074/0:0,400:400-300-0-70/8b05c" alt="${player.name}" class="w-12 h-12 rounded-full mr-3">
-          ${player.name}
-        </td>
-        <td class="px-6 py-4">
-          <span class="flex items-center gap-2">
-            <img src="https://flagcdn.com/w320/${player.nationality}.png" class="w-6 h-4 rounded-sm"/>
-            ${player.team}
-          </span>
-        </td>
-        <td class="px-6 py-4">${player.time}</td>
-        <td class="px-6 py-4 font-medium">${player.points}</td>
-        <td class="px-6 py-4 text-xl">${trendIcon}</td>
-      `;
-      rankingBody.appendChild(row);
-    });
-    
-    // Report Modal Functionality
-    const reportButton = document.getElementById('reportButton');
-    const reportModal = document.getElementById('reportModal');
-    const closeReportModal = document.getElementById('closeReportModal');
-    
-    reportButton.addEventListener('click', function() {
-      reportModal.classList.remove('hidden');
-      reportModal.classList.add('flex');
-    });
-    
-    closeReportModal.addEventListener('click', function() {
-      reportModal.classList.remove('flex');
-      reportModal.classList.add('hidden');
-    });
-  });
-</script>
 
 <style>
   .animate-pulse-slow {
