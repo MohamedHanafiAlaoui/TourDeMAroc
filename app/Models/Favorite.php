@@ -72,7 +72,7 @@ class Favorite extends BaseModel {
     
 
     public function save() {
-        $sql = "INSERT INTO fan_favorites (id_fan, id_cyclist)
+        $sql = "INSERT INTO favorites (id_fan, id_cyclist)
                 VALUES (:fan, :cyclist)
                 ON CONFLICT DO NOTHING";
         
@@ -84,7 +84,7 @@ class Favorite extends BaseModel {
     }
 
     public function delete() {
-        $sql = "DELETE FROM fan_favorites 
+        $sql = "DELETE FROM favorites 
                 WHERE id_fan = :fan 
                 AND id_cyclist = :cyclist";
         
@@ -102,7 +102,7 @@ class Favorite extends BaseModel {
        c.last_name AS cyclist_last_name,
         c.photo AS cyclist_photo,
         c.team AS cyclist_team
-        FROM fan_favorites f  
+        FROM favorites f  
         LEFT JOIN cyclists c ON f.id_cyclist = c.id where f.id_fan=:id";
 
         self::$db->query($sql);
@@ -125,7 +125,7 @@ class Favorite extends BaseModel {
 
     public static function find($id_fan, $id_cyclist)
     {
-        $sql ="SELECT * FROM fan_favorites where id_fan=:id_fan AND id_cyclist = :id_cyclist";
+        $sql ="SELECT * FROM favorites where id_fan=:id_fan AND id_cyclist = :id_cyclist";
         self::$db->query($sql);
         self::$db->bind(':id_fan', $id_fan);
         self::$db->bind(':id_cyclist', $id_cyclist);
@@ -137,7 +137,7 @@ class Favorite extends BaseModel {
     public static function favorite_count(int $id)
     {
         $sql = "SELECT COUNT(*) AS favorite_count 
-FROM fan_favorites 
+FROM favorites 
 WHERE id_fan = :id_fan";
         self::$db->query($sql);
         
