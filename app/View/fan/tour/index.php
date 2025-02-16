@@ -1,38 +1,74 @@
 
-  <!-- Hero Section -->
-  <div class="pt-16 bg-gradient-to-b from-emerald-500/10 to-transparent">
-    <div class="max-w-7xl mx-auto px-4 py-16">
-      <div class="bg-white rounded-2xl shadow-xl p-8 backdrop-blur-md bg-opacity-90">
-        <div class="flex flex-col md:flex-row items-start gap-8">
-          <div class="flex-1">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">Tour de Maroc 2025</h1>
-            <div class="flex flex-wrap gap-4 text-gray-600 mb-6">
-              <span class="flex items-center bg-gray-100 px-4 py-2 rounded-full">
-                <i class="far fa-calendar-alt mr-2 text-emerald-500"></i>
-                May 1 - May 15, 2025
-              </span>
-              <span class="flex items-center bg-gray-100 px-4 py-2 rounded-full">
-                <i class="fas fa-route mr-2 text-emerald-500"></i>
-                1565 km Total
-              </span>
-              <span class="flex items-center bg-gray-100 px-4 py-2 rounded-full">
-                <i class="fas fa-flag-checkered mr-2 text-emerald-500"></i>
-                10 Stages
-              </span>
-            </div>
-            <p class="text-xl text-gray-700 leading-relaxed">
-              Experience the majestic journey through Morocco's diverse landscapes, from the Atlantic coast to the Atlas Mountains, in this prestigious cycling event.
-            </p>
+<?php
+  if ($Stages && count($Stages) > 0) {
+      // Order stages based on their start date (assumes getStDate() returns a date string)
+      usort($Stages, function($a, $b) {
+          return strtotime($a->getStDate()) - strtotime($b->getStDate());
+      });
+      
+      $totalDistance = 0;
+      $countStages   = count($Stages);
+      
+      // The first stage's start date becomes the tour's start date
+      $startDate = $Stages[0]->getStDate();
+      // The last stage's end date becomes the tour's end date
+      $endDate   = $Stages[$countStages - 1]->getEnDate();
+      
+      // Sum up distances for all stages
+      foreach ($Stages as $stage) {
+          $totalDistance += $stage->getDistance();
+      }
+  } else {
+      $totalDistance = 0;
+      $countStages   = 0;
+      $startDate     = 'N/A';
+      $endDate       = 'N/A';
+  }
+  
+  // Optionally, format the dates
+  if ($startDate !== 'N/A') {
+      $formattedStart = date("M j", strtotime($startDate));
+      $formattedEnd   = date("M j, Y", strtotime($endDate));
+  } else {
+      $formattedStart = $formattedEnd = 'TBA';
+  }
+?>
+
+<!-- Hero Section -->
+<div class="pt-16 bg-gradient-to-b from-emerald-500/10 to-transparent">
+  <div class="max-w-7xl mx-auto px-4 py-16">
+    <div class="bg-white rounded-2xl shadow-xl p-8 backdrop-blur-md bg-opacity-90">
+      <div class="flex flex-col md:flex-row items-start gap-8">
+        <div class="flex-1">
+          <h1 class="text-4xl font-bold text-gray-800 mb-4">Tour de Maroc 2025</h1>
+          <div class="flex flex-wrap gap-4 text-gray-600 mb-6">
+            <span class="flex items-center bg-gray-100 px-4 py-2 rounded-full">
+              <i class="far fa-calendar-alt mr-2 text-emerald-500"></i>
+              <?= htmlspecialchars($formattedStart) ?> - <?= htmlspecialchars($formattedEnd) ?>
+            </span>
+            <span class="flex items-center bg-gray-100 px-4 py-2 rounded-full">
+              <i class="fas fa-route mr-2 text-emerald-500"></i>
+              <?= htmlspecialchars($totalDistance) ?> km Total
+            </span>
+            <span class="flex items-center bg-gray-100 px-4 py-2 rounded-full">
+              <i class="fas fa-flag-checkered mr-2 text-emerald-500"></i>
+              <?= htmlspecialchars($countStages) ?> Stages
+            </span>
           </div>
-          <div class="flex-1">
-            <div class="relative h-64 bg-gray-200 rounded-xl overflow-hidden">
-              <img src="https://sportpro.ma/wp-content/uploads/2024/06/tour-de-france-scaled.jpg" alt="Tour Map" class="w-full h-full object-cover" />
-            </div>
+          <p class="text-xl text-gray-700 leading-relaxed">
+            Experience the majestic journey through Morocco's diverse landscapes, from the Atlantic coast to the Atlas Mountains, in this prestigious cycling event.
+          </p>
+        </div>
+        <div class="flex-1">
+          <div class="relative h-64 bg-gray-200 rounded-xl overflow-hidden">
+            <img src="https://sportpro.ma/wp-content/uploads/2024/06/tour-de-france-scaled.jpg" alt="Tour Map" class="w-full h-full object-cover" />
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
 
   <!-- Stages Section (Redesigned) -->
   <section class="max-w-7xl mx-auto px-4">
@@ -60,9 +96,11 @@
             <div class="bg-emerald-50 px-6 py-4">
               <div class="flex justify-between items-center">
                 <span class="text-sm text-emerald-600 font-medium">Details</span>
-                <button class="text-emerald-500 hover:text-emerald-600 transition">
-                  <i class="fas fa-chevron-right"></i>
-                </button>
+                <a href="<?= url('stages/'.$stage->getId()) ?>">
+                  <button class="text-emerald-500 hover:text-emerald-600 transition">
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </a>
               </div>
             </div>
           </div>
@@ -93,49 +131,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // // // Tour Stages Data (10 stages)
-      // // const stages = [
-      // //   { start: "Casablanca", end: "Rabat", distance: 90, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Rabat", end: "Fez", distance: 200, type: "Urban", icon: "fa-city" },
-      // //   { start: "Fez", end: "Meknes", distance: 65, type: "Nature", icon: "fa-tree" },
-      // //   { start: "Meknes", end: "Marrakech", distance: 350, type: "Mountain", icon: "fa-mountain" },
-      // //   { start: "Marrakech", end: "Agadir", distance: 250, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Agadir", end: "Essaouira", distance: 180, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Essaouira", end: "Safi", distance: 140, type: "Coastal", icon: "fa-water" },
-      // //   { start: "Safi", end: "El Jadida", distance: 160, type: "Coastal", icon: "fa-water" },
-      // //   { start: "El Jadida", end: "Casablanca", distance: 100, type: "Urban", icon: "fa-city" },
-      // //   { start: "Casablanca", end: "Mohammedia", distance: 30, type: "Urban", icon: "fa-city" }
-      // // ];
-
-      // // Render Stages
-      // const stagesContainer = document.getElementById("stages-container");
-      // stages.forEach((stage, index) => {
-      //   const stageElement = document.createElement("div");
-      //   stageElement.className = "bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition duration-300";
-      //   stageElement.innerHTML = `
-      //     <div class="p-6">
-      //       <div class="flex items-center justify-between mb-4">
-      //         <span class="text-2xl font-bold text-emerald-500">Stage ${index + 1}</span>
-      //         <span class="bg-emerald-100 text-emerald-600 px-3 py-1 rounded-full text-sm">
-      //           ${stage.distance} km
-      //         </span>
-      //       </div>
-      //       <h3 class="text-xl font-semibold text-gray-800 mb-2">${stage.start} → ${stage.end}</h3>
-      //       <p class="text-gray-600 flex items-center">
-      //         <i class="fas ${stage.icon} mr-2 text-emerald-500"></i> ${stage.type}
-      //       </p>
-      //     </div>
-      //     <div class="bg-emerald-50 px-6 py-4">
-      //       <div class="flex justify-between items-center">
-      //         <span class="text-sm text-emerald-600 font-medium">Details</span>
-      //         <button class="text-emerald-500 hover:text-emerald-600 transition">
-      //           <i class="fas fa-chevron-right"></i>
-      //         </button>
-      //       </div>
-      //     </div>
-      //   `;
-      //   stagesContainer.appendChild(stageElement);
-      // });
 
       // initial le bare de recherche
       let searchInput = document.getElementById("team-search");

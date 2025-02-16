@@ -11,6 +11,10 @@ class Ranking extends BaseModel
     private Cyclist $cyclist;
     private Stage $stage;
 
+    private $first_name;
+    private $team;
+    private $last_name;
+
     public function __construct($id = null, $cyclist_id = null, $stage_id = null, $total_time = null, $points_awarded = null, $created_at = null)
     {
         $this->id = $id;
@@ -101,6 +105,30 @@ class Ranking extends BaseModel
     public function setStage($stage)
     {
         $this->stage = $stage;
+    }
+    public function setlast_name($last_name)
+    {
+        $this->last_name = $last_name;
+    }
+    public function setfirst_name($first_name)
+    {
+        $this->first_name = $first_name;
+    }
+    public function setteam($team)
+    {
+        $this->team = $team;
+    }
+    public function getlast_name()
+    {
+        return $this->last_name;
+    }
+    public function getfirst_name()
+    {
+        return $this->first_name;
+    }
+    public function getteam()
+    {
+        return $this->team;
     }
 
     // Save method

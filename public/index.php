@@ -24,12 +24,14 @@
     $router->get('/', [HomeController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/tour', [HomeController::class, 'details'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->post('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/stages', [StageController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->post('/stages/notify/{id}', [StageController::class, 'notify'], ["fan", "cyclist"]);
     $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/ranking', [CyclistController::class, 'ranking'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
+    $router->post('/favorites/create', [FavoriteController::class, 'favorite'], ["fan"]);
     
     $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
     $router->post('/comments/store', [CommentController::class, 'store'], ["fan", "cyclist"]);
