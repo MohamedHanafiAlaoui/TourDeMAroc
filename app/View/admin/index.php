@@ -93,15 +93,15 @@
                                     <img class="w-full h-full rounded-full" src="https://randomuser.me/api/portraits/men/1.jpg" alt="" />
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getFirstName()?> <?=$stage->getLastName()?></p>
+                                    <p class="text-gray-900 whitespace-no-wrap"><?=$cyclist->getFirstName()?> <?=$cyclist->getLastName()?></p>
                                 </div>
                             </div>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getNameTeam()?></p>
+                            <p class="text-gray-900 whitespace-no-wrap"><?=$cyclist->getTeam()?></p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap"><?=$stage->getTotalePoints()?></p>
+                            <p class="text-gray-900 whitespace-no-wrap"><?=$cyclist->getPointsAwarded()?></p>
                         </td>
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">2</p>

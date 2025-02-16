@@ -204,7 +204,8 @@ class StageController extends BaseController
             $errors['categories_name_err'] = 'you must fill all the values .';
         }
         if (empty($errors['categories_name_err'])) {
-            $stage = new Stage("",$_POST["stageName"],$_POST["startCity"],$_POST["endCity"],$_POST["distance"],$_POST["startDate"],$_POST["endDate"],$_POST["region"],"medium",$_POST["category"],$_POST["photo"],$_POST["description"]);
+            $stageCount = Stage::CountSatges();
+            $stage = new Stage("",$_POST["stageName"],$_POST["startCity"],$_POST["endCity"],$_POST["distance"],$_POST["startDate"],$_POST["endDate"],$_POST["region"],"medium",$_POST["category"],$_POST["photo"],$_POST["description"],$stageCount+1);
             $stage->save();
             flash("success", "stage created successfully.");
             back();
@@ -214,6 +215,9 @@ class StageController extends BaseController
     }
     public function delete(){
         $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
+        $id = $_POST["id"];
+        $stage = new Stage();
+        $stage->delete($id);
+        back();
     }
 }

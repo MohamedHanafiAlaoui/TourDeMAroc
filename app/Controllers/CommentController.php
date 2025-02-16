@@ -1,9 +1,12 @@
 <?php
-class CommentController extends BaseController {
+class CommentController extends BaseController
+{
 
     public function pendingComments()
     {
-        $this->render("admin/pending-comments/index");
+        $comments = Comment::pendingcomment();
+        $data = ["comments" => $comments];
+        $this->render("admin/pending-comments/index", $data);
     }
 
     public function store()
@@ -30,19 +33,43 @@ class CommentController extends BaseController {
         }
 
         // Make sure errors are empty (There's no errors)
-        if(empty($errors['stage_err']) && empty($errors['comment_err']) ){
+        if (empty($errors['stage_err']) && empty($errors['comment_err'])) {
             $comment = new Comment(null, user()->getId(), $stage->getId(), $data["comment"]);
 
             if ($comment->save()) {
                 flash("success", "Submited, wait for the adminstrator to publish your comment.");
-            }else{
+            } else {
                 flash("error", "Something went wrong.");
             }
             back();
-        }
-        else{
+        } else {
             // Load view with errors
             flash("error", array_first_not_null_value($errors));
+            back();
+        }
+    }
+    public function publish()
+    {
+        $id = $_POST["id"];
+        $comment = Comment::find($id);
+        if ($comment->publish()) {
+            flash("success", "Comment published");
+            back();
+        } else {
+            flash("error", "Something went wrong");
+            back();
+        }
+    }
+    public function delete()
+    {
+        $id = $_POST["id"];
+        var_dump($id);
+        $comment = Comment::find($id);
+        if ($comment->delete()) {
+            flash("success", "Comment deleted ");
+            back();
+        } else {
+            flash("error", "Something went wrong");
             back();
         }
     }

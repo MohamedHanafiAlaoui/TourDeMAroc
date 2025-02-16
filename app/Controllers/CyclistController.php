@@ -37,7 +37,9 @@ class CyclistController extends BaseController
 
     public function unverifiedCyclists()
     {
-        $this->render("admin/unverified-cyclists/index");
+        $cyclists = Cyclist::unverifiedCyclists();
+        $data= ["cyclists"=>$cyclists];
+        $this->render("admin/unverified-cyclists/index",$data);
     }
     
     public function update()
@@ -92,5 +94,19 @@ class CyclistController extends BaseController
         $TopCyclists = Cyclist::getTopCyclists(3); 
         $Cyclists = Cyclist::getTopCyclists(); 
         $this->render("/fan/ranking/index", compact("Cyclists", "TopCyclists"));
+    }
+    public function approve(){
+        $id = $_POST['id'];
+        $mail = $_POST['email'];
+        $cyclist = Cyclist::find($id);
+        if ($cyclist) {
+            $Admin = new Admin();
+            $Admin->approveCyclest($id);
+            $sendmail = new sendMail();
+            $sendmail->send($mail,"name", "Your account has been approved","fsdfsdfds",);
+            flash("success", "cylist was approved successfuly.");
+            back();
+        }
+
     }
 }

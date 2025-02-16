@@ -102,7 +102,11 @@
 
             $reports = [];
             foreach ($results as $result) {
-                $reports[] = new self($result["id"], $result["id_fan"], $result["stage_id"], $result["description"], $result["created_at"]);
+                $report = new self($result["id"], $result["id_fan"], $result["stage_id"], $result["description"], $result["reported_at"]);
+                $reporter = User::find($result["id_fan"]);
+                $stage = Stage::find($result["id"]);
+                $theReport = ["report"=>$report,"reporter"=>$reporter,"stage"=>$stage];
+                $reports[] = $theReport;
             }
             return $reports;
         }

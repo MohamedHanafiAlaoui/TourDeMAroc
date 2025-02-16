@@ -36,6 +36,7 @@
     $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
     $router->post('/comments/store', [CommentController::class, 'store'], ["fan", "cyclist"]);
     $router->post('/reports/store', [ReportController::class, 'store'], ["fan", "cyclist"]);
+    $router->post('/reports/delete', [ReportController::class, 'delete'], ["admin"]);
     
     $router->get('/profile', [CyclistController::class, 'profile'], ["cyclist"]);
     
@@ -56,14 +57,17 @@
     $router->get('/regions', [RegionController::class, 'index'], ["admin"]);
     $router->get('/stages', [StageController::class, 'index'], ["admin"]);
     $router->get('/unverified-cyclists', [CyclistController::class, 'unverifiedCyclists'], ["admin"]);
+    $router->post('/cyclists/verify', [CyclistController::class, 'approve'], ["admin"]);
     $router->get('/pending-comments', [CommentController::class, 'pendingComments'], ["admin"]);
+    $router->post('/comments/publish', [CommentController::class, 'publish'], ["admin"]);
+    $router->post('/comments/delete', [CommentController::class, 'delete'], ["admin"]);
     $router->get('/reports', [ReportController::class, 'index'], ["admin"]);
     $router->post('/stage/store', [StageController::class, 'store'], ["admin"]);
+    $router->post('/stage/delete', [StageController::class, 'delete'], ["admin"]);
     $router->get('/timing', [TimingController::class, 'index'], ["admin"]);
     $router->post('/timing/store', [TimingController::class, 'store'], ["admin"]);
 
     $router->get('/api/Stages', [StageController::class, 'fetchStages'], ["visitor", "fan", "cyclist"]);
-
     
     
     $router->get('/login', [AuthController::class, 'login'], ["visitor"]);
