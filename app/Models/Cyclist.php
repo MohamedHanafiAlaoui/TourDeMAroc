@@ -264,6 +264,45 @@ class Cyclist extends User
         }
     }
 
+    public static function search($search = null)
+    {
+        $sql = "SELECT * FROM cyclists WHERE approved = true";
+        self::$db->query($sql);
+
+        if ($search) {
+            $sql .= " AND ((first_name ILIKE :search) OR (last_name ILIKE :search) OR (team ILIKE :search))";
+            self::$db->query($sql);
+            self::$db->bind(':search', "%$search%");
+        }
+
+
+
+        $result = self::$db->results();
+
+        $cyclists = [];
+
+        foreach ($result as $row) {
+            $cyclists[] = new self(
+                $row['id'],
+                $row['first_name'],
+                $row['last_name'],
+                $row['email'],
+                $row['password'],
+                $row['role_id'],
+                $row['created_at'],
+                $row['password_token_hash'],
+                $row['password_token_expires_at'],
+                $row['photo'],
+                $row['nationality'],
+                $row['birthdate'],
+                $row['approved'],
+                $row['team']
+            );
+        }
+
+        return $cyclists; 
+    }
+
     public static function mappingCyclist($result)
     {
         return new self($result["id"], $result["first_name"], $result["last_name"], $result["email"], $result["password"], $result["role_id"], $result["created_at"], $result["password_token_hash"], $result["password_token_expires_at"], $result['photo'],
