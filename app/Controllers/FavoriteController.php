@@ -3,8 +3,13 @@ class FavoriteController extends BaseController {
 
     public function favorite()
     {
-        $favorite = new Favorite(user()->getId(), $_POST['favorite']);
-        $favorite->save();
-        redirect("cyclists/".$_POST['favorite']);
+        $id = $_POST['favorite'];
+        $favorite = new Favorite(user()->getId(), $id);
+        if (Favorite::find(user()->getId(), $id)) {
+            $favorite->delete();
+        } else {
+            $favorite->save();
+        }
+        redirect("cyclists/".$id);
     }
 }
