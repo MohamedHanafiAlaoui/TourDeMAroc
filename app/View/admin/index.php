@@ -25,17 +25,6 @@
         </div>
         <div class="bg-white shadow-lg rounded-lg p-4">
             <div class="flex items-center">
-                <div class="flex-shrink-0 bg-yellow-500 rounded-md p-3">
-                    <i class="fas fa-trophy text-white text-2xl"></i>
-                </div>
-                <div class="ml-4">
-                    <p class="text-gray-500">Current Leader</p>
-                    <p class="text-2xl font-semibold text-gray-700"><?=$data["PlatfromStatistics"]["teamWithMostPlayers"]?></p>
-                </div>
-            </div>
-        </div>
-        <div class="bg-white shadow-lg rounded-lg p-4">
-            <div class="flex items-center">
                 <div class="flex-shrink-0 bg-red-500 rounded-md p-3">
                     <i class="fas fa-clock text-white text-2xl"></i>
                 </div>
