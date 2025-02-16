@@ -35,7 +35,7 @@
             </div>
         <?php } else { foreach ($nextStages as $key => $stage): ?>
             <div class="bg-gray-50 rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-                <img src="/api/placeholder/600/400" alt="Stage: <?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?>" class="w-full h-48 object-cover">
+                <img src="<?= htmlspecialchars($stage->getPhoto()) ?>" alt="Stage: <?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?>" class="w-full h-48 object-cover">
                 <div class="p-6">
                 <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($stage->getStLocation()) ?> → <?= htmlspecialchars($stage->getEnLocation()) ?></h3>
                 <p class="text-gray-600"><?= htmlspecialchars($stage->getStDate()) ?> - <?= htmlspecialchars($stage->getEnDate()) ?></p>
@@ -65,7 +65,7 @@
                 </div>
             <?php } else { foreach ($TopCyclists as $key => $cyclist): ?>
                 <div class="bg-white rounded-2xl overflow-hidden shadow-lg transition duration-300 hover:shadow-xl">
-                    <img src="/api/placeholder/400/500" alt="<?= htmlspecialchars($cyclist->getFullName()) ?>" class="w-full h-64 object-cover">
+                    <img src="<?= htmlspecialchars($cyclist->getPhoto()) ?>" alt="<?= htmlspecialchars($cyclist->getFullName()) ?>" class="w-full h-64 object-cover">
                     <div class="p-6 text-center">
                         <h3 class="font-bold text-xl mb-2"><?= htmlspecialchars($cyclist->getFullName()) ?></h3>
                         <p class="text-emerald-500">Team : <?= htmlspecialchars($cyclist->getTeam()) ?></p>

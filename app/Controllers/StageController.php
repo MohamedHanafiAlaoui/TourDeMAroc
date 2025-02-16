@@ -18,9 +18,16 @@ class StageController extends BaseController
     public function show($id)
     {
         $stage = Stage::find($id);
+        if (!$stage) {
+            flash("error", "Stage not found.");
+            back();
+        }
         $likes = $stage->likesCount();
-        $isLiked = !!(Like::find(user()->getId(), $stage->getId()));
 
+        $isLiked = false;
+        if (isLoggedIn()) {
+            $isLiked = !!(Like::find(user()->getId(), $stage->getId()));
+        }
         $comments = $stage->comments();
         $ranking = $stage->rankings($id);
         
@@ -74,6 +81,7 @@ class StageController extends BaseController
             $formerStages = array_map(function ($row) use ($stages) {
                 return [
                     'id' => $row->getId(),
+                    'photo' => $row->getPhoto(),
                     'Stage_name' => $row->getName(),
                     'start_location' => $row->getStLocation(),
                     'end_location' => $row->getEnLocation(),

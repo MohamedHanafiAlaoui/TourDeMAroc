@@ -24,6 +24,7 @@
     $router->get('/', [HomeController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/tour', [HomeController::class, 'details'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
+    $router->post('/cyclists', [CyclistController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->get('/cyclists/{id}', [CyclistController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/stages', [StageController::class, 'index'], ["visitor", "fan", "cyclist"]);
     $router->post('/stages/notify/{id}', [StageController::class, 'notify'], ["fan", "cyclist"]);
