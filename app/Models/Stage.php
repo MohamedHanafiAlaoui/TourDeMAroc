@@ -411,4 +411,31 @@
             self::$db->bind(':id', $id);
             return self::$db->execute();
         }
+        
+    public function rankings($id)
+    {
+        $sql = "select r.total_time as time , r.points_awarded as poin ,
+                c.first_name as first_name , c.team as team ,
+                c.last_name as last_name  from ranking r
+                left join cyclists c on c.id =r.cyclist_id  
+                where r.stage_id = :stage_id ORDER BY
+                r.total_time ";
+
+        self::$db->query($sql);
+        self::$db->bind(':stage_id', $id);
+
+        $results = self::$db->results();
+
+        $ranking = [];
+
+        foreach ($results as $result) {
+            $class = new Ranking(  null, null,  null, $result["time"] , $result["poin"] , null);
+            $class-> setlast_name($result["last_name"]);
+            $class->setfirst_name($result["first_name"]);
+            $class->setteam($result["team"]);
+            $ranking[] = $class;
+        }
+
+        return $ranking;
+    }
     }
