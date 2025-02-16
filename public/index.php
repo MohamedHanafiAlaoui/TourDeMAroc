@@ -31,7 +31,7 @@
     $router->get('/stages/{id}', [StageController::class, 'show'], ["visitor", "fan", "cyclist"]);
     $router->get('/ranking', [CyclistController::class, 'ranking'], ["visitor", "fan", "cyclist"]);
     $router->get('/profile', [FanController::class, 'profile'], ["fan"]);
-    $router->post('/favorites/create', [FanController::class, 'favorite'], ["fan"]);
+    $router->post('/favorites/create', [FavoriteController::class, 'favorite'], ["fan"]);
     
     $router->post('/like', [LikeController::class, 'like'], ["fan", "cyclist"]);
     $router->post('/comments/store', [CommentController::class, 'store'], ["fan", "cyclist"]);
