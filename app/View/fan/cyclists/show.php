@@ -1,8 +1,17 @@
 <main class="max-w-7xl mx-auto px-4 pt-28 pb-20">
   <!-- Enhanced Profile Section -->
   <section class="bg-white rounded-2xl shadow-xl p-8 mb-12 transition-all duration-300 hover:shadow-2xl">
-    <div class="flex flex-col md:flex-row items-center gap-8">
+    <div class="flex flex-col md:flex-row items-center gap-8 relative">
       <!-- Profile Image with Hover Effect -->
+       <?php if ($isLoggeIn): ?>
+        <?php $starStyle = $favoris ? 'fas' : 'far' ?>
+        <form action="<?= url("favorites/create") ?>" method="POST" class="absolute top-0 right-0">
+            <input type="text" name="favorite" value="<?= htmlspecialchars($cyclist->getId()) ?>" class="hidden">
+            <button type="submit">
+              <i class="<?= htmlspecialchars($starStyle) ?> fa-star text-2xl text-emerald-600"></i>
+            </button>
+        </form>
+        <?php endif ?>
       <div class="relative group flex-shrink-0">
         <div class="absolute inset-0 bg-emerald-500/10 rounded-full blur-lg animate-pulse"></div>
         <img src="<?= $cyclist->getPhoto() ?>" 
@@ -11,7 +20,7 @@
       </div>
       
       <!-- Profile Info with Icon Grid -->
-      <div class="space-y-4">
+      <div class="space-y-4 ">
         <h1 class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent">
           John Doe
         </h1>

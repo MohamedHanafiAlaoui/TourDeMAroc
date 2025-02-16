@@ -13,14 +13,19 @@ class CyclistController extends BaseController
     public function show($id)
     {
         $cyclist = Cyclist::findCyclist($id);
-
         if (!$cyclist) {
             flash("error", "Cyclist not found.");
             redirect("cyclists");
         }
         $experiences = Experience::All($id);
 
-        $this->render("fan/cyclists/show", compact("cyclist", "experiences"));
+        $isLoggeIn = (isLoggedIn() && user()->isFan());
+        $favoris = false;
+        if ($isLoggeIn) {
+            $favoris = Favorite::find(user()->getId(), $id);
+        }
+
+        $this->render("fan/cyclists/show", compact("cyclist", "experiences", "isLoggeIn", "favoris"));
     }
 
     public function profile()

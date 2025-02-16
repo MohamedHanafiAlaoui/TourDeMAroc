@@ -94,7 +94,7 @@ CREATE TABLE ranking (
     UNIQUE (cyclist_id, stage_id)
 );
 
-CREATE TABLE fan_favorites (
+CREATE TABLE favorites (
     id_fan INT NOT NULL REFERENCES fans(id) ON DELETE CASCADE,
     id_cyclist INT NOT NULL REFERENCES cyclists(id) ON DELETE CASCADE,
     PRIMARY KEY (id_fan, id_cyclist)
@@ -835,7 +835,7 @@ INSERT INTO ranking (cyclist_id, stage_id, total_time, points_awarded) VALUES
 (47, 8, '04:15:00', 0);
 
 -- Insert fan favorites (600 entries)
-INSERT INTO fan_favorites (id_fan, id_cyclist) VALUES
+INSERT INTO favorites (id_fan, id_cyclist) VALUES
 (54, 20),
 (54, 21),
 (55, 22),
